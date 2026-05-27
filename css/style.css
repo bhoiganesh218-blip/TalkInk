@@ -2358,6 +2358,30 @@ body {
 }
 
 
+/* --- NAYA READ FREE BUTTON STYLE --- */
+.read-free-btn {
+    flex: 1; /* Buy now ke barabar space lega */
+    height: 50px;
+    background: #10b981; /* Premium Emerald Green for Free Actions */
+    border: none;
+    border-radius: 16px;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: 0.3s all ease;
+}
+
+.read-free-btn:active {
+    transform: scale(0.95);
+}
+
+
 
 
 
