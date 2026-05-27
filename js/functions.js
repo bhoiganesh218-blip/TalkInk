@@ -645,19 +645,38 @@ export const showBookDetails = async (bookId) => {
             };
         }
 
-
-        // --- 🎯 ACTION BAR ACTIONS INJECTIONS (DYNAMIC ROUTING FIXED) ---
+         // =========================================================================
+        // 🎯 ACTION BAR ACTIONS INJECTIONS (DYNAMIC ROUTING + FREE READER BUTTON)
+        // =========================================================================
         const buyBtn = document.getElementById('buyAction');
-        if (buyBtn) {
-            buyBtn.setAttribute('data-book-id', bookId);
+        const couponBtn = document.getElementById('couponAction');
+        const readFreeBtn = document.getElementById('readFreeAction');
+
+        if (isFree) {
+            // 🟢 IF BOOK IS 100% FREE (Price === 0)
             
-            if (isFree) {
-                // 🟢 CONDITION 1: BOOK IS 100% FREE -> Force Wishlist Intercept Confirmation Popup
-                buyBtn.innerHTML = `<i class="fa-solid fa-heart-circle-plus"></i> Save Free Book`;
-                buyBtn.style.background = "#10b981"; 
-                
+            // 1. "Read Free" button ko dikhao aur click event lagao
+            if (readFreeBtn) {
+                readFreeBtn.style.display = "flex";
+                readFreeBtn.onclick = () => {
+                    console.log("📖 Direct streaming mode triggered via Action Bar.");
+                    window.openReader(bookId);
+                };
+            }
+
+            // 2. Coupon button ko chhupa do (Kyunki free book me coupon ka koi kaam nahi)
+            if (couponBtn) couponBtn.style.display = "none";
+
+            // 3. "Buy Now" button ko badal kar "Save Free Book" (Wishlist Intercept) banao
+            if (buyBtn) {
+                buyBtn.setAttribute('data-book-id', bookId);
+                buyBtn.innerHTML = `<i class="fa-solid fa-heart-circle-plus"></i> Save Free`;
+                buyBtn.style.background = "rgba(255, 255, 255, 0.05)"; // Neutral design taaki green read button highlight ho
+                buyBtn.style.border = "1px solid var(--ink-border)";
+                buyBtn.style.color = "var(--ink-text-main)";
+                buyBtn.style.boxShadow = "none";
+
                 buyBtn.onclick = () => {
-                    console.log("🎁 Free Book Interceptor Triggered. Showing English warning matrix...");
                     triggerActionConfirmation({
                         title: "Save Free Book?",
                         desc: "This book is free, if you want to save it you can save it in your wish list.",
@@ -666,21 +685,8 @@ export const showBookDetails = async (bookId) => {
                         }
                     });
                 };
-            } else {
-                // 🔴 CONDITION 2: BOOK IS PREMIUM (Price > 0 -> Kept inside Library Route)
-                buyBtn.innerHTML = `<i class="fa-solid fa-bolt"></i> Buy Now`;
-                buyBtn.style.background = ""; 
-
-                buyBtn.onclick = () => {
-                    if (bookData.isFeatured === true) {
-                        console.log("🪙 Featured Book detected. Redirecting context to Coin Module...");
-                        openCoinPurchaseGateway(bookId, bookData.price);
-                    } else {
-                        initiatePurchase(bookId, bookData.price);
-                    }
-                };
             }
-        }
+        
 
         // =========================================================================
         // 🔗 NATIVE MOBILE WEB SHARE API INTEGRATION
