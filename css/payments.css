@@ -1,0 +1,345 @@
+/* =========================================================================
+   💳 TALKINK PAYMENTS & REFUNDS - STANDALONE TYPOGRAPHY STYLESHEET
+   ========================================================================= */
+
+/* 🎨 1. CORE BRAND DESIGN TOKENS */
+:root {
+    --bg-color: #020617;        /* Aapka signature Deep Navy Blue background */
+    --text-main: #ffffff;       /* Pure White Text */
+    --text-muted: #94a3b8;      /* Premium Slate Muted Text */
+    --accent-cyan: #06b6d4;     /* Neon Cyan Electric Spark */
+    --accent-purple: #a855f7;   /* Cyberpunk Neon Purple */
+    --accent-amber: #f59e0b;    /* Gold/Amber Warning Accent for Piracy Alert */
+    --font-heading: 'Bricolage Grotesque', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+/* 🎯 2. GLOBAL RESET & CORE CANVAS ARCHITECTURE */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* 🪐 3. HYPER-CINEMATIC BACKGROUND AMBIENCE ORBS */
+.pay-glow-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+    background: #020617;
+}
+
+.orb-cyan, .orb-purple {
+    position: absolute;
+    width: min(550px, 110vw);
+    height: min(550px, 110vw);
+    border-radius: 50%;
+    filter: blur(150px);
+    opacity: 0.1;
+}
+
+.orb-cyan {
+    top: -10%;
+    left: -5%;
+    background: var(--accent-cyan);
+}
+
+.orb-purple {
+    bottom: -10%;
+    right: -5%;
+    background: var(--accent-purple);
+}
+
+/* 💻 4. PAYMENTS VIEWPORT & CONTENT LAYOUT boundaries */
+.pay-viewport {
+    position: relative;
+    width: 100%;
+    padding: 8rem 1.5rem 6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pay-container {
+    max-width: 850px; /* Scientifically tested reading length for premium readability */
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* 📝 5. J落实 TYPOGRAPHY HEADER ENGINE */
+.pay-header {
+    max-width: 800px;
+    margin: 0 auto 5rem;
+    text-align: center;
+}
+
+.pay-subtitle {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent-purple);
+    letter-spacing: 5px;
+    margin-bottom: 1.25rem;
+    text-transform: uppercase;
+}
+
+.pay-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 6.5vw, 4.5rem);
+    font-weight: 700;
+    letter-spacing: -2.5px;
+    line-height: 1.1;
+    margin-bottom: 1.25rem;
+    color: #ffffff;
+}
+
+/* Fluid Gradient Text Helper */
+.gradient-text {
+    background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.pay-meta {
+    font-size: 0.9rem;
+    color: var(--accent-cyan);
+    font-family: var(--font-body);
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+}
+
+.pay-lead {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    font-weight: 300;
+}
+
+/* 🎴 6. THE CORE GLASSMORPHIC CONTRACT PANEL */
+.pay-glass-card {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.012) 0%, rgba(255, 255, 255, 0.002) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border-radius: 32px;
+    padding: 5.5rem 4.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem; /* Wide structural gaps between legal clauses */
+    box-shadow: 0 60px 120px rgba(0, 0, 0, 0.6);
+}
+
+/* Legal Clauses Blocks */
+.pay-clause {
+    position: relative;
+}
+
+.clause-title {
+    font-family: var(--font-heading);
+    font-size: 1.7rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(90deg, #ffffff 50%, var(--text-muted) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.clause-desc {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    line-height: 1.85;
+    font-weight: 300;
+    margin-bottom: 1.2rem;
+    text-align: justify;
+}
+
+/* 🚫 7. PREMIUM ANTI-PIRACY WARNING CALLOUT BOX */
+.pay-alert-box {
+    background: linear-gradient(90deg, rgba(245, 158, 11, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
+    border-left: 3px solid var(--accent-amber);
+    padding: 1.5rem;
+    border-radius: 0 20px 20px 0;
+    color: #fde68a; /* Soft readable amber text over dark background */
+    font-size: 1rem;
+    line-height: 1.7;
+    margin: 1.5rem 0;
+    font-weight: 300;
+}
+
+.pay-alert-box strong {
+    color: var(--accent-amber);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+/* 📋 8. MODERN TICK/DOT BULLET DESIGN FRAMEWORK */
+.pay-bullet-list {
+    list-style: none;
+    padding-left: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+}
+
+.pay-bullet-list li {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    font-weight: 300;
+    position: relative;
+    padding-left: 2rem;
+}
+
+/* Premium Gold-Cyan Geometric Dot */
+.pay-bullet-list li::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 10px;
+    width: 6px;
+    height: 6px;
+    background: var(--accent-cyan);
+    box-shadow: 0 0 10px var(--accent-cyan);
+    border-radius: 2px;
+}
+
+.pay-bullet-list li strong {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* 📩 9. CORE RESOLUTION DESK CALLOUT MATRIX */
+.pay-contact-callout {
+    background: linear-gradient(90deg, rgba(6, 182, 212, 0.04) 0%, rgba(0,0,0,0) 100%);
+    border-left: 3px solid var(--accent-cyan);
+    padding: 1.5rem;
+    border-radius: 0 20px 20px 0;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 1.7;
+    margin-top: 1.5rem;
+}
+
+.pay-inline-link {
+    color: var(--accent-purple);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.pay-inline-link:hover {
+    color: #ffffff;
+    text-shadow: 0 0 10px var(--accent-purple);
+    transform: translateY(-1px);
+}
+
+/* 🔘 10. PREMIUM RETURN NAVIGATION BUTTON */
+.pay-action-row {
+    margin-top: 5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-dashboard {
+    display: inline-block;
+    padding: 1.1rem 3rem;
+    background: #ffffff;
+    color: #020617;
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 700;
+    border-radius: 100px;
+    box-shadow: 0 10px 40px rgba(255, 255, 255, 0.05);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-dashboard:hover {
+    transform: translateY(-5px);
+    background: linear-gradient(45deg, var(--accent-cyan), var(--accent-purple));
+    color: #ffffff;
+    box-shadow: 0 15px 35px rgba(6, 182, 212, 0.25);
+}
+
+/* 🎬 11. SCROLL REVEAL OPTIMIZATION INTERFACES */
+.reveal {
+    opacity: 1;
+    transform: translateY(35px);
+    transition: opacity 0.8s cubic-bezier(0.215, 0.61, 0.355, 1), transform 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* =========================================================================
+   📱 12. RESPONSIVE MEDIA BREAKPOINTS (MOBILE ANTI-CRASH OPTIMIZATION)
+   ========================================================================= */
+@media (max-width: 768px) {
+    .pay-viewport {
+        padding: 6rem 1rem 4rem;
+    }
+
+    .pay-glass-card {
+        padding: 3.5rem 1.75rem; /* Secures critical layout limits on tight mobile screens */
+        border-radius: 24px;
+        gap: 2.5rem;
+    }
+
+    .pay-title {
+        font-size: 2.6rem;
+    }
+
+    .clause-title {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+    }
+
+    .clause-desc, 
+    .pay-bullet-list li {
+        font-size: 1rem;
+        line-height: 1.7;
+        text-align: left; /* Changes text justification to clean left layout for narrow columns */
+    }
+
+    .pay-alert-box,
+    .pay-contact-callout {
+        padding: 1.25rem 1rem;
+        border-radius: 12px;
+    }
+
+    .btn-dashboard {
+        width: 100%;
+        max-width: 300px;
+        text-align: center;
+        padding: 1rem 2rem;
+    }
+}
