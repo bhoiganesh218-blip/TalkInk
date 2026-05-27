@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment & Refund Policy | TalkInk</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="./css/payments.css">
+</head>
+<body>
+
+    <div class="pay-glow-bg">
+        <div class="orb-cyan"></div>
+        <div class="orb-purple"></div>
+    </div>
+
+    <main class="pay-viewport">
+        
+        <header class="pay-header text-center">
+            <span class="pay-subtitle reveal">// FINANCIAL DISCLOSURE</span>
+            <h1 class="pay-title reveal">Payment & <span class="gradient-text">Refunds</span></h1>
+            <p class="pay-meta reveal">Last Modified: May 20, 2026 • Legal Node: TR-009</p>
+            <p class="pay-lead reveal">
+                Thank you for choosing TalkInk as your digital reading ecosystem. Since we serve instantaneous cryptographic access to independent literature, our financial terms are engineered to prevent digital duplication. Please read our operational mandates below.
+            </p>
+        </header>
+
+        <section class="pay-body">
+            <div class="pay-container">
+                
+                <div class="pay-glass-card reveal">
+                    
+                    <div class="pay-clause">
+                        <h2 class="clause-title">1. Secure Monetary Settlement Engine</h2>
+                        <p class="clause-desc">
+                            All licensing fees, book un-locking transactions, and digital profile upgrades triggered on TalkInk are executed via encrypted tokenized streams. We process high-tier transactions strictly through our integrated partner, **Instamojo's Secure Gateway Layer**.
+                        </p>
+                        <p class="clause-desc">
+                            By binding a financial vehicle (Credit Card, Debit Card, UPI Handle, or Net Banking credentials) to an active purchase intent, you grant absolute clearance to our ecosystem nodes to process the localized transaction amount instantly.
+                        </p>
+                    </div>
+
+                    <div class="pay-clause">
+                        <h2 class="clause-title">2. Digital Asset Nature & Absolute No-Refund Mandate</h2>
+                        <p class="clause-desc">
+                            TalkInk explicitly operates a strict **Strictly Non-Refundable and Non-Returnable Financial Policy** over all purchased assets. Once a digital book wrapper is unlocked, or an audio streaming sequence is fetched by your terminal profile, the asset is classified as fully consumed.
+                        </p>
+                        
+                        <div class="pay-alert-box">
+                            <strong>🚫 ANTI-PIRACY & REPLICATION CLAUSE:</strong> 
+                            Unlike physical goods, digital assets are inherently susceptible to illegal extraction, mirroring, and intellectual property theft. If an account un-locks a title, copies the textual layout, or records the vocal transmission and then initiates a refund claim, it directly damages independent authors and system integrity. Because physical return is structurally impossible with digital files, all sales are terminal, absolute, and immutable.
+                        </div>
+                    </div>
+
+                    <div class="pay-clause">
+                        <h2 class="clause-title">3. Structural Exceptions for Verified System Errors</h2>
+                        <p class="clause-desc">
+                            While digital assets cannot be returned under typical ideological changes, TalkInk stands firmly beside its users in scenarios involving unfair double-charging or severe network fallout. We recognize that backend server glitches or ledger synchronization timeouts can happen.
+                        </p>
+                        <p class="clause-desc">
+                            If you experience a genuine technical failure—such as your account balance being debited but the cloud database failing to assign the respective unlock token within your <strong>'LibraryPage' viewport</strong>—we classify this as an unfair system anomaly. 
+                        </p>
+                    </div>
+
+                    <div class="pay-clause">
+                        <h2 class="clause-title">4. Arbitration & Resolution Processing Mechanism</h2>
+                        <p class="clause-desc">
+                            If a verified transaction failure occurs, users are requested not to initiate aggressive banking chargebacks, as it complicates cloud database logs. Instead, follow our clean engineering query channel:
+                        </p>
+                        <ul class="pay-bullet-list">
+                            <li><strong>Dispatch Log:</strong> Send a formal email tracking request directly to our structural support node within 7 days of the billing incident.</li>
+                            <li><strong>Required Validation Metadata:</strong> Your email must clearly state your active TalkInk profile identification, your registered phone number, and the official Instamojo Transaction ID along with a digital ledger screenshot.</li>
+                            <li><strong>Turnaround Window:</strong> Our backend ledger inspection team will audit the Firestore server logs. If the double-billing or unassigned transaction is found to be genuine, your asset will either be manually mapped to your cloud profile or a structural adjustment will be processed within a reasonable timeframe.</li>
+                        </ul>
+                    </div>
+
+                    <div class="pay-clause">
+                        <h2 class="clause-title">5. Official Legal Support Destination</h2>
+                        <p class="clause-desc">
+                            For any inquiries regarding incomplete transaction statuses or server un-locking timeouts, you can activate a standard support ticket at our central operations node:
+                        </p>
+                        <div class="pay-contact-callout">
+                            📬 <strong>Core Resolution Desk:</strong> <a href="mailto:Talkink.support@gmail.com" class="pay-inline-link">Talkink.support@gmail.com</a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="pay-action-row text-center reveal">
+                    <a href="index.html" class="btn-dashboard">Return To Library</a>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const revealElements = document.querySelectorAll('.reveal');
+            
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('active');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                revealElements.forEach(el => observer.observe(el));
+            } else {
+                revealElements.forEach(el => el.classList.add('active'));
+            }
+        });
+    </script>
+</body>
+</html>

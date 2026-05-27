@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Reward Hub | TalkInk</title>
+    
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+    
+    <link rel="stylesheet" href="./css/ads.css"> 
+</head>
+<body>
+
+    <div class="ti-dashboard-wrapper">
+        
+        <div class="bg-flare flare-primary"></div>
+        <div class="bg-flare flare-secondary"></div>
+
+        <header class="ti-dashboard-header">
+            <div class="brand-meta-group">
+                <span class="brand-logo-icon">✒️</span>
+                <div class="brand-text-nodes">
+                    <h1>TALK<span class="gradient-accent">INK</span></h1>
+                    <span class="sub-gateway">REWARD HUB ENGINE</span>
+                </div>
+            </div>
+            <button class="ti-dashboard-exit-btn" onclick="window.location.href='index.html'" aria-label="Exit Hub">
+                <span class="exit-text">Back to Home</span>
+                <span class="exit-icon">✕</span>
+            </button>
+        </header>
+
+        <main class="ti-hub-layout-grid">
+            
+            <section class="ti-grid-column-left">
+                
+                <div class="ti-premium-card wallet-card-showcase">
+                    <div class="wallet-card-overlay"></div>
+                    <div class="wallet-inner-flex">
+                        <div class="wallet-label-block">
+                            <span class="card-mini-title">SECURED BALANCE</span>
+                            <div class="live-balance-counter">
+                                <span class="coin-glow-sparkle">🪙</span>
+                                <h2 id="modal-user-coins">000</h2>
+                            </div>
+                        </div>
+                        <div class="wallet-chip-icon">✨</div>
+                    </div>
+                </div>
+
+                <div class="ti-premium-card mission-control-center">
+                    <div class="card-header-row">
+                        <div class="status-indicator-badge">
+                            <span class="pulse-beacon"></span>
+                            <span>ACTIVE LEVEL</span>
+                        </div>
+                        <h3 class="panel-heading">DAILY COIN MISSION</h3>
+                    </div>
+
+                    <div class="reward-progress-grid">
+                        <div class="progress-info-row">
+                            <span class="task-descriptor">Objective: Stream 5 micro-ads today</span>
+                            <strong class="counter-badge-highlight" id="modal-ad-count-text">0 / 5 COMPLETE</strong>
+                        </div>
+                        <div class="modal-progress-bar-bg">
+                            <div class="modal-progress-fill" id="modal-ad-progress-fill" style="width: 0%"></div>
+                        </div>
+                        <p class="reward-hint-text">Each milestone releases points. Complete the total cap pool to filter high-tier premium coupon codes below.</p>
+                    </div>
+
+                    <div class="reward-action-zone">
+                        <div class="cooldown-lock-layer" id="modal-cooldown-lock" style="display: none;">
+                            <div class="lock-vibe-box">
+                                <span class="lock-icon">🔒</span>
+                                <div class="lock-timer-text">
+                                    <span>SYSTEM COOLING CYCLE</span>
+                                    <strong id="modal-timer-clock">01:30</strong>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="modal-watch-ad-btn" id="modal-watch-btn" onclick="triggerAdWatchingProcess()">
+                            ⏳ LOADING AD ENGINE...
+                        </button>
+                    </div>
+                </div>
+
+                <div class="ti-premium-card modal-coupon-reveal" id="modal-coupon-box" style="display: none;">
+                    <div class="coupon-alert-badge">🎉 MISSION ACCOMPLISHED!</div>
+                    
+                    <div class="unlocked-book-card">
+                        <div class="book-card-flex">
+                            <div class="book-cover-wrapper">
+                                <img id="modal-book-cover" src="https://via.placeholder.com/120x180" alt="Unlocked Book Cover">
+                                <div class="cover-glass-overlay"></div>
+                            </div>
+                            <div class="book-meta-details">
+                                <h4 id="modal-book-title">LOADING PREMIUM TITLE...</h4>
+                                <p id="modal-book-desc">Loading special summary context analysis from TalkInk database store...</p>
+                                <div class="target-apply-badge">⚡ VALID ONLY FOR THIS BOOK</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="coupon-code-wrapper">
+                        <div class="ticket-stub-left"></div>
+                        <code id="modal-unlocked-coupon">FETCHING...</code>
+                        <div class="ticket-stub-right"></div>
+                    </div>
+                    <p class="coupon-expiry-note">Validity: 1-2 Days. Copy the digital token string and apply inside the designated portal.</p>
+                    
+                    <div class="coupon-action-row">
+                        <button class="coupon-claim-btn" id="copy-btn-text" onclick="copyUnlockedCoupon()">COPY CODE</button>
+                        <a id="modal-book-direct-link" href="#" class="book-redirect-btn">READ BOOK NOW 🚀</a>
+                    </div>
+                </div>
+
+            </section>
+
+            <section class="ti-grid-column-right">
+                
+                <div class="ti-premium-card guide-blueprint-card">
+                    <h3 class="guide-title">🎁 HOW TO CLAIM REWARDS?</h3>
+                    <div class="blueprint-timeline">
+                        
+                        <div class="timeline-step">
+                            <div class="step-badge">1</div>
+                            <div class="step-content">
+                                <h4>Stream Ads</h4>
+                                <p>Click the launch button to cycle through sponsor video allocations. Complete the buffer runtime safely.</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-step">
+                            <div class="step-badge">2</div>
+                            <div class="step-content">
+                                <h4>Accumulate 🪙 Coins</h4>
+                                <p>Every single stream pushes 50 instant coins into your primary local wallet asset container automatically.</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-step">
+                            <div class="step-badge">3</div>
+                            <div class="step-content">
+                                <h4>Unlock Premium Ticket</h4>
+                                <p>Once the 5/5 mission gauge locks full, a dynamic hidden paid book profile alongside an exclusive zero-balance code drops instantly.</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-step">
+                            <div class="step-badge">4</div>
+                            <div class="step-content">
+                                <h4>Apply & Enjoy Reading</h4>
+                                <p>Copy the ticket string, tap the rocket redirection icon, and insert it at checkout to claim your completely free access setup!</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="ti-premium-card alpha-notice-card">
+                    <div class="notice-flex">
+                        <span class="notice-icon">🛡️</span>
+                        <div class="notice-text">
+                            <h4>Anti-Cheat Protection Activated</h4>
+                            <p>To avoid resource flooding, a brief cooldown matrix protects your session between subsequent streams. Keep reading other books while system cools down!</p>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+            
+        </main>
+    </div>
+
+    <script type="module" src="./js/rewardEngine.js"></script>
+</body>
+</html>

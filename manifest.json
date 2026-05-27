@@ -1,0 +1,37 @@
+{
+  "short_name": "TalkInk",
+  "name": "TalkInk - Digital Audio Stories & Books",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/talkink/?source=pwa",
+  "background_color": "#020617",
+  "theme_color": "#020617",
+  "display": "standalone",
+  "orientation": "portrait",
+  "share_target": {
+    "action": "/talkink/handle-shared-pdf",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "files": [
+        {
+          "name": "shared_pdf",
+          "accept": [
+            "application/pdf",
+            ".pdf"
+          ]
+        }
+      ]
+    }
+  }
+}
