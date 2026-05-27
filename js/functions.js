@@ -645,7 +645,8 @@ export const showBookDetails = async (bookId) => {
             };
         }
 
-         // =========================================================================
+
+        // =========================================================================
         // 🎯 ACTION BAR ACTIONS INJECTIONS (DYNAMIC ROUTING + FREE READER BUTTON)
         // =========================================================================
         const buyBtn = document.getElementById('buyAction');
@@ -686,7 +687,35 @@ export const showBookDetails = async (bookId) => {
                     });
                 };
             }
-        
+
+        } else {
+            // 🔴 IF BOOK IS PREMIUM (Price > 0)
+            
+            // 1. Naye "Read Free" button ko poori tarah chhupa do
+            if (readFreeBtn) readFreeBtn.style.display = "none";
+
+            // 2. Coupon button ko wapas dikhao
+            if (couponBtn) couponBtn.style.display = "flex";
+
+            // 3. Buy Now button ko default state me set karo
+            if (buyBtn) {
+                buyBtn.setAttribute('data-book-id', bookId);
+                buyBtn.innerHTML = `<i class="fa-solid fa-bolt"></i> Buy Now`;
+                buyBtn.style.background = ""; // Default CSS automatic load ho jayegi
+                buyBtn.style.border = "";
+                buyBtn.style.color = "";
+                buyBtn.style.boxShadow = "";
+
+                buyBtn.onclick = () => {
+                    if (bookData.isFeatured === true) {
+                        openCoinPurchaseGateway(bookId, bookData.price);
+                    } else {
+                        initiatePurchase(bookId, bookData.price);
+                    }
+                };
+            }
+        }
+
 
         // =========================================================================
         // 🔗 NATIVE MOBILE WEB SHARE API INTEGRATION
