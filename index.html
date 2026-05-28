@@ -483,41 +483,90 @@
     
     
     
-    
-        <div id="ttsLanguageModal" class="jump-modal" style="display: none; z-index: 2000;">
-        <div class="modal-content" style="max-width: 380px; padding: 25px; border: 1px solid rgba(99, 102, 241, 0.2);">
-            <div style="text-align: center; margin-bottom: 20px;">
-                <i class="fa-solid fa-language" style="font-size: 2.2rem; color: #6366f1; margin-bottom: 10px; display: block;"></i>
-                <h3 style="margin: 0; font-size: 1.3rem; font-weight: 800; letter-spacing: 0.5px; color: #fff;">Select Audio Language</h3>
-                <p style="font-size: 0.8rem; color: #64748b; margin: 5px 0 0 0;">Choose a voice engine translation matrix</p>
-            </div>
-            
-            <div id="ttsLangGrid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px;">
-                <button class="lang-select-btn" onclick="window.speechPlayer.setLanguage('en', 'en-US', 'Original (English)')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: 0.2s;">
-                    <span style="font-size: 1.1rem;">🇺🇸</span> English
-                </button>
-                <button class="lang-select-btn" onclick="window.speechPlayer.setLanguage('hi', 'hi-IN', 'Hindi Translation')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: 0.2s;">
-                    <span style="font-size: 1.1rem;">🇮🇳</span> हिंदी (Hindi)
-                </button>
-                <button class="lang-select-btn" onclick="window.speechPlayer.setLanguage('or', 'or-IN', 'Odia Translation')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: 0.2s;">
-                    <span style="font-size: 1.1rem;">🇮🇳</span> ଓଡ଼ିଆ (Odia)
-                </button>
-                <button class="lang-select-btn" onclick="window.speechPlayer.setLanguage('bn', 'bn-IN', 'Bengali Translation')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: 0.2s;">
-                    <span style="font-size: 1.1rem;">🇮🇳</span> বাংলা (Bengali)
-                </button>
-                <button class="lang-select-btn" onclick="window.speechPlayer.setLanguage('es', 'es-ES', 'Spanish Translation')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: 0.2s;">
-                    <span style="font-size: 1.1rem;">🇪🇸</span> Spanish
-                </button>
-                <button class="lang-select-btn" onclick="window.speechPlayer.setLanguage('fr', 'fr-FR', 'French Translation')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: 0.2s;">
-                    <span style="font-size: 1.1rem;">🇫🇷</span> French
-                </button>
-            </div>
+    <div id="ttsLanguageModal" class="jump-modal" style="display: none; z-index: 2000;">
+    <div class="modal-content" style="max-width: 380px; padding: 25px; border: 1px solid rgba(99, 102, 241, 0.2); background: #020617; border-radius: 16px;">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <i class="fa-solid fa-language" style="font-size: 2.2rem; color: #6366f1; margin-bottom: 10px; display: block;"></i>
+            <h3 style="margin: 0; font-size: 1.3rem; font-weight: 800; letter-spacing: 0.5px; color: #fff;">Select Audio Mode</h3>
+            <p style="font-size: 0.8rem; color: #64748b; margin: 5px 0 0 0;">Choose standard TTS or Premium AI Explanation</p>
+        </div>
 
-            <div style="display: flex; gap: 10px;">
-                <button onclick="window.speechPlayer.closeLangModal()" style="flex: 1; background: rgba(255,255,255,0.05); border: none; color: #94a3b8; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.85rem; transition: 0.2s;">Cancel</button>
-            </div>
+        <button onclick="window.speechPlayer.openAiLangModal()" style="width: 100%; background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); border: none; color: #fff; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3); transition: 0.2s;">
+            <i class="fa-solid fa-wand-magic-sparkles animate-pulse"></i> ✨ Listen AI Explanation
+        </button>
+
+        <div style="display: flex; align-items: center; margin-bottom: 15px;">
+            <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.08);"></div>
+            <span style="font-size: 0.75rem; color: #475569; padding: 0 10px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px;">Or Standard Read</span>
+            <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.08);"></div>
+        </div>
+        
+        <div id="ttsLangGrid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px;">
+            <button class="lang-select-btn" onclick="window.speechPlayer.setLanguage('en', 'en-US', 'Original (English)')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: 0.2s;">
+                <span style="font-size: 1.1rem;">🇺🇸</span> English
+            </button>
+            <button class="lang-select-btn" onclick="window.speechPlayer.setLanguage('hi', 'hi-IN', 'Hindi Translation')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: 0.2s;">
+                <span style="font-size: 1.1rem;">🇮🇳</span> हिंदी (Hindi)
+            </button>
+            <button class="lang-select-btn" onclick="window.speechPlayer.setLanguage('or', 'or-IN', 'Odia Translation')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: 0.2s;">
+                <span style="font-size: 1.1rem;">🇮🇳</span> ଓଡ଼ିଆ (Odia)
+            </button>
+            <button class="lang-select-btn" onclick="window.speechPlayer.setLanguage('bn', 'bn-IN', 'Bengali Translation')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: 0.2s;">
+                <span style="font-size: 1.1rem;">🇮🇳</span> বাংলা (Bengali)
+            </button>
+            <button class="lang-select-btn" onclick="window.speechPlayer.setLanguage('es', 'es-ES', 'Spanish Translation')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: 0.2s;">
+                <span style="font-size: 1.1rem;">🇪🇸</span> Spanish
+            </button>
+            <button class="lang-select-btn" onclick="window.speechPlayer.setLanguage('fr', 'fr-FR', 'French Translation')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: 0.2s;">
+                <span style="font-size: 1.1rem;">🇫🇷</span> French
+            </button>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+            <button onclick="window.speechPlayer.closeLangModal()" style="flex: 1; background: rgba(255,255,255,0.05); border: none; color: #94a3b8; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.85rem; transition: 0.2s;">Cancel</button>
         </div>
     </div>
+</div>
+
+<div id="aiExplanationLangModal" class="jump-modal" style="display: none; z-index: 2010;">
+    <div class="modal-content" style="max-width: 350px; padding: 25px; border: 1px solid rgba(168, 85, 247, 0.2); background: #020617; border-radius: 16px;">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <i class="fa-solid fa-brain" style="font-size: 2.2rem; color: #a855f7; margin-bottom: 10px; display: block;"></i>
+            <h3 style="margin: 0; font-size: 1.25rem; font-weight: 800; color: #fff;">Explanation Language</h3>
+            <p style="font-size: 0.8rem; color: #64748b; margin: 5px 0 0 0;">In which language do you want the story breakdown?</p>
+        </div>
+        
+        <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+            <button onclick="window.speechPlayer.startAiExplanation('hi')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 14px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.2s;">
+                <span style="font-size: 1.2rem;">🇮🇳</span> हिंदी (Conversational Story)
+            </button>
+            <button onclick="window.speechPlayer.startAiExplanation('en')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 14px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.2s;">
+                <span style="font-size: 1.2rem;">🇺🇸</span> English (Friendly Mentor)
+            </button>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+            <button onclick="window.speechPlayer.closeAiLangModal()" style="flex: 1; background: rgba(255,255,255,0.05); border: none; color: #94a3b8; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.85rem; transition: 0.2s;">Back</button>
+        </div>
+    </div>
+</div>
+
+<div id="aiTranscriptModal" class="jump-modal" style="display: none; z-index: 2020;">
+    <div class="modal-content" style="max-width: 500px; width: 90%; padding: 25px; border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-quote-left" style="color: #a855f7; font-size: 1.1rem;"></i>
+                <h3 style="margin:0; font-size: 1.15rem; font-weight: 800; color: #fff; letter-spacing: 0.3px;">AI Explanation Transcript</h3>
+            </div>
+            <button onclick="window.speechPlayer.closeTranscriptModal()" style="background: none; border: none; color: #64748b; font-size: 1.2rem; cursor: pointer; transition: 0.2s;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        
+        <div id="aiTranscriptBody" style="max-height: 300px; overflow-y: auto; color: #cbd5e1; font-size: 0.95rem; line-height: 1.6; padding-right: 8px; font-family: 'Inter', sans-serif; text-align: left; white-space: pre-line;">
+            AI is analyzing the page structure...
+        </div>
+    </div>
+</div>
+
 
 </section>
 
@@ -807,6 +856,9 @@
             <button id="audioStopBtn" onclick="window.speechPlayer.stop()" title="Stop Audio">
                 <i class="fa-solid fa-xmark"></i>
             </button>
+            
+            <button id="aiTranscriptBtn" onclick="window.speechPlayer.openTranscriptModal()" style="display: none; background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.2); color: #a855f7; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; transition: 0.2s; font-size: 0.95rem;" title="View AI Explanation Text"><i class="fa-solid fa-file-lines"></i></button>
+
         </div>
     </div>
 </div>
@@ -1170,7 +1222,6 @@
 <script type="module" src="./js/app.js"></script>
 </body>
 </html>
-
 
 
 
