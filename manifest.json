@@ -13,13 +13,14 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "/talkink/?source=pwa",
+  "start_url": "/?source=pwa",
+  "scope": "/",
   "background_color": "#020617",
   "theme_color": "#020617",
   "display": "standalone",
   "orientation": "portrait",
   "share_target": {
-    "action": "/talkink/handle-shared-pdf",
+    "action": "/handle-shared-pdf",
     "method": "POST",
     "enctype": "multipart/form-data",
     "params": {
