@@ -2504,6 +2504,14 @@ window.speechPlayer = {
         window.speechPlayer.currentSentenceIdx = 0;
         window.speechPlayer.sentences = [];
         window.speechPlayer.updateUI(false);
+        
+        // Is logic ko window.speechPlayer.stop() ke andar lagana h sabse neeche
+window.speechPlayer.cachedAiExplanationText = "";
+window.speechPlayer.isAiMode = false;
+const transcriptBtn = document.getElementById('aiTranscriptBtn');
+if (transcriptBtn) transcriptBtn.style.display = 'none';
+
+        
     },
 
     // 4. FLOATING DOCK INTERFACE UPDATER
@@ -2546,7 +2554,168 @@ window.speechPlayer = {
                 mainHeadphonesIcon.className = "fa-solid fa-headphones";
             }
         }
-    }
+    },
+    
+    
+    
+    
+    
+    
+    
+    // ==========================================================================
+// INJECT THESE NEW PROPERTIES & FUNCTIONS INSIDE THE window.speechPlayer OBJECT
+// ==========================================================================
+
+    // New State Management Parameters inside speechPlayer object
+    cachedAiExplanationText: "", // Holds current active page's AI reply text
+    isAiMode: false,            // Flag to identify if running TTS or AI mode
+    AI_BACKEND_URL: 'https://talkinkbackend.onrender.com/tts-ai-explain', // Change if route varies
+
+    // 1. MODAL INTERACTIVE CONTROLLERS
+    openAiLangModal: () => {
+        window.speechPlayer.closeLangModal();
+        const aiModal = document.getElementById('aiExplanationLangModal');
+        if (aiModal) aiModal.style.display = 'flex';
+    },
+
+    closeAiLangModal: () => {
+        const aiModal = document.getElementById('aiExplanationLangModal');
+        if (aiModal) aiModal.style.display = 'none';
+        window.speechPlayer.openLangModal(); // Fallback back to primary menu
+    },
+
+    openTranscriptModal: () => {
+        const modal = document.getElementById('aiTranscriptModal');
+        const body = document.getElementById('aiTranscriptBody');
+        if (body) {
+            body.innerText = window.speechPlayer.cachedAiExplanationText || "No text script available for this node execution.";
+        }
+        if (modal) modal.style.display = 'flex';
+    },
+
+    closeTranscriptModal: () => {
+        const modal = document.getElementById('aiTranscriptModal');
+        if (modal) modal.style.display = 'none';
+    },
+
+    // 2. MAIN AI EXPLANATION PROCESSING ENGINE
+    startAiExplanation: async (selectedAiLang) => {
+        window.speechPlayer.isAiMode = true;
+        // Sub modal shut down safely
+        const aiModal = document.getElementById('aiExplanationLangModal');
+        if (aiModal) aiModal.style.display = 'none';
+
+        window.speechPlayer.stopAudioStream(); // Clear current voice stream pipeline
+
+        const activeBookDoc = window.currentPdfDoc;
+        const pageCounterText = document.getElementById('dockPageCounter')?.innerText || "1 / 1";
+        const currentPageIdx = parseInt(pageCounterText.split('/')[0].trim(), 10) || 1;
+        
+        window.speechPlayer.currentPage = currentPageIdx;
+
+        if (!activeBookDoc) {
+            alert("No active book asset found inside execution viewport matrix.");
+            return;
+        }
+
+        if (window.showLoader) window.showLoader();
+        window.speechPlayer.updateUI(true, `AI is digesting Page ${currentPageIdx} text streams...`);
+
+        try {
+            // Extract raw string content layer from PDF structure
+            const page = await activeBookDoc.getPage(currentPageIdx);
+            const textContent = await page.getTextContent();
+            let rawText = textContent.items.map(item => item.str).join(' ').trim();
+
+            if (!rawText || rawText.length < 5) {
+                if (window.hideLoader) window.hideLoader();
+                alert("This framework node canvas contains no extractable texts.");
+                window.speechPlayer.stop();
+                return;
+            }
+
+            // Hit the premium server payload matrix
+            const response = await fetch(window.speechPlayer.AI_BACKEND_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    text: rawText,
+                    lang: selectedAiLang // 'hi' or 'en'
+                })
+            });
+
+            if (!response.ok) {
+                const faultText = await response.text().catch(() => "Unknown Server Node Interrupt");
+                throw new Error(`Execution error context [${response.status}]: ${faultText}`);
+            }
+
+            const payloadData = await response.json(); // Expected: { audioBlobBase64: "...", explanationText: "..." }
+
+            // Store raw AI output script details safely for the popup display panel
+            window.speechPlayer.cachedAiExplanationText = payloadData.explanationText;
+            
+            // Unhide text visual feedback button inside docking pipeline controls layer
+            const transcriptBtn = document.getElementById('aiTranscriptBtn');
+            if (transcriptBtn) {
+                transcriptBtn.style.display = 'flex';
+            }
+
+            // Convert Base64 data chunks back to executable binary stream block
+            const binaryString = atob(payloadData.audioBlobBase64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            const audioBlob = new Blob([bytes], { type: 'audio/mpeg' });
+            const audioStreamUrl = URL.createObjectURL(audioBlob);
+
+            if (window.hideLoader) window.hideLoader();
+
+            // Fire up active audio player deployment pipeline node
+            const player = window.speechPlayer.audioInstance;
+            player.src = audioStreamUrl;
+
+            window.speechPlayer.updateUI(true, `Playing AI Story Summary (${selectedAiLang.toUpperCase()})`);
+
+            player.onended = () => {
+                URL.revokeObjectURL(audioStreamUrl);
+                window.speechPlayer.stop(); // AI story finishes in a single track sequence
+            };
+
+            player.onerror = () => {
+                console.error("Binary execution buffer drop during play state.");
+                window.speechPlayer.stop();
+            };
+
+            await player.play();
+
+        } catch (err) {
+            console.error("🎯 Critical break inside AI processing deck:", err.message);
+            if (window.hideLoader) window.hideLoader();
+            alert("Cloud node timeout or warming processing state. Try once more, bhai!");
+            window.speechPlayer.stop();
+        }
+    },
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 };
 
 // ==========================================================================
@@ -5001,3 +5170,8 @@ export const openCategoryViewPage = async (db, categoryId, categoryName, current
         await renderBooksGrid('.ink-grid', 21, currentUser, true, categoryId, db);
     }
 };
+     
+
+
+
+
