@@ -6,7 +6,7 @@ import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/f
 // --- 🎚️ SYSTEM HARD-CORE CONFIGURATION ---
 const COOLDOWN_TIME = 15 * 1000; // 60 Seconds Cooldown
 const MAX_ADS_PER_DAY = 10;
-const IS_TEST_MODE = false; // 🚨 Production pe jaate hi ise false kar dena bhaa
+const IS_TEST_MODE = true; // 🚨 Production pe jaate hi ise false kar dena bhaa
 
 // Global States for Monetag Framework Transformation
 let isAdReady = false;
