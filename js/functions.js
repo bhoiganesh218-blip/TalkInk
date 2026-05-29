@@ -4875,208 +4875,6 @@ window.syncFloatingWidgetState = function(userData) {
 
 
 
-
-
-/**
- * 🎨 DYNAMIC LOCAL PDF UPLOADER MODAL SYSTEM (MONETAG OPTIMIZED)
- * Generates an interactive file parsing frame for guest PDF conversions.
- * Fully integrated with Monetag Full-Screen Vignette Ad Gate.
- */
-window.openLocalPdfModal = () => {
-    // Check if modal already exists to block duplicate injection leaks
-    if (document.getElementById('local-pdf-modal')) return;
-
-    const modal = document.createElement('div');
-    modal.id = 'local-pdf-modal';
-    modal.className = 'pdf-upload-modal-overlay';
-    
-    modal.innerHTML = `
-        <div class="pdf-upload-modal-card animate-modal-in">
-            <button class="modal-close-btn" onclick="document.getElementById('local-pdf-modal').remove()">✕</button>
-            
-            <div class="modal-header-block">
-                <h3>3D PDF ENGINE</h3>
-                <p>Upload your own PDF to read in a premium 3D page-flip environment.</p>
-            </div>
-
-            <div class="upload-drop-zone" id="pdfDropZone" onclick="document.getElementById('localPdfInput').click()">
-                <div class="upload-icon-wrap">
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                </div>
-                <p class="main-upload-text">Drag & Drop your PDF here or <span class="browse-highlight">Browse</span></p>
-                <p class="sub-upload-text">Max file capacity size recommended: 50MB</p>
-                <input type="file" id="localPdfInput" accept="application/pdf" style="display: none;" />
-            </div>
-
-            <div class="selected-file-feedback" id="fileFeedback" style="display: none;">
-                <i class="fa-solid fa-file-pdf feedback-pdf-icon"></i>
-                <div class="file-meta">
-                    <span class="file-name-txt" id="feedbackFileName">document.pdf</span>
-                    <span class="file-size-txt" id="feedbackFileSize">0.0 MB</span>
-                </div>
-            </div>
-
-            <button class="action-read-btn disabled-state" id="startLocalReadBtn" disabled>
-                <span>LAUNCH 3D READER</span> <i class="fa-solid fa-circle-play"></i>
-            </button>
-        </div>
-    `;
-
-    document.body.appendChild(modal);
-
-    // --- INTERNAL ELEMENT POINTERS & REACTIVE LISTENERS ---
-    const fileInput = document.getElementById('localPdfInput');
-    const dropZone = document.getElementById('pdfDropZone');
-    const feedbackBlock = document.getElementById('fileFeedback');
-    const fileNameTxt = document.getElementById('feedbackFileName');
-    const fileSizeTxt = document.getElementById('feedbackFileSize');
-    const launchBtn = document.getElementById('startLocalReadBtn');
-
-    // Input change event listener hook
-    fileInput.addEventListener('change', (e) => {
-        handleFileSelection(e.target.files[0]);
-    });
-
-    // Helper process logic to parse local attributes
-    const handleFileSelection = (file) => {
-        if (!file || file.type !== "application/pdf") {
-            alert("Bhai, please select a valid PDF file only! 📄");
-            return;
-        }
-
-        fileNameTxt.innerText = file.name;
-        fileSizeTxt.innerText = (file.size / (1024 * 1024)).toFixed(2) + " MB";
-        
-        feedbackBlock.style.display = "flex";
-        dropZone.classList.add('file-attached');
-        
-        launchBtn.classList.remove('disabled-state');
-        launchBtn.removeAttribute('disabled');
-
-        window.tempSelectedPdfFile = file; 
-    };
-
-    // 🚀 MONETAG INJECTION ENGINE & AD GATE PIPELINE
-    launchBtn.addEventListener('click', async () => {
-        if (!window.tempSelectedPdfFile) {
-            alert("Bhai, pehle koi PDF file select karo! 📄");
-            return;
-        }
-
-        if (window.showLoader) window.showLoader();
-        console.log("🎬 Ad Gate Channel Requested for Local File:", window.tempSelectedPdfFile.name);
-
-        const IS_TEST_MODE = false; // 🚨 Live push karne se pehle ise FALSE kar dena bhaa!
-
-        if (IS_TEST_MODE) {
-            console.log("🤖 Simulated Ad Pipeline active (Test Mode)...");
-            // Test mode me 2.5 seconds ka delay loading block simulation chalega
-            setTimeout(async () => {
-                await executeCore3DReaderPipeline();
-            }, 2500);
-        } else {
-            console.log("🔥 PRODUCTION ACTIVE: Injecting Monetag Full-Screen Ad Gate...");
-            
-            // Monetag Script Dynamic Injection Framework
-            if (!document.getElementById('monetag-pdf-gate-sdk')) {
-                const script = document.createElement('script');
-                script.id = 'monetag-pdf-gate-sdk';
-                script.src = 'https://n6wxm.com/vignette.min.js';
-                script.dataset.zone = '11073043'; // Your Exact Monetag Zone ID
-                script.async = true;
-
-                script.onload = () => {
-                    console.log("🎯 Monetag Script Loaded. Registering blur hook...");
-                    window.addEventListener('blur', handlePdfGateTelemetry);
-                };
-
-                script.onerror = async () => {
-                    console.warn("⚠️ Ad network blocked or failed. Failsafe activated.");
-                    await executeCore3DReaderPipeline();
-                };
-
-                [document.documentElement, document.body].filter(Boolean).pop().appendChild(script);
-            } else {
-                // If script is already in memory, attach listener and trigger window focus loop
-                window.addEventListener('blur', handlePdfGateTelemetry);
-                console.log("🔄 Ad Engine already initialized. Ready for fullscreen display switch.");
-            }
-
-            // Fallback safety to release screen if ad fails to steal focus within 4 seconds
-            setTimeout(async () => {
-                window.removeEventListener('blur', handlePdfGateTelemetry);
-                if (document.getElementById('local-pdf-modal')) {
-                    console.log("🛡️ Ad timeout bypass triggered to keep application responsive.");
-                    await executeCore3DReaderPipeline();
-                }
-            }, 4000);
-        }
-    });
-};
-
-// 🎯 MONETAG AD ENGAGEMENT METRIC TELEMETRY FOR PDF GATE
-async function handlePdfGateTelemetry() {
-    window.removeEventListener('blur', handlePdfGateTelemetry);
-    console.log("💰 Ad display focus shifted. Provisioning 3D Reader launch pipeline...");
-    
-    // Gives user time to close the full-screen window before breaking DOM structure
-    setTimeout(async () => {
-        await executeCore3DReaderPipeline();
-    }, 1500);
-}
-
-// 🔀 DYNAMIC SECURITY APPLICATION ROUTER FOR 3D ENVIRONMENT
-async function executeCore3DReaderPipeline() {
-    try {
-        if (!window.tempSelectedPdfFile) return;
-        
-        console.log("🎯 Access Authorized! Rendering 3D book canvas layout.");
-        
-        // 1. Remove the tool uploader window layer completely
-        const modalContainer = document.getElementById('local-pdf-modal');
-        if (modalContainer) modalContainer.remove();
-        
-        if (window.hideLoader) window.hideLoader();
-
-        // 2. Safely bootstrap your independent 3D rendering system
-        if (typeof startBookReader === 'function') {
-            await startBookReader(window.tempSelectedPdfFile, true);
-        } else if (window.startBookReader) {
-            await window.startBookReader(window.tempSelectedPdfFile, true);
-        }
-        
-        // 3. Purge data pointer to optimize mobile performance
-        window.tempSelectedPdfFile = null;
-
-    } catch (error) {
-        console.error("🚨 Emergency bypass crash inside core reader engine:", error);
-        if (window.hideLoader) window.hideLoader();
-        
-        const modalContainer = document.getElementById('local-pdf-modal');
-        if (modalContainer) modalContainer.remove();
-        if (window.startBookReader) window.startBookReader(window.tempSelectedPdfFile, true);
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // =========================================================================
 // 🪐 DYNAMIC CATEGORIES INJECTION ENGINE (ULTRA-SAFE DEBUG VARIANT)
 // =========================================================================
@@ -5180,3 +4978,210 @@ export const openCategoryViewPage = async (db, categoryId, categoryName, current
         await renderBooksGrid('.ink-grid', 21, currentUser, true, categoryId, db);
     }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * 🎨 DYNAMIC LOCAL PDF UPLOADER MODAL SYSTEM (MONETAG OPTIMIZED)
+ * Generates an interactive file parsing frame for guest PDF conversions.
+ * Fully integrated with Monetag Full-Screen Vignette Ad Gate (No-Permission Bypass).
+ */
+window.openLocalPdfModal = () => {
+    // Check if modal already exists to block duplicate injection leaks
+    if (document.getElementById('local-pdf-modal')) return;
+
+    const modal = document.createElement('div');
+    modal.id = 'local-pdf-modal';
+    modal.className = 'pdf-upload-modal-overlay';
+    
+    modal.innerHTML = `
+        <div class="pdf-upload-modal-card animate-modal-in">
+            <button class="modal-close-btn" onclick="document.getElementById('local-pdf-modal').remove()">✕</button>
+            
+            <div class="modal-header-block">
+                <h3>3D PDF ENGINE</h3>
+                <p>Upload your own PDF to read in a premium 3D page-flip environment.</p>
+            </div>
+
+            <div class="upload-drop-zone" id="pdfDropZone" onclick="document.getElementById('localPdfInput').click()">
+                <div class="upload-icon-wrap">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                </div>
+                <p class="main-upload-text">Drag & Drop your PDF here or <span class="browse-highlight">Browse</span></p>
+                <p class="sub-upload-text">Max file capacity size recommended: 50MB</p>
+                <input type="file" id="localPdfInput" accept="application/pdf" style="display: none;" />
+            </div>
+
+            <div class="selected-file-feedback" id="fileFeedback" style="display: none;">
+                <i class="fa-solid fa-file-pdf feedback-pdf-icon"></i>
+                <div class="file-meta">
+                    <span class="file-name-txt" id="feedbackFileName">document.pdf</span>
+                    <span class="file-size-txt" id="feedbackFileSize">0.0 MB</span>
+                </div>
+            </div>
+
+            <button class="action-read-btn disabled-state" id="startLocalReadBtn" disabled>
+                <span>LAUNCH 3D READER</span> <i class="fa-solid fa-circle-play"></i>
+            </button>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // --- INTERNAL ELEMENT POINTERS & REACTIVE LISTENERS ---
+    const fileInput = document.getElementById('localPdfInput');
+    const dropZone = document.getElementById('pdfDropZone');
+    const feedbackBlock = document.getElementById('fileFeedback');
+    const fileNameTxt = document.getElementById('feedbackFileName');
+    const fileSizeTxt = document.getElementById('feedbackFileSize');
+    const launchBtn = document.getElementById('startLocalReadBtn');
+
+    // Input change event listener hook
+    fileInput.addEventListener('change', (e) => {
+        handleFileSelection(e.target.files[0]);
+    });
+
+    // Helper process logic to parse local attributes
+    const handleFileSelection = (file) => {
+        if (!file || file.type !== "application/pdf") {
+            alert("Bhai, please select a valid PDF file only! 📄");
+            return;
+        }
+
+        fileNameTxt.innerText = file.name;
+        fileSizeTxt.innerText = (file.size / (1024 * 1024)).toFixed(2) + " MB";
+        
+        feedbackBlock.style.display = "flex";
+        dropZone.classList.add('file-attached');
+        
+        launchBtn.classList.remove('disabled-state');
+        launchBtn.removeAttribute('disabled');
+
+        window.tempSelectedPdfFile = file; 
+    };
+
+    // 🚀 MONETAG INJECTION ENGINE & AD GATE PIPELINE
+    launchBtn.addEventListener('click', async () => {
+        if (!window.tempSelectedPdfFile) {
+            alert("Bhai, pehle koi PDF file select karo! 📄");
+            return;
+        }
+
+        if (window.showLoader) window.showLoader();
+        console.log("🎬 Ad Gate Channel Requested for Local File:", window.tempSelectedPdfFile.name);
+
+        const IS_TEST_MODE = false; // 🔥 Live production mode locked to bypass confirmation popups!
+
+        if (IS_TEST_MODE) {
+            console.log("🤖 Simulated Ad Pipeline active (Test Mode)...");
+            setTimeout(async () => {
+                await executeCore3DReaderPipeline();
+            }, 2500);
+        } else {
+            console.log("🔥 PRODUCTION ACTIVE: Injecting Monetag Full-Screen Ad Gate via Head Node...");
+            
+            // Instantly register the window blur hook for seamless tracking
+            window.addEventListener('blur', handlePdfGateTelemetry);
+
+            // Injecting directly into document.head to block layout shifts and permissions
+            if (!document.getElementById('monetag-pdf-gate-sdk')) {
+                const script = document.createElement('script');
+                script.id = 'monetag-pdf-gate-sdk';
+                script.src = 'https://n6wxm.com/vignette.min.js';
+                script.dataset.zone = '11073043'; // Your Exact Monetag Zone ID Locked
+                script.async = true;
+
+                script.onerror = async () => {
+                    console.warn("⚠️ Ad network blocked or failed. Failsafe activated.");
+                    await executeCore3DReaderPipeline();
+                };
+
+                document.head.appendChild(script);
+            } else {
+                console.log("🔄 Ad Engine already loaded in head node. Ready for tracking.");
+            }
+
+            // Fallback safety: Strict 3 seconds timeout. Agar ad load na ho ya focus issue ho, user automatic andar jaye!
+            setTimeout(async () => {
+                window.removeEventListener('blur', handlePdfGateTelemetry);
+                if (document.getElementById('local-pdf-modal')) {
+                    console.log("🛡️ Ad timeout bypass triggered to keep application responsive.");
+                    await executeCore3DReaderPipeline();
+                }
+            }, 3000);
+        }
+    });
+};
+
+// 🎯 MONETAG AD ENGAGEMENT METRIC TELEMETRY FOR PDF GATE
+async function handlePdfGateTelemetry() {
+    window.removeEventListener('blur', handlePdfGateTelemetry);
+    console.log("💰 Ad display focus shifted. Provisioning 3D Reader launch pipeline...");
+    
+    // Gives user time to interact with full-screen ad before wiping DOM structure
+    setTimeout(async () => {
+        await executeCore3DReaderPipeline();
+    }, 1500);
+}
+
+// 🔀 DYNAMIC SECURITY APPLICATION ROUTER FOR 3D ENVIRONMENT
+async function executeCore3DReaderPipeline() {
+    try {
+        if (!window.tempSelectedPdfFile) return;
+        
+        console.log("🎯 Access Authorized! Rendering 3D book canvas layout.");
+        
+        // 1. Remove the tool uploader window layer completely
+        const modalContainer = document.getElementById('local-pdf-modal');
+        if (modalContainer) modalContainer.remove();
+        
+        if (window.hideLoader) window.hideLoader();
+
+        // 2. Safely bootstrap your independent 3D rendering system
+        if (typeof startBookReader === 'function') {
+            await startBookReader(window.tempSelectedPdfFile, true);
+        } else if (window.startBookReader) {
+            await window.startBookReader(window.tempSelectedPdfFile, true);
+        }
+        
+        // 3. Purge data pointer to optimize performance
+        window.tempSelectedPdfFile = null;
+
+    } catch (error) {
+        console.error("🚨 Emergency bypass crash inside core reader engine:", error);
+        if (window.hideLoader) window.hideLoader();
+        
+        const modalContainer = document.getElementById('local-pdf-modal');
+        if (modalContainer) modalContainer.remove();
+        if (window.startBookReader) window.startBookReader(window.tempSelectedPdfFile, true);
+    }
+}
