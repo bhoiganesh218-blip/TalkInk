@@ -507,54 +507,60 @@ window.refreshLibraryVault = initializeLibraryMatrix;
 
 
 
-
 document.addEventListener("DOMContentLoaded", () => {
-    // 🔍 Step 1: Check Session Storage
+    // 🔍 Step 1: Check Session Storage (Taaki user har page reload par pareshan na ho)
     const isAppAlreadyOpen = sessionStorage.getItem("pwa_ad_displayed");
 
     if (!isAppAlreadyOpen) {
-        const adOverlay = document.getElementById("appOpenAdOverlay");
-        if (adOverlay) {
-            adOverlay.style.display = "flex"; // Overlay open karo
-            sessionStorage.setItem("pwa_ad_displayed", "true"); // Lock instant active
+        console.log("🌐 Fresh session detected. Launching Full Screen Monetag Ad Engine...");
+        sessionStorage.setItem("pwa_ad_displayed", "true"); // Session lock active instantly
 
-            // 🚀 Step 2: Call Ad Initializer
-            initializeDynamicAdEngine();
-        }
+        // 🚀 Step 2: Trigger Full Screen Ad Injection
+        initializeFullScreenAdEngine();
     }
 });
 
-// 🛠️ AUTOMATED AD INJECTION CONTROLLER
-function initializeDynamicAdEngine() {
-    const adVault = document.getElementById("google-ad-injection-vault");
-    if (!adVault) return;
+// 🛠️ AUTOMATED FULL SCREEN AD INJECTION CONTROLLER (MONETAG PRODUCTION-READY)
+function initializeFullScreenAdEngine() {
+    const IS_TEST_MODE = false; // 🚨 Bhai, live push karne se pehle ise FALSE kar dena!
 
-    // 🟢 MODE A: RUNNING CUSTOM BACKUP BANNER (Abhi ke liye yeh chalega)
-    const runGoogleAdsNow = false; // 👈 Future mein Google Ad live karne ke liye ise bas TRUE karna hai!
-
-    if (runGoogleAdsNow) {
-        // =========================================================================
-        // 🛑 FUTURE GOOGLE ADSENSE CODE COUPLING LAYER
-        // =========================================================================
-        adVault.innerHTML = `
-            <ins class="adsbygoogle"
-                 style="display:block; min-width:300px; max-width:360px; height:250px;"
-                 data-ad-client="ca-pub-YOUR_GOOGLE_CLIENT_ID_HERE"
-                 data-ad-slot="YOUR_AD_SLOT_ID_HERE"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-        `;
-        
-        // Push configuration initialization via Google Script
-        try {
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        } catch (e) {
-            console.error("Google Ad Engine Blocked or Failed:", e);
-        }
+    if (IS_TEST_MODE) {
+        console.log("🛠️ TEST MODE ACTIVE: Full Screen Ad Overlay simulated.");
+        // Test mode me aapka purana TalkInk Backup dikhega taaki account block na ho
+        showBackupPromoOverlay();
     } else {
-        // =========================================================================
-        // 🚀 CURRENT SYSTEM: PREMIUM NATIVE TALKINK VAULT PROMO
-        // =========================================================================
+        console.log("🔥 PRODUCTION ACTIVE: Injecting Monetag Full-Screen Interstitial Engine...");
+        
+        try {
+            // Programmatic Injection matching your exact Monetag script specification
+            const script = document.createElement('script');
+            script.src = 'https://n6wxm.com/vignette.min.js';
+            script.dataset.zone = '11073043';
+            script.async = true;
+
+            script.onerror = (err) => {
+                console.error("❌ Interstitial fluid stream broken, loading backup layout:", err);
+                showBackupPromoOverlay();
+            };
+
+            // Injecting using your strict DOM standard structural layout
+            [document.documentElement, document.body].filter(Boolean).pop().appendChild(script);
+            console.log("🎯 Monetag Full-Screen ad node streamlined successfully!");
+            
+        } catch (error) {
+            console.error("Critical crash inside ad injection engine:", error);
+            showBackupPromoOverlay();
+        }
+    }
+}
+
+// 🛡️ FALLBACK BACKUP OVERLAY (Sirf testing ya ad fail hone par chalega)
+function showBackupPromoOverlay() {
+    const adOverlay = document.getElementById("appOpenAdOverlay");
+    const adVault = document.getElementById("google-ad-injection-vault");
+    
+    if (adOverlay && adVault) {
+        adOverlay.style.display = "flex";
         adVault.innerHTML = `
             <div style="width:70px; height:70px; background:rgba(99,102,241,0.1); border-radius:20px; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; font-size:1.8rem; color:#6366f1;">
                 <i class="fa-solid fa-bolt-lightning"></i>
@@ -576,4 +582,5 @@ function closeAppOpenAd() {
         }, 200);
     }
 }
+
 
