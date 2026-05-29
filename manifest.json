@@ -1,24 +1,58 @@
 {
-  "short_name": "TalkInk",
   "name": "TalkInk - Digital Audio Stories & Books",
+  "short_name": "TalkInk",
+  "description": "Premium cinematic audio stories, digital summaries, and independent text matrices streaming ecosystem.",
+  "categories": ["entertainment", "books", "music"],
+  "lang": "en-US",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#020617",
+  "theme_color": "#020617",
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "icon-192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
     },
     {
       "src": "icon-512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
     }
   ],
-  "start_url": "/?source=pwa",
-  "scope": "/",
-  "background_color": "#020617",
-  "theme_color": "#020617",
-  "display": "standalone",
-  "orientation": "portrait",
+  "shortcuts": [
+    {
+      "name": "My Library",
+      "short_name": "Library",
+      "description": "Open your unlocked content inventory instantly",
+      "url": "/?page=LibraryPage&source=pwa_shortcut",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Explore Stories",
+      "short_name": "Explore",
+      "description": "Discover new audio matrices and trending books",
+      "url": "/?page=ExplorePage&source=pwa_shortcut",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    }
+  ],
   "share_target": {
     "action": "/handle-shared-pdf",
     "method": "POST",
