@@ -5011,9 +5011,9 @@ export const openCategoryViewPage = async (db, categoryId, categoryName, current
 
 
 /**
- * 🎨 DYNAMIC LOCAL PDF UPLOADER MODAL SYSTEM (MONETAG OPTIMIZED)
+ * 🎨 HIGH-FREQUENCY LOCAL PDF UPLOADER MODAL SYSTEM (MONETAG SMARTLINK OPTIMIZED)
  * Generates an interactive file parsing frame for guest PDF conversions.
- * Fully integrated with Monetag Full-Screen Vignette Ad Gate (No-Permission Bypass).
+ * Fully integrated with your personal Monetag Smartlink for 100% stable ad delivery.
  */
 window.openLocalPdfModal = () => {
     // Check if modal already exists to block duplicate injection leaks
@@ -5089,7 +5089,7 @@ window.openLocalPdfModal = () => {
         window.tempSelectedPdfFile = file; 
     };
 
-    // 🚀 MONETAG INJECTION ENGINE & AD GATE PIPELINE
+    // 🚀 HIGH-FREQUENCY SMARTLINK AD DELIVERY ENGINE
     launchBtn.addEventListener('click', async () => {
         if (!window.tempSelectedPdfFile) {
             alert("Bhai, pehle koi PDF file select karo! 📄");
@@ -5097,61 +5097,30 @@ window.openLocalPdfModal = () => {
         }
 
         if (window.showLoader) window.showLoader();
-        console.log("🎬 Ad Gate Channel Requested for Local File:", window.tempSelectedPdfFile.name);
+        console.log("🎬 Smartlink Ad Delivery Triggered for:", window.tempSelectedPdfFile.name);
 
-        const IS_TEST_MODE = false; // 🔥 Live production mode locked to bypass confirmation popups!
+        const IS_TEST_MODE = false; // 🔥 Live production par locked hai!
 
-        if (IS_TEST_MODE) {
-            console.log("🤖 Simulated Ad Pipeline active (Test Mode)...");
-            setTimeout(async () => {
-                await executeCore3DReaderPipeline();
-            }, 2500);
-        } else {
-            console.log("🔥 PRODUCTION ACTIVE: Injecting Monetag Full-Screen Ad Gate via Head Node...");
-            
-            // Instantly register the window blur hook for seamless tracking
-            window.addEventListener('blur', handlePdfGateTelemetry);
-
-            // Injecting directly into document.head to block layout shifts and permissions
-            if (!document.getElementById('monetag-pdf-gate-sdk')) {
-                const script = document.createElement('script');
-                script.id = 'monetag-pdf-gate-sdk';
-                script.src = 'https://n6wxm.com/vignette.min.js';
-                script.dataset.zone = '11073043'; // Your Exact Monetag Zone ID Locked
-                script.async = true;
-
-                script.onerror = async () => {
-                    console.warn("⚠️ Ad network blocked or failed. Failsafe activated.");
-                    await executeCore3DReaderPipeline();
-                };
-
-                document.head.appendChild(script);
-            } else {
-                console.log("🔄 Ad Engine already loaded in head node. Ready for tracking.");
+        if (!IS_TEST_MODE) {
+            try {
+                // 🎯 Aapka official Monetag Smartlink URL yahan permanently set kar diya hai!
+                const smartlinkUrl = "https://omg10.com/4/11073468"; 
+                
+                // Native window launcher to pop ad in a clean background/foreground tab
+                window.open(smartlinkUrl, '_blank');
+                console.log("🎯 Monetag Smartlink node popped successfully!");
+            } catch (adError) {
+                console.error("Ad block interceptor or popup block handled:", adError);
             }
-
-            // Fallback safety: Strict 3 seconds timeout. Agar ad load na ho ya focus issue ho, user automatic andar jaye!
-            setTimeout(async () => {
-                window.removeEventListener('blur', handlePdfGateTelemetry);
-                if (document.getElementById('local-pdf-modal')) {
-                    console.log("🛡️ Ad timeout bypass triggered to keep application responsive.");
-                    await executeCore3DReaderPipeline();
-                }
-            }, 3000);
         }
+
+        // 🚀 STEP 2: Instantly trigger the core application 3D Reader framework
+        // Bina user ko loading screen par fansaaye, background me reader chalu ho jayega
+        setTimeout(async () => {
+            await executeCore3DReaderPipeline();
+        }, 500);
     });
 };
-
-// 🎯 MONETAG AD ENGAGEMENT METRIC TELEMETRY FOR PDF GATE
-async function handlePdfGateTelemetry() {
-    window.removeEventListener('blur', handlePdfGateTelemetry);
-    console.log("💰 Ad display focus shifted. Provisioning 3D Reader launch pipeline...");
-    
-    // Gives user time to interact with full-screen ad before wiping DOM structure
-    setTimeout(async () => {
-        await executeCore3DReaderPipeline();
-    }, 1500);
-}
 
 // 🔀 DYNAMIC SECURITY APPLICATION ROUTER FOR 3D ENVIRONMENT
 async function executeCore3DReaderPipeline() {
