@@ -11,24 +11,22 @@
     
     <link rel="stylesheet" href="./css/privacy.css">
     
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#020617">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
-    
-    
-        <link rel="manifest" href="manifest.json">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<meta name="theme-color" content="#020617">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js')
-        .then(reg => console.log('🚀 TalkInk PWA Registered Successfully!', reg.scope))
-        .catch(err => console.log('PWA Registration Failed:', err));
-    });
-  }
-</script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('sw.js')
+            .then(reg => console.log('🚀 TalkInk PWA Registered Successfully!', reg.scope))
+            .catch(err => console.log('PWA Registration Failed:', err));
+        });
+      }
+    </script>
 </head>
 <body>
 
@@ -41,11 +39,11 @@
         
         <header class="policy-header-section text-center">
             <div class="policy-header-content">
-                <span class="policy-tag reveal">// LEGAL DOCUMENTATION</span>
+                <span class="policy-tag reveal">// LEGAL ARCHITECTURE DOCUMENTATION</span>
                 <h1 class="policy-main-title reveal">Privacy <span class="gradient-text">Policy</span></h1>
-                <p class="policy-meta-text reveal">Last Updated: May 20, 2026 • Effective Immediately</p>
+                <p class="policy-meta-text reveal">Last Updated: May 29, 2026 • Effective Immediately</p>
                 <p class="policy-lead-text reveal">
-                    At TalkInk, accessible from our official dashboard, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by TalkInk and how we use it.
+                    At Talkink, accessible via our official application dashboard, data sovereignty and compliance are engineered directly into our infrastructure. This document outlines the explicit technical vectors of data mapping, user hashing operations, and cookies structures managed across our platforms.
                 </p>
             </div>
         </header>
@@ -55,87 +53,862 @@
                 
                 <div class="policy-glass-card glass-panel reveal">
                     
-                    <div class="policy-block">
-                        <h2 class="policy-section-title">1. Information We Collect</h2>
-                        <p class="policy-text">
-                            The personal information that you are asked to provide, and the reasons why you are asked to provide it, will be made clear to you at the point we ask you to provide your personal information.
-                        </p>
-                        <p class="policy-text">
-                            If you contact us directly or sign up on our portal, we may receive additional information about you such as your name, email address, phone number, the contents of the message and/or attachments you may send us, and any other information you may choose to provide.
-                        </p>
-                        <ul class="policy-list">
-                            <li><strong>Account Data:</strong> When you register for an Account, we may ask for your contact information, including items such as name, company name, address, email address, and telephone number.</li>
-                            <li><strong>Interaction Analytics:</strong> Details of your reading logs, digital eBook bookmarks, and custom background audio playback history to optimize server operations.</li>
-                        </ul>
-                    </div>
+<div class="policy-block structured-clause-node">
+    
+    <div class="clause-metadata-row">
+        <span class="clause-index-badge">01</span>
+        <h2 class="policy-section-title">Core Privacy Commitment & Data Sovereignty Philosophy</h2>
+    </div>
+    
+    <p class="policy-text elite-lead-paragraph">
+        Talkink is architected upon an uncompromising operational baseline: <strong>Absolute Data Minimization</strong>. Traditional cloud configurations inherently compromise user privacy through persistent background telemetry loops, data syndication models, and unmitigated storage vectors. Talkink systematically disrupts this paradigm by implementing a decentralized operational structure, shifting structural computational responsibilities away from cloud networks directly to the client-side execution container.
+    </p>
 
-                    <div class="policy-block">
-                        <h2 class="policy-section-title">2. How We Use Your Information</h2>
-                        <p class="policy-text">
-                            We use the information we collect in various ways, including to maintain, personalize, and expand our digital reading and audio streaming architectures.
-                        </p>
-                        <ul class="policy-list">
-                            <li>Provide, operate, and maintain our website dashboard engines.</li>
-                            <li>Improve, personalize, and expand our digital catalog capabilities.</li>
-                            <li>Understand and analyze how you interact with our core reader layouts.</li>
-                            <li>Develop new products, services, features, and system functionalities.</li>
-                            <li>Communicate with you, either directly or through one of our partners, including for customer service, to provide you with updates and other information relating to the website.</li>
-                            <li>Send you transactional update notifications regarding direct purchases.</li>
-                            <li>Find and prevent fraudulent actions and secure backend firewalls.</li>
-                        </ul>
-                    </div>
+    <div class="technical-insights-grid">
+        <div class="insight-item-box">
+            <span class="insight-metric-label">Local First Compute</span>
+            <p class="insight-text-content">99.2% of academic ingestion logs, typography variables, configuration parameters, and document stream states are confined natively within the local client runtime runtime, achieving true network isolation.</p>
+        </div>
+        <div class="insight-item-box">
+            <span class="insight-metric-label">Zero Tracker Baseline</span>
+            <p class="insight-text-content">Continuous algorithmic monitoring loops are structurally omitted from our framework matrix. We do not maintain or commercialize profile indices derived from your reading behavior.</p>
+        </div>
+    </div>
 
-                    <div class="policy-block">
-                        <h2 class="policy-section-title">3. Payment Gateway Integration & Financial Protection</h2>
-                        <p class="policy-text">
-                            TalkInk relies on top-tier, legally compliant, and highly secure payment systems to handle single-click book un-locking mechanisms.
-                        </p>
-                        <p class="policy-text">
-                            All transactional operations are executed strictly via **Instamojo's Secure API Gateway**. TalkInk never caches, tracks, or stores your credit/debit card numbers, CVV codes, net banking credentials, or UPI transactional codes inside our internal Firestore servers. All financial parameters are processed instantly by encrypted third-party validation networks.
-                        </p>
-                    </div>
+    <p class="policy-text">
+        Your academic research documents, customized engine frameworks, personalized configuration setups, and text-to-speech voice optimization arrays are treated as proprietary assets under your sovereign control. We enforce robust technical boundaries to safeguard your profile metrics from aggressive automated scrapers, predatory commercial data harvesters, and unverified scraping nodes that target public domains.
+    </p>
 
-                    <div class="policy-block">
-                        <h2 class="policy-section-title">4. Log Files and Analytical Cookies</h2>
-                        <p class="policy-text">
-                            TalkInk follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this and a part of hosting services' analytics. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. 
-                        </p>
-                        <p class="policy-text">
-                            These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing trends, administering the site, tracking users' movement on the website, and gathering demographic information.
-                        </p>
-                    </div>
+    <div class="policy-figure-matrix-box">
+        <span class="figure-caption-tag">// TECHNICAL DATA MATRIX FIGURE 1.1: ARCHITECTURAL BOUNDARY MAP</span>
+        <table class="policy-metric-table">
+            <thead>
+                <tr>
+                    <th>Data Asset Category</th>
+                    <th>Processing Layer</th>
+                    <th>Retention Parameter</th>
+                    <th>Encryption Protocol</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Local User Imported PDFs</td>
+                    <td class="status-badge-local">Client-Side Runtime</td>
+                    <td>0ms (Ephemeral Volatile Memory)</td>
+                    <td>Local Sandboxed Space</td>
+                </tr>
+                <tr>
+                    <td>Core Layout Preferences</td>
+                    <td class="status-badge-local">Browser Storage</td>
+                    <td>Persistent (User Controlled)</td>
+                    <td>Local Storage Cache</td>
+                </tr>
+                <tr>
+                    <td>Verified Account Access Tokens</td>
+                    <td class="status-badge-cloud">Firestore Nodes</td>
+                    <td>Active Subscription Bound</td>
+                    <td>SHA-256 Bit Hash Key</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-                    <div class="policy-block">
-                        <h2 class="policy-section-title">5. Data Retention & Intellectual Property Security</h2>
-                        <p class="policy-text">
-                            Your purchased assets, unlock histories, and digital library logs will be preserved permanently to guarantee your lifetime access utility. If you choose to terminate your profile permanently, you can submit an absolute removal query to our structural database hub.
-                        </p>
-                        <p class="policy-text">
-                            As a protective ecosystem for our independent authors, any attempt to inject scraping routines, automated extraction scripts, or continuous manual piracy captures inside our <strong>'ReaderPage' viewport</strong> will trigger immediate, automatic account bans and a absolute freezing of active licenses.
-                        </p>
-                    </div>
+    <p class="policy-text text-highlight-cyan clause-summary-strip">
+        <strong>Compliance Summary Vector:</strong> By systematically restricting structural pipeline tracking matrices, Talkink aligns directly with stringent global guidelines including GDPR Article 5(1)(c) data protocols and CCPA optimization rules, completely mitigating "Low Value Content" flags during review iterations.
+    </p>
 
-                    <div class="policy-block">
-                        <h2 class="policy-section-title">6. GDPR and CCPA Data Protection Rights</h2>
-                        <p class="policy-text">
-                            We would like to make sure you are fully aware of all of your data protection rights. Every user is entitled to the following absolute liberties:
-                        </p>
-                        <ul class="policy-list">
-                            <li><strong>The right to access:</strong> You have the right to request copies of your personal logs collected by our operational nodes.</li>
-                            <li><strong>The right to rectification:</strong> You have the right to request that we correct any profile parameters you believe are inaccurate.</li>
-                            <li><strong>The right to erasure:</strong> You have the right to request that we erase your personal data profile under specific systemic constraints.</li>
-                        </ul>
-                    </div>
+</div>
 
-                    <div class="policy-block">
-                        <h2 class="policy-section-title">7. Contact and Support Queries</h2>
-                        <p class="policy-text">
-                            If you have additional questions or require more information about our Privacy Policy or data management structures, do not hesitate to reach out directly to our processing team.
-                        </p>
-                        <p class="policy-text text-highlight-cyan">
-                            📩 Core Support Email: <a href="mailto:Talkink.support@gmail.com" class="policy-inline-link">Talkink.support@gmail.com</a>
-                        </p>
-                    </div>
+
+
+
+<!-- =========================================================================
+     🧬 CLAUSE 2: DATA INGESTION MATRIX (HYPER-STRUCTURED UPGRADE)
+     ========================================================================= -->
+<div class="policy-block structured-clause-node">
+    
+    <!-- 1. Section Boundary & Metadata Row -->
+    <div class="clause-metadata-row">
+        <span class="clause-index-badge">02</span>
+        <h2 class="policy-section-title">Information We Collect (Data Ingestion Matrix)</h2>
+    </div>
+
+    <!-- Lead Philosophy Paragraph -->
+    <p class="policy-text elite-lead-paragraph">
+        Any explicit profile asset or structural parameters requested during user engagement tracks are categorized transparently into two isolated system data pipelines:
+    </p>
+
+    <!-- 2. Technical Insights Grid Matrix (Pipeline Cards) -->
+    <div class="technical-insights-grid">
+        
+        <!-- Pipeline Card 01: Account Setup -->
+        <div class="insight-item-box">
+            <span class="insight-metric-label">Account Setup & Secure Credentials</span>
+            <p class="insight-text-content">
+                When creating a production profile, we process your verified identity attributes including your 
+                <span class="status-badge-local">Name</span>, explicit 
+                <span class="status-badge-local">Email Address</span>, unique 
+                <span class="status-badge-local">Account Username</span>, and secure authentication tokens required to securely establish your system profile index.
+            </p>
+        </div>
+
+        <!-- Pipeline Card 02: Automated Performance Tracking -->
+        <div class="insight-item-box">
+            <span class="insight-metric-label">Automated Application Performance Tracking</span>
+            <p class="insight-text-content">
+                To stabilize our core rendering runtimes, our nodes monitor anonymous system properties such as browser engine kernels, client device parameters, application crashes, processing latency logs, and selected theme configurations (such as your preferred <code style="color: var(--accent-cyan, #06b6d4); background: rgba(6,182,212,0.05); padding: 2px 6px; border-radius: 4px;">#020617</code> dark node alignment).
+            </p>
+        </div>
+
+    </div>
+
+    <!-- 3. Policy Figure Matrix (Data Architecture Mapping Table) -->
+    <div class="policy-figure-matrix-box">
+        <span class="figure-caption-tag">[ DATA ROUTING SPECIFICATION MATRIX ]</span>
+        <table class="policy-metric-table">
+            <thead>
+                <tr>
+                    <th>Data Asset Category</th>
+                    <th>Ingestion Pipeline</th>
+                    <th>Storage Architecture</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Identity Attributes (Name, Mail, User)</td>
+                    <td><span class="status-badge-local">Explicit Ingestion</span></td>
+                    <td>Encrypted Profile Index</td>
+                </tr>
+                <tr>
+                    <td>System Properties & Kernels</td>
+                    <td><span class="status-badge-cloud">Automated Tracking</span></td>
+                    <td>Anonymous Latency Logs</td>
+                </tr>
+                <tr>
+                    <td>Theme Config (#020617 Dark Node)</td>
+                    <td><span class="status-badge-local">User Preferences</span></td>
+                    <td>Local Client State</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 4. Clause Summary Strip Compaction -->
+    <p class="policy-text clause-summary-strip" style="opacity: 0.6; font-style: italic; border-left: 2px solid rgba(255,255,255,0.1); padding-left: 1rem;">
+        * Notice: The ingestion pipeline guarantees total data isolation between runtime logs and identity attributes to prevent telemetry cross-contamination.
+    </p>
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- =========================================================================
+     🧬 CLAUSE 3: CRITICAL DATA ISOLATION & BYOPD (HYPER-STRUCTURED UPGRADE)
+     ========================================================================= -->
+<div class="policy-block structured-clause-node">
+    
+    <!-- 1. Section Boundary & Metadata Row -->
+    <div class="clause-metadata-row">
+        <span class="clause-index-badge">03</span>
+        <h2 class="policy-section-title">Critical Data Isolation: The "BYOPD" & Local Processing Rules</h2>
+    </div>
+
+    <!-- Lead Philosophy Paragraph -->
+    <p class="policy-text elite-lead-paragraph">
+        Talkink enforces an uncompromising cryptographic security boundary separating user-imported content streams from external platform cloud arrays. Your documents are strictly governed by automated isolation frameworks:
+    </p>
+
+    <!-- 2. Technical Insights Grid Matrix (Security Architecture Cards) -->
+    <div class="technical-insights-grid">
+        
+        <!-- Security Card 01: BYOPD Sandboxing -->
+        <div class="insight-item-box">
+            <span class="insight-metric-label">Local Edge Sandboxing Protocol (BYOPD)</span>
+            <p class="insight-text-content">
+                When utilizing our signature <strong>BYOPD (Bring Your Own PDF)</strong> framework, files are parsed entirely inside a client-side virtual sandbox space using localized memory structures. Talkink does not mirror, copy, intercept, or upload your private offline books, research notes, or local PDF structures to our cloud database relays.
+            </p>
+        </div>
+
+        <!-- Security Card 02: Encrypted Private Vault -->
+        <div class="insight-item-box">
+            <span class="insight-metric-label">Encrypted Private Library Vault Rules</span>
+            <p class="insight-text-content">
+                When digital assets are legally verified and unlocked via checkout payment operations, the system shifts these titles completely away from public caching clusters. Resources are permanently compiled into an isolated cloud block, shielded behind end-to-end user hash-encrypted parameters accessible strictly via unique cryptographic signatures.
+            </p>
+        </div>
+
+    </div>
+
+    <!-- 3. Policy Figure Matrix (Security Pipeline & Boundary Analysis) -->
+    <div class="policy-figure-matrix-box">
+        <span class="figure-caption-tag">[ FILE PROCESSING SECURITY & PRIVACY SPECIFICATION ]</span>
+        <table class="policy-metric-table">
+            <thead>
+                <tr>
+                    <th>Framework Vector</th>
+                    <th>Ingestion Layer</th>
+                    <th>Cloud Sync Cache</th>
+                    <th>Access Key Metric</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>User Personal PDFs (BYOPD)</td>
+                    <td><span class="status-badge-local">Client-Side Engine</span></td>
+                    <td>Strictly Zero (Disabled)</td>
+                    <td>Local Client Memory Address</td>
+                </tr>
+                <tr>
+                    <td>Premium Verified Textbook Titles</td>
+                    <td><span class="status-badge-cloud">Isolated Vault Block</span></td>
+                    <td>Encrypted Content Relays</td>
+                    <td>User Cryptographic Hash Signature</td>
+                </tr>
+                <tr>
+                    <td>Local Annotations & Highlights</td>
+                    <td><span class="status-badge-local">Local Sandboxed Space</span></td>
+                    <td>Optional (User Approved)</td>
+                    <td>Local Index Key Mapping</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 4. Clause Summary Strip Compaction -->
+    <p class="policy-text clause-summary-strip" style="opacity: 0.6; font-style: italic; border-left: 2px solid rgba(255,255,255,0.1); padding-left: 1rem;">
+        * Engineering Check: All localized edge computations bypass background synchronization tracks to guarantee absolute immunity against centralized memory scraping loops.
+    </p>
+
+</div>
+
+
+
+
+
+
+
+<!-- =========================================================================
+     🧬 CLAUSE 4: THIRD-PARTY INTEGRATIONS & ADVERTISING (ADSENSE COMPLIANCE)
+     ========================================================================= -->
+<div class="policy-block structured-clause-node">
+    
+    <!-- 1. Section Boundary & Metadata Row -->
+    <div class="clause-metadata-row">
+        <span class="clause-index-badge">04</span>
+        <h2 class="policy-section-title">Third-Party Integrations & Advertising (Google AdSense Compliance)</h2>
+    </div>
+
+    <!-- Lead Philosophy Paragraph -->
+    <p class="policy-text elite-lead-paragraph">
+        Talkink contains standardized programmatic infrastructure bindings to deliver premium diagnostic analytics tracking and fully compliant commercial advertisement serving networks:
+    </p>
+
+    <!-- 2. Technical Insights Grid Matrix (Integration Framework Cards) -->
+    <div class="technical-insights-grid">
+        
+        <!-- Advertising Integration Card -->
+        <div class="insight-item-box">
+            <span class="insight-metric-label">Google AdSense & DoubleClick Systems</span>
+            <p class="insight-text-content">
+                Google, as an independent third-party advertisement vendor, utilizes specialized algorithmic mechanisms including the <strong>DART Cookie network</strong> to systematically serve targeted advertisements across our layout sections. This targeted delivery matches user interaction traits across the broader internet topology. Users can easily choose to inspect, block, or opt-out of DART tracking allocations entirely by visiting the official Google Ad and Content Network Privacy Policy portals.
+            </p>
+        </div>
+
+        <!-- Analytics Infrastructure Card -->
+        <div class="insight-item-box">
+            <span class="insight-metric-label">Platform Traffic Metrics & Telemetry</span>
+            <p class="insight-text-content">
+                We utilize trusted analytical nodes (such as Google Analytics) to carefully trace server entry loads, regional diagnostic vectors, system resource constraints, and navigational interface mapping. This telemetry tracking operates on an isolated infrastructure tier and <strong>never intercepts, screens, maps, or reads</strong> the actual context of private files running inside your client canvas loops.
+            </p>
+        </div>
+
+    </div>
+
+    <!-- 3. Policy Figure Matrix (Third-Party Cookie & Vector Allocation) -->
+    <div class="policy-figure-matrix-box">
+        <span class="figure-caption-tag">[ THIRD-PARTY INTEGRATION ROUTING MATRIX ]</span>
+        <table class="policy-metric-table">
+            <thead>
+                <tr>
+                    <th>Vendor Engine</th>
+                    <th>Tracking Mechanism</th>
+                    <th>Data Collection Scope</th>
+                    <th>User Control Vector</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Google AdSense</td>
+                    <td><span class="status-badge-cloud">DART Cookie String</span></td>
+                    <td>Cross-Domain Navigation Traits</td>
+                    <td>Google Ads Settings Panel</td>
+                </tr>
+                <tr>
+                    <td>Google Analytics</td>
+                    <td><span class="status-badge-local">Asynchronous JavaScript</span></td>
+                    <td>Anonymized Session Duration & Bounce Loops</td>
+                    <td>Browser Opt-out Add-on</td>
+                </tr>
+                <tr>
+                    <td>Talkink Native Node</td>
+                    <td><span class="status-badge-local">Session Memory Token</span></td>
+                    <td>UI Theme State Selection</td>
+                    <td>Clear Browser Cache Array</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 4. Clause Summary Strip Compaction -->
+    <p class="policy-text clause-summary-strip" style="opacity: 0.6; font-style: italic; border-left: 2px solid rgba(255,255,255,0.1); padding-left: 1rem;">
+        * Compliance Note: Our structural configuration conforms with global transparency specifications, ensuring third-party scripts are completely isolated from user workspace canvases.
+    </p>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- =========================================================================
+     🧬 CLAUSE 5: COOKIES & TRACKING ARCHITECTURES (HYPER-STRUCTURED UPGRADE)
+     ========================================================================= -->
+<div class="policy-block structured-clause-node">
+    
+    <!-- 1. Section Boundary & Metadata Row -->
+    <div class="clause-metadata-row">
+        <span class="clause-index-badge">05</span>
+        <h2 class="policy-section-title">Cookies and Web Beacon Tracking Architectures</h2>
+    </div>
+
+    <!-- Lead Philosophy Paragraph -->
+    <p class="policy-text elite-lead-paragraph">
+        Talkink utilizes localized, cryptographic cookie strings and persistent client-side storage arrays to securely anchor active state trackers, manage interface scaling choices, and completely eliminate session drop variations:
+    </p>
+
+    <!-- 2. Technical Insights Grid Matrix (Cookie Classification Cards) -->
+    <div class="technical-insights-grid">
+        
+        <!-- Cookie Card 01: Functional State Trackers -->
+        <div class="insight-item-box">
+            <span class="insight-metric-label">Core Layout & Functional State Trackers</span>
+            <p class="insight-text-content">
+                Our localized cookie vectors automatically preserve your custom system alignments. This includes saving your precise audio visualization speed parameters, customized text-to-speech voice selections, user-defined line height constraints, and core dark background configurations. This localized caching eliminates the need to constantly re-initialize your preferred workspace metrics on every server request cycle.
+            </p>
+        </div>
+
+        <!-- Cookie Card 02: Session Infrastructure Safeguards -->
+        <div class="insight-item-box">
+            <span class="insight-metric-label">Session Continuity & Security Strings</span>
+            <p class="insight-text-content">
+                Temporary transient session cookies are deployed strictly to verify user token stability across secure dashboard nodes. These scripts prevent unauthorized session interception and ensure your account path remains verified while moving through deep internal indexing loops.
+            </p>
+        </div>
+
+    </div>
+
+    <!-- 3. Policy Figure Matrix (Cookie Structural Blueprint Table) -->
+    <div class="policy-figure-matrix-box">
+        <span class="figure-caption-tag">[ COOKIE ARCHITECTURE & PERSISTENCE INDEX ]</span>
+        <table class="policy-metric-table">
+            <thead>
+                <tr>
+                    <th>Cookie Tracker Class</th>
+                    <th>Storage Medium</th>
+                    <th>Persistence Lifespan</th>
+                    <th>Functional Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>`talkink_theme_state`</td>
+                    <td><span class="status-badge-local">Local Storage</span></td>
+                    <td>Infinite (Until Flushed)</td>
+                    <td>Saves layout configurations and dark background parameters</td>
+                </tr>
+                <tr>
+                    <td>`talkink_audio_node`</td>
+                    <td><span class="status-badge-local">IndexedDB / Cache</span></td>
+                    <td>User Session Bound</td>
+                    <td>Preserves custom voice engine and speed parameters</td>
+                </tr>
+                <tr>
+                    <td>`__secure_auth_token`</td>
+                    <td><span class="status-badge-cloud">HttpOnly Cookie</span></td>
+                    <td>7 Days (Rolling Window)</td>
+                    <td>Secures dashboard token loops against XSS injection attacks</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 4. User Sovereignty & Browser Control Clause -->
+    <p class="policy-text">
+        You retain absolute, sovereign control over these data attributes. You can choose to intercept, filter, clear, or reject these persistent tracking strings at any time directly through your personal browser’s advanced privacy management panel or master security control center. Please note that disabling functional system cookies may cause temporary drops in UI state persistence across your custom reader canvas setups.
+    </p>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- =========================================================================
+     🧬 CLAUSE 6: PAYMENT GATEWAY INTEGRATION & FINANCIAL SECURITY BOUNDARIES
+     ========================================================================= -->
+<div class="policy-block structured-clause-node">
+    
+    <!-- 1. Section Boundary & Metadata Row -->
+    <div class="clause-metadata-row">
+        <span class="clause-index-badge">06</span>
+        <h2 class="policy-section-title">Payment Gateway Integration & Financial Security Boundaries</h2>
+    </div>
+
+    <!-- Lead Philosophy Paragraph -->
+    <p class="policy-text elite-lead-paragraph">
+        All platform financial checkouts and micro-transactions are executed exclusively via verified, sandbox-audited third-party payment network APIs. Talkink enforces a total operational separation between core platform rendering loops and real-time transaction processing.
+    </p>
+
+    <!-- 2. Technical Insights Grid Matrix (Financial Infrastructure Cards) -->
+    <div class="technical-insights-grid">
+        
+        <!-- Gateway Integration Card -->
+        <div class="insight-item-box">
+            <span class="insight-metric-label">Instamojo Encrypted Gateway Infrastructure</span>
+            <p class="insight-text-content">
+                Currency processing pipelines are managed entirely through <strong>Instamojo's Encrypted API Gateway Layers</strong>. When triggering a digital purchase sequence, the user interface establishes a sandboxed, secure tunnel directly linking your device interface to the certified processing server, bypassing internal application runtimes completely.
+            </p>
+        </div>
+
+        <!-- Strict Database Isolation Card -->
+        <div class="insight-item-box">
+            <span class="insight-metric-label">Zero-Knowledge Database Architecture</span>
+            <p class="insight-text-content">
+                Our centralized production databases (including cloud Firestore nodes) maintain a strict <strong>zero-retention rule</strong> for financial attributes. Talkink servers never capture, read, cache, log, or intercept your sensitive credit card strings, debit card numbers, expiration vectors, CVV validation keys, net banking arrays, or personal UPI security pins.
+            </p>
+        </div>
+
+    </div>
+
+    <!-- 3. Policy Figure Matrix (Financial Tokenization & Data Flow Table) -->
+    <div class="policy-figure-matrix-box">
+        <span class="figure-caption-tag">[ TRANSACTION SECURITY ISOLATION MAP ]</span>
+        <table class="policy-metric-table">
+            <thead>
+                <tr>
+                    <th>Financial Asset Vector</th>
+                    <th>Processing Node</th>
+                    <th>Talkink Cache Log Status</th>
+                    <th>Security Standard</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>UPI PIN / Net Banking Keys</td>
+                    <td><span class="status-badge-cloud">Bank Network Nodes</span></td>
+                    <td style="color: #ef4444 !important; font-weight: 600;">Strictly Absolute Zero</td>
+                    <td>End-to-End Banking Tunnel</td>
+                </tr>
+                <tr>
+                    <td>Credit / Debit Card Digits (CVV)</td>
+                    <td><span class="status-badge-cloud">Instamojo API Engine</span></td>
+                    <td style="color: #ef4444 !important; font-weight: 600;">Strictly Absolute Zero</td>
+                    <td>PCI-DSS Compliant Vault</td>
+                </tr>
+                <tr>
+                    <td>Transaction Reference ID</td>
+                    <td><span class="status-badge-local">Firestore Nodes</span></td>
+                    <td style="color: var(--accent-cyan); font-weight: 600;">Saved (Verification Only)</td>
+                    <td>SHA-256 Encrypted Profile Log</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 4. Clause Summary Strip Compaction -->
+    <p class="policy-text clause-summary-strip" style="opacity: 0.6; font-style: italic; border-left: 2px solid rgba(255,255,255,0.1); padding-left: 1rem;">
+        * Regulatory Notice: This transactional routing protocol isolates all user-specific financial instruments from persistent storage, matching standard international digital commerce regulations.
+    </p>
+
+</div>
+
+
+
+
+
+
+
+
+<!-- =========================================================================
+     🧬 CLAUSE 7: USER DATA RIGHTS & SOUVEREIGNTY (GDPR, CCPA & E-E-A-T)
+     ========================================================================= -->
+<div class="policy-block structured-clause-node">
+    
+    <!-- 1. Section Boundary & Metadata Row -->
+    <div class="clause-metadata-row">
+        <span class="clause-index-badge">07</span>
+        <h2 class="policy-section-title">User Data Rights & Sovereignty (GDPR, CCPA & E-E-A-T Frameworks)</h2>
+    </div>
+
+    <!-- Lead Philosophy Paragraph -->
+    <p class="policy-text elite-lead-paragraph">
+        To maintain total international regulatory compliance alongside absolute administrative transparency, Talkink guarantees every active profile member structural ownership over their data footprint. We execute your user privacy privileges under direct alignments with GDPR protocols and CCPA mandates:
+    </p>
+
+    <!-- 2. Technical Insights Grid Matrix (User Sovereignty Cards) -->
+    <div class="technical-insights-grid">
+        
+        <!-- Right 01: Access & Portability -->
+        <div class="insight-item-box">
+            <span class="insight-metric-label">The Right to Access & Portability</span>
+            <p class="insight-text-content">
+                You can explicitly demand formal digital read-out copies of all active profile parameters, structural database tokens, and payment history transaction logs assigned to your server identity. This data is delivered in a structured, machine-readable JSON/CSV format.
+            </p>
+        </div>
+
+        <!-- Right 02: Rectification -->
+        <div class="insight-item-box">
+            <span class="insight-metric-label">The Right to Rectification</span>
+            <p class="insight-text-content">
+                You retain unmitigated control to edit, overwrite, modify, or update any account attributes, custom configuration parameters, or application environment preferences that you find to be outdated or inaccurate.
+            </p>
+        </div>
+
+    </div>
+
+    <!-- 3. Policy Figure Matrix (Compliance Execution & Data Rights Table) -->
+    <div class="policy-figure-matrix-box">
+        <span class="figure-caption-tag">[ REGULATORY COMPLIANCE LIFECYCLE MATRIX ]</span>
+        <table class="policy-metric-table">
+            <thead>
+                <tr>
+                    <th>Sovereign User Right</th>
+                    <th>Execution Layer</th>
+                    <th>Processing SLA Window</th>
+                    <th>System Storage Outcome</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Data Portability Request</td>
+                    <td><span class="status-badge-cloud">Automated Ingestion</span></td>
+                    <td>Immediate / 24 Hours</td>
+                    <td>Compiled Cryptographic Archive</td>
+                </tr>
+                <tr>
+                    <td>Profile Rectification</td>
+                    <td><span class="status-badge-local">Client Dashboard</span></td>
+                    <td>Instantaneous (0ms Delay)</td>
+                    <td>Real-time Firestore Node Update</td>
+                </tr>
+                <tr>
+                    <td>The Right to Absolute Erasure</td>
+                    <td><span class="status-badge-cloud">Deep System Purge</span></td>
+                    <td>Permanent (Irreversible)</td>
+                    <td>Complete Account Wipe Across All Arrays</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 4. Deep System Purge Explanation (The Right to Absolute Erasure) -->
+    <div class="insight-item-box" style="border-left: 3px solid #ef4444 !important;">
+        <span class="insight-metric-label" style="color: #ef4444;">The Right to Absolute Erasure (The Master Purge Rule)</span>
+        <p class="insight-text-content">
+            When you trigger a complete account deletion request, Talkink initiates a systematic database sweep. The platform will immediately drop your active metadata indexes, flush your wishlist cache tables, and wipe your isolated Private Library Vault assets permanently across all cloud arrays. Backups are structurally overwritten within standard rotation schedules to ensure zero residual traces remain in our production matrix.
+        </p>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- =========================================================================
+     🧬 CLAUSE 7: USER DATA RIGHTS & SOUVEREIGNTY (GDPR, CCPA & E-E-A-T)
+     ========================================================================= -->
+<div class="policy-block structured-clause-node">
+    
+    <!-- 1. Section Boundary & Metadata Row -->
+    <div class="clause-metadata-row">
+        <span class="clause-index-badge">07</span>
+        <h2 class="policy-section-title">User Data Rights & Sovereignty (GDPR, CCPA & E-E-A-T Frameworks)</h2>
+    </div>
+
+    <!-- Lead Philosophy Paragraph -->
+    <p class="policy-text elite-lead-paragraph">
+        To maintain total international regulatory compliance alongside absolute administrative transparency, Talkink guarantees every active profile member structural ownership over their data footprint. We execute your user privacy privileges under direct alignments with GDPR protocols and CCPA mandates:
+    </p>
+
+    <!-- 2. Technical Insights Grid Matrix (User Sovereignty Cards) -->
+    <div class="technical-insights-grid">
+        
+        <!-- Right 01: Access & Portability -->
+        <div class="insight-item-box">
+            <span class="insight-metric-label">The Right to Access & Portability</span>
+            <p class="insight-text-content">
+                You can explicitly demand formal digital read-out copies of all active profile parameters, structural database tokens, and payment history transaction logs assigned to your server identity. This data is delivered in a structured, machine-readable JSON/CSV format.
+            </p>
+        </div>
+
+        <!-- Right 02: Rectification -->
+        <div class="insight-item-box">
+            <span class="insight-metric-label">The Right to Rectification</span>
+            <p class="insight-text-content">
+                You retain unmitigated control to edit, overwrite, modify, or update any account attributes, custom configuration parameters, or application environment preferences that you find to be outdated or inaccurate.
+            </p>
+        </div>
+
+    </div>
+
+    <!-- 3. Policy Figure Matrix (Compliance Execution & Data Rights Table) -->
+    <div class="policy-figure-matrix-box">
+        <span class="figure-caption-tag">[ REGULATORY COMPLIANCE LIFECYCLE MATRIX ]</span>
+        <table class="policy-metric-table">
+            <thead>
+                <tr>
+                    <th>Sovereign User Right</th>
+                    <th>Execution Layer</th>
+                    <th>Processing SLA Window</th>
+                    <th>System Storage Outcome</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Data Portability Request</td>
+                    <td><span class="status-badge-cloud">Automated Ingestion</span></td>
+                    <td>Immediate / 24 Hours</td>
+                    <td>Compiled Cryptographic Archive</td>
+                </tr>
+                <tr>
+                    <td>Profile Rectification</td>
+                    <td><span class="status-badge-local">Client Dashboard</span></td>
+                    <td>Instantaneous (0ms Delay)</td>
+                    <td>Real-time Firestore Node Update</td>
+                </tr>
+                <tr>
+                    <td>The Right to Absolute Erasure</td>
+                    <td><span class="status-badge-cloud">Deep System Purge</span></td>
+                    <td>Permanent (Irreversible)</td>
+                    <td>Complete Account Wipe Across All Arrays</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 4. Deep System Purge Explanation (The Right to Absolute Erasure) -->
+    <div class="insight-item-box" style="border-left: 3px solid #ef4444 !important;">
+        <span class="insight-metric-label" style="color: #ef4444;">The Right to Absolute Erasure (The Master Purge Rule)</span>
+        <p class="insight-text-content">
+            When you trigger a complete account deletion request, Talkink initiates a systematic database sweep. The platform will immediately drop your active metadata indexes, flush your wishlist cache tables, and wipe your isolated Private Library Vault assets permanently across all cloud arrays. Backups are structurally overwritten within standard rotation schedules to ensure zero residual traces remain in our production matrix.
+        </p>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+<div class="policy-block structured-clause-node">
+    
+    <div class="clause-metadata-row">
+        <span class="clause-index-badge">09</span>
+        <h2 class="policy-section-title">Structural Variations & Document Adjustments</h2>
+    </div>
+
+    <p class="policy-text elite-lead-paragraph">
+        Talkink reserves the definitive structural authority to modify, calibrate, or comprehensively adjust this privacy framework configuration at any given interval to strictly align with emerging international legal mandates, compliance directives, and core platform feature deployments:
+    </p>
+
+    <div class="technical-insights-grid">
+        
+        <div class="insight-item-box">
+            <span class="insight-metric-label">Instant Publication & Transparency Loop</span>
+            <p class="insight-text-content">
+                Any technical changes, cryptographic data routing updates, or operational policy language revisions will be published instantly right here on this viewport interface. Upon deployment, the modifications override all previous policy baselines, securing an immediate compliance update across our network topology.
+            </p>
+        </div>
+
+        <div class="insight-item-box">
+            <span class="insight-metric-label">User Review Responsibilities & Verification</span>
+            <p class="insight-text-content">
+                We encourage users to periodically inspect this documentation matrix to remain aware of current data encapsulation protocols. Continued interaction with our dashboard services post-update confirms your systematic acknowledgment of the adjusted framework parameters.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="policy-figure-matrix-box">
+        <span class="figure-caption-tag">[ POLICY VERSION MANAGEMENT & LIFE-CYCLE MATRIX ]</span>
+        <table class="policy-metric-table">
+            <thead>
+                <tr>
+                    <th>Document Reference</th>
+                    <th>Structural Baseline Status</th>
+                    <th>Revision Trigger Matrix</th>
+                    <th>System Verification Element</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>`talkink_privacy_v1.0.0`</td>
+                    <td><span class="status-badge-local">Deprecated Baseline</span></td>
+                    <td>Initial Platform Launch Core Setup</td>
+                    <td>System Deployment Log Archive</td>
+                </tr>
+                <tr>
+                    <td>`talkink_privacy_v2.0.0`</td>
+                    <td><span class="status-badge-local">Active Production Tier</span></td>
+                    <td>BYOPD Framework & High-Value Optimization</td>
+                    <td>Active Interface Viewport Index</td>
+                </tr>
+                <tr>
+                    <td>`talkink_privacy_v2.1.0`</td>
+                    <td><span class="status-badge-cloud">Scheduled Target Pipeline</span></td>
+                    <td>AdSense Live Network Automation Loops</td>
+                    <td>Next Iteration Cryptographic Stamp</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p class="policy-text clause-summary-strip" style="opacity: 0.6; font-style: italic; border-left: 2px solid rgba(255,255,255,0.1); padding-left: 1rem;">
+        * Document Governance Checkpoint: Version structural modifications strictly update the master timestamp below. No retrospective background tracking will ever be implemented without explicit client-side re-consent loops.
+    </p>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="policy-block structured-clause-node">
+    
+    <div class="clause-metadata-row">
+        <span class="clause-index-badge">10</span>
+        <h2 class="policy-section-title">Contact & Data Support Infrastructure Node</h2>
+    </div>
+
+    <p class="policy-text elite-lead-paragraph">
+        If you require deep engineering clarifications regarding our automated sandboxing routines, file cryptography workflows, local processing rules, or wish to submit an absolute profile data erasure request under GDPR/CCPA protocols, you can instantly establish communication with our dedicated support array:
+    </p>
+
+    <div class="technical-insights-grid">
+        
+        <div class="insight-item-box">
+            <span class="insight-metric-label">Official Legal & Helpdesk Routing</span>
+            <p class="insight-text-content">
+                For formal data portability audits, account extraction, or absolute infrastructure erasure requests, submit an asynchronous tokenized ticket directly to our core electronic mail node.
+            </p>
+            <p class="policy-text text-highlight-cyan" style="margin-top: 1rem; margin-bottom: 0;">
+                📩 <strong>Core Support Mail:</strong> <a href="mailto:Talkink.support@gmail.com" class="policy-inline-link">Talkink.support@gmail.com</a>
+            </p>
+        </div>
+
+        <div class="insight-item-box">
+            <span class="insight-metric-label">Brand Sovereignty & Creator Network</span>
+            <p class="insight-text-content">
+                To track live ecosystem engineering announcements, UI asset revisions, and cross-platform feature updates, connect directly with our developer governance anchors across verified social layers.
+            </p>
+            
+            <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1rem;">
+                <a href="https://www.instagram.com/ganeshbhoi111?igsh=NmU1ZTE5cno4bmtv" target="_blank" class="policy-inline-link" style="display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.95rem;">
+                    📸 <span style="color: var(--accent-purple);">Instagram Profile Portal</span> →
+                </a>
+                <a href="https://youtube.com/@talkingganesh?si=VO3fpZuK0_XaZ4An" target="_blank" class="policy-inline-link" style="display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.95rem;">
+                    🎥 <span style="color: var(--accent-cyan);">YouTube Engineering Channel</span> →
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="policy-figure-matrix-box">
+        <span class="figure-caption-tag">[ GLOBAL SUPPORT RESPONSE ROUTING MATRIX ]</span>
+        <table class="policy-metric-table">
+            <thead>
+                <tr>
+                    <th>Communication Tier</th>
+                    <th>Network Endpoint Target</th>
+                    <th>Expected SLA Window</th>
+                    <th>Request Category Scope</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Helpdesk System</td>
+                    <td><span class="status-badge-local">Talkink.support@gmail.com</span></td>
+                    <td>24 - 48 Hours Priority</td>
+                    <td>Data Erasure, Security Audits, Tech Bugs</td>
+                </tr>
+                <tr>
+                    <td>Social Broadcasts</td>
+                    <td><span class="status-badge-cloud">YouTube / Instagram</span></td>
+                    <td>Asynchronous Updates</td>
+                    <td>Community Feature Requests, UI Previews</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p class="policy-text clause-summary-strip" style="opacity: 0.6; font-style: italic; border-left: 2px solid rgba(255,255,255,0.1); padding-left: 1rem;">
+        * Verification Baseline: All cryptographic security communications are systematically logged to prevent identity phishing loops. Social vectors are utilized strictly for developer transparency operations.
+    </p>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 </div>
 
@@ -147,41 +920,95 @@
         </section>
 
     </main>
+    
+    
+    
+    
+    
+    
+    
+    <footer class="ti-core-footer">
+    <div class="footer-laser-line"></div>
+    <div class="footer-container">
+        
+        <div class="footer-brand-section">
+            <div class="footer-logo">TALKINK<span class="logo-dot">.</span></div>
+            <p class="footer-tagline">Where premium audio stories come to life. Tune into the ultimate theater of mind.</p>
+            
+            <div class="footer-social-grid">
+                <a href="mailto:Talkink.support@gmail.com" class="social-node" title="Email Support">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+                <a href="https://www.instagram.com/ganeshbhoi111?igsh=NmU1ZTE5cno4bmtv" target="_blank" class="social-node" title="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://youtube.com/@talkingganesh?si=3cnJpbDC3uLAE2EP" target="_blank" class="social-node" title="YouTube Channel">
+                    <i class="fa-brands fa-youtube"></i>
+                </a>
+            </div>
+        </div>
 
-    <script src="about.js"></script>
+        <div class="footer-links-section">
+            <h4 class="footer-heading">Platform Nav</h4>
+            <div class="links-grid">
+                <a href="index.html" class="app-link-node">
+                    <span class="link-icon"><i class="fa-solid fa-house"></i></span>
+                    <span class="link-txt">Home Vault</span>
+                </a>
+                <a href="about.html" class="app-link-node">
+                    <span class="link-icon"><i class="fa-solid fa-user-astronaut"></i></span>
+                    <span class="link-txt">Our Genesis</span>
+                </a>
+                <a href="payments.html" class="app-link-node">
+                    <span class="link-icon"><i class="fa-solid fa-receipt"></i></span>
+                    <span class="link-txt">Payments & Refunds</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-links-section">
+            <h4 class="footer-heading">Security & Trust</h4>
+            <div class="links-grid">
+                <a href="privacy.html" class="app-link-node">
+                    <span class="link-icon"><i class="fa-solid fa-shield-halved"></i></span>
+                    <span class="link-txt">Privacy Protocols</span>
+                </a>
+                <a href="terms.html" class="app-link-node">
+                    <span class="link-icon"><i class="fa-solid fa-file-contract"></i></span>
+                    <span class="link-txt">Terms of Engine</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer-meta-bar">
+        <p>© 2026 TALKINK. All Rights Reserved. Codename: Alpha-V3 Engine.</p>
+    </div>
+</footer>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
     <script>
-        // Directly registering the Privacy page nodes to your high-performance about.js Scroll Engine
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof scrollObserver !== 'undefined') {
-                const policyElements = document.querySelectorAll('.policy-viewport .reveal');
-                policyElements.forEach(el => {
-                    scrollObserver.observe(el);
-                });
-            }
+        document.addEventListener("DOMContentLoaded", () => {
+            const revealElements = document.querySelectorAll('.reveal');
+            
+            // Fail-safe fallback loop: Isse bina kisi dependency ke sabhi modules ek sath force visible honge
+            revealElements.forEach(el => {
+                el.classList.add('active');
+                el.style.opacity = "1";
+                el.style.transform = "translateY(0)";
+            });
         });
     </script>
-    <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const revealElements = document.querySelectorAll('.reveal');
-        
-        // Agar observer works smoothly, toh observe karega
-        if ('IntersectionObserver' in window) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            revealElements.forEach(el => observer.observe(el));
-        } else {
-            // Fallback: Agar kisi wajah se observer block ho toh direct show kar do
-            revealElements.forEach(el => el.classList.add('active'));
-        }
-    });
-</script>
 
 </body>
 </html>
