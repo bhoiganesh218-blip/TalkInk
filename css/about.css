@@ -1,1239 +1,774 @@
-/* 🎨 Core Variables */
+/* ==========================================================================
+   TALKINK BRANDING & TYPOGRAPHY SYSTEM - PREMIUM HARDCORE EDITION
+   Core Palette: Professional Dark (#020617) & Cyber Cyan Accent (#38bdf8)
+   Layout Philosophy: Immersive Full-Screen UI, Fluid Structural Grids
+   ========================================================================== */
+
+/* 1. Global Reset & Performance Theme Variables */
 :root {
-    --bg-color: #020617;
-    --text-main: #ffffff;
-    --text-muted: #94a3b8;
-    --accent-cyan: #06b6d4;
-    --accent-purple: #a855f7;
-    --font-heading: 'Bricolage Grotesque', sans-serif;
-    --font-body: 'Inter', sans-serif;
+    --bg-primary: #020617;        /* Core application dark grid canvas */
+    --bg-secondary: #0f172a;      /* Modular container layers */
+    --bg-surface: #1e293b;        /* Feature box interaction points */
+    --text-primary: #f8fafc;      /* Pure crisp reading metrics */
+    --text-secondary: #94a3b8;    /* Smooth scanning description arrays */
+    --text-muted: #64748b;        /* Technical micro markers */
+    --accent-cyan: #38bdf8;       /* System signature accent logic */
+    --accent-glow: rgba(56, 189, 248, 0.12);
+    --border-color: #334155;      /* Strict interface line separations */
+    --border-focus: #475569;
+    
+    /* Dynamic Premium Typography Scales */
+    --font-primary: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    --font-display: 'Space Grotesk', -apple-system, sans-serif;
+    --fs-h2: 28px;
+    --fs-h3: 20px;
+    --fs-body: 15.5px;
+    --fs-meta: 13px;
+    --padding-inline: 6%;         /* Fluid variable for edge-to-edge screens */
 }
 
+/* 2. Document Smooth Reset Configuration */
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    width: 100%;
 }
 
 body {
-    background-color: var(--bg-color);
-    color: var(--text-main);
-    font-family: var(--font-body);
-    overflow-x: hidden;
-}
-
-/* 🌌 Moving Background Blobs */
-.glow-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    overflow: hidden;
-}
-
-.blob {
-    position: absolute;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, rgba(168, 85, 247, 0.05) 100%);
-    filter: blur(80px);
-    border-radius: 50%;
-    animation: move 20s infinite alternate;
-}
-
-.blob-1 { top: -10%; left: -10%; }
-.blob-2 { bottom: -10%; right: -10%; animation-delay: -5s; }
-
-@keyframes move {
-    from { transform: translate(0, 0); }
-    to { transform: translate(100px, 50px); }
-}
-
-/* 🌟 Hero Section Styles */
-.hero-section {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    text-align: center;
-}
-
-.logo-wrapper {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 2rem;
-}
-
-.hero-logo {
-    width: 100%;
-    height: 100%;
-    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; /* Unique Organic Shape */
-    object-fit: cover;
-    border: 2px solid rgba(255,255,255,0.1);
-    position: relative;
-    z-index: 2;
-}
-
-.logo-glow {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 140%;
-    height: 140%;
-    background: linear-gradient(45deg, var(--accent-cyan), var(--accent-purple));
-    filter: blur(25px);
-    opacity: 0.4;
-    z-index: 1;
-}
-
-.hero-title {
-    font-family: var(--font-heading);
-    font-size: clamp(2.5rem, 8vw, 4.5rem);
-    line-height: 1.1;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    letter-spacing: -2px;
-}
-
-.gradient-text {
-    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.hero-subtitle {
-    max-width: 700px;
-    margin: 0 auto 2.5rem;
-    font-size: 1.25rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-    font-weight: 300;
-}
-
-.highlight {
-    color: var(--text-main);
-    font-weight: 600;
-}
-
-
-
-
-
-/* =========================================================================
-   🎛️ SMART FLEX-GRID BUTTON SYSTEM (MOBILE: 2 COLUMNS | PC: INLINE ROW)
-   ========================================================================= */
-.hero-btns {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 📱 Mobile par strictly 2 equal columns */
-    gap: 1rem;                             /* Buttons ke beech ka spacing */
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    padding: 0.5rem 0;
-}
-
-/* 🧱 Button Base Styles Configuration */
-.btn-primary, .btn-secondary {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem 1.5rem;                  /* Mobile-friendly compact padding */
-    font-size: 0.95rem;
-    font-weight: 600;
-    text-decoration: none;
-    border-radius: 50px;
-    text-align: center;
-    width: 100%;                           /* Card structure ke andar full automatic stretch */
-    box-sizing: border-box;
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, background 0.3s ease;
-}
-
-.btn-primary {
-    background: linear-gradient(45deg, var(--accent-cyan), var(--accent-purple));
-    color: #ffffff;
-}
-
-.btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(6, 182, 212, 0.25);
-}
-
-.btn-secondary {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.02);
-}
-
-.btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-3px);
-}
-
-/* =========================================================================
-   💻 DESKTOP SMART TRANSLATION (MEDIA QUERY FOR PC)
-   ========================================================================= */
-@media (min-width: 768px) {
-    .hero-btns {
-        display: flex;                      /* 💻 PC par grid hatakar clean flexbox row */
-        grid-template-columns: none;
-        gap: 1.5rem;
-        width: auto;                        /* Content ke hisab se width wrapper */
-        justify-content: flex-start;        /* Left-aligned content structure */
-    }
-
-    .btn-primary, .btn-secondary {
-        width: auto;                        /* PC par buttons standard auto size hold karenge */
-        padding: 1rem 2.5rem;               /* Premium wider horizontal padding */
-        font-size: 1.05rem;
-    }
-}
-
-/* 🎬 Reveal Animation Engine Restoration */
-.reveal {
-    opacity: 1;
-    transform: translateY(30px);
-    transition: all 1s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-}
-
-.reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-
-
-
-
-
-
-
-
-
-/* =========================================================================
-   📝 SECTION 2: ABOUT THE PLATFORM STYLES
-   ========================================================================= */
-.about-platform-section {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding: 6rem 2rem;
-    overflow: hidden;
-}
-
-.platform-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-    position: relative;
-}
-
-/* Big Abstract Typography Watermark */
-.bg-watermark {
-    position: absolute;
-    top: -50px;
-    left: -20px;
-    font-family: var(--font-heading);
-    font-size: clamp(4rem, 15vw, 10rem);
-    font-weight: 900;
-    color: rgba(255, 255, 255, 0.02);
-    letter-spacing: -5px;
-    user-select: none;
-    pointer-events: none;
-    z-index: 0;
-}
-
-/* Asymmetric Grid Layout */
-.platform-grid {
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 4rem;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-}
-
-/* Left Column Layout: Stacked Glass Cards */
-.platform-visuals {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.glass-card {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    padding: 2.5rem;
-    border-radius: 24px;
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s ease;
-}
-
-.glass-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    border-color: rgba(6, 182, 212, 0.2);
-    box-shadow: 0 20px 40px rgba(2, 6, 23, 0.7);
-}
-
-.card-icon {
-    font-size: 2.5rem;
-    display: inline-block;
-    margin-bottom: 1rem;
-}
-
-.glass-card h3 {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.5px;
-}
-
-.glass-card p {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    line-height: 1.5;
-    font-weight: 300;
-}
-
-/* Right Column Layout: Extraordinary Text Hierarchy */
-.section-title {
-    font-family: var(--font-heading);
-    font-size: clamp(2rem, 5vw, 3.2rem);
-    line-height: 1.15;
-    font-weight: 700;
-    letter-spacing: -1.5px;
-    margin-bottom: 2rem;
-}
-
-.platform-description {
-    font-size: 1.15rem;
-    color: var(--text-muted);
-    line-height: 1.7;
-    margin-bottom: 1.5rem;
-    font-weight: 300;
-    text-align: justify;
-}
-
-/* =========================================================================
-   📱 RESPONSIVE ADJUSTMENTS (For Tablet & Mobile Viewports)
-   ========================================================================= */
-@media (max-width: 968px) {
-    .platform-grid {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-    }
-    
-    .platform-text-content {
-        order: -1; /* Text elements come on top for mobile screens */
-    }
-    
-    .section-title {
-        text-align: center;
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-/* =========================================================================
-   👤 SECTION 3: ABOUT THE CREATOR / CEO STYLES
-   ========================================================================= */
-.about-ceo-section {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding: 6rem 2rem;
-    background: linear-gradient(180deg, var(--bg-color) 0%, rgba(10, 15, 30, 0.7) 100%);
-}
-
-.ceo-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-}
-
-.ceo-grid {
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 6rem;
-    align-items: center;
-}
-
-/* 🖼️ Left Side: Creative Photo Frame Engine */
-.ceo-visual-column {
-    position: relative;
-    justify-self: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.frame-wrapper {
-    position: relative;
-    width: min(340px, 80vw);
-    height: min(420px, 100vw);
-    background: rgba(255, 255, 255, 0.01);
-    border-radius: 16px;
-    padding: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.ceo-profile-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 12px;
-    filter: grayscale(20%) contrast(105%);
-    transition: filter 0.5s ease, transform 0.5s ease;
-}
-
-.frame-wrapper:hover .ceo-profile-img {
-    filter: grayscale(0%) contrast(100%);
-    transform: scale(1.02);
-}
-
-/* Cyberpunk Style Geometric Corner Brackets */
-.frame-corner {
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    border: 3px solid var(--accent-cyan);
-    z-index: 3;
-    pointer-events: none;
-}
-.corner-tl { top: -2px; left: -2px; border-right: none; border-bottom: none; }
-.corner-br { bottom: -2px; right: -2px; border-left: none; border-top: none; var(--accent-purple); border-color: var(--accent-purple); }
-
-.frame-border-glow {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    border-radius: 16px;
-    background: linear-gradient(45deg, var(--accent-cyan), var(--accent-purple));
-    filter: blur(30px);
-    opacity: 0.1;
-    z-index: 0;
-    transition: opacity 0.4s ease;
-}
-
-.frame-wrapper:hover .frame-border-glow {
-    opacity: 0.25;
-}
-
-.ceo-signature-badge {
-    margin-top: 1.5rem;
-    font-family: var(--font-heading);
-    font-size: 0.9rem;
-    letter-spacing: 4px;
-    color: var(--text-muted);
-    border-left: 2px solid var(--accent-cyan);
-    padding-left: 10px;
-}
-
-/* 📝 Right Side: Editorial Typography Layout */
-.section-tag {
-    display: block;
-    font-family: var(--font-body);
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--accent-cyan);
-    letter-spacing: 2px;
-    margin-bottom: 1rem;
-}
-
-.ceo-title {
-    font-family: var(--font-heading);
-    font-size: clamp(2.2rem, 5vw, 3.5rem);
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -1.5px;
-    margin-bottom: 2.5rem;
-}
-
-.ceo-bio-wrapper {
-    border-left: 1px solid rgba(255, 255, 255, 0.08);
-    padding-left: 2rem;
-}
-
-.bio-greeting {
-    font-family: var(--font-heading);
-    font-size: 1.6rem;
-    letter-spacing: -0.5px;
-    margin-bottom: 1rem;
-}
-
-.bio-main-text {
-    font-size: 1.1rem;
-    color: var(--text-muted);
+    font-family: var(--font-primary);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     line-height: 1.75;
-    font-weight: 300;
-    margin-bottom: 1.25rem;
-    text-align: justify;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding: 40px 0 0 0;        /* Removed restrictive body padding */
+    overflow-x: hidden;
+    width: 100%;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.04) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(99, 102, 241, 0.04) 0%, transparent 40%);
 }
 
-.ceo-footer-meta {
-    margin-top: 3rem;
-    padding-left: 2rem;
+/* 3. Main Structural Glassmorphism Container (Fitted for Full-Screen) */
+#about-container {
+    max-width: 100% !important;   /* Breaks the 1000px rigid lock box */
+    width: 92%;                   /* Gives a premium breathing margin from screen borders */
+    margin: 0 auto 60px auto;
+    background-color: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 24px;
+    padding: 60px var(--padding-inline); /* Responsive inline padding scale */
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 
+                inset 0 1px 1px rgba(255, 255, 255, 0.08);
+    box-sizing: border-box;
 }
 
-.meta-item {
+/* 4. Top Header Block (Single Line Navigation Layer) */
+.top-bar {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    width: 100%;
 }
 
-.meta-val {
-    font-family: var(--font-heading);
-    font-size: 2rem;
+.logo-area {
+    display: flex;
+    align-items: center;
+}
+
+.logo-text {
+    font-family: var(--font-display);
+    font-size: 30px;
     font-weight: 700;
-    background: linear-gradient(90deg, var(--accent-cyan), #ffffff);
+    letter-spacing: -0.04em;
+    text-transform: lowercase;
+    color: var(--text-primary);
+    position: relative;
+    background: linear-gradient(135deg, #ffffff 60%, var(--accent-cyan));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.meta-lbl {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
+.logo-text::after {
+    content: '.';
+    color: var(--accent-cyan);
+    -webkit-text-fill-color: var(--accent-cyan);
 }
 
-/* =========================================================================
-   📱 RESPONSIVE ADJUSTMENTS 
-   ========================================================================= */
-@media (max-width: 968px) {
-    .ceo-grid {
-        grid-template-columns: 1fr;
-        gap: 4rem;
-    }
-    
-    .ceo-bio-wrapper {
-        padding-left: 1rem;
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* =========================================================================
-   🚀 SECTION 4: JOIN AS A CREATOR STYLES (FIXED MOBILE VIEW)
-   ========================================================================= */
-.about-creator-section {
-    position: relative;
-    min-height: auto; /* Fixed: Mobile par unwanted blank space nahi banega */
+.doc-badge-area {
     display: flex;
     align-items: center;
-    padding: 5rem 1.5rem; /* Better breathing room on mobile */
 }
 
-.creator-container {
-    max-width: 1200px;
-    margin: 0 auto;
+.doc-tag {
+    font-size: var(--fs-meta);
+    font-weight: 600;
+    color: var(--accent-cyan);
+    background-color: var(--accent-glow);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    padding: 6px 16px;
+    border-radius: 30px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(56, 189, 248, 0.05);
+}
+
+.icon-space {
+    margin-right: 8px;
+}
+
+/* 5. Structural Separators with Subtle Gradient Fade */
+.section-divider {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(51, 65, 85, 0.6) 0%, rgba(51, 65, 85, 0.1) 100%);
+    margin: 48px 0;
     width: 100%;
 }
 
-/* 🎴 The Premium Glassmorphic Core Panel */
-.creator-card {
+/* 6. Section Engineering & Typography Elements */
+.section {
+    padding: 20px 0;
+    width: 100%;
+}
+
+h2 {
+    font-family: var(--font-display);
+    font-size: var(--fs-h2);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-primary);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    line-height: 1.3;
+}
+
+.section-icon {
+    color: var(--accent-cyan);
+    font-size: 24px;
+    filter: drop-shadow(0 0 8px var(--accent-cyan));
+}
+
+.content-block {
+    margin-bottom: 32px;
+    width: 100%;
+}
+
+h3 {
+    font-size: var(--fs-h3);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+}
+
+p, .feature-desc {
+    font-size: var(--fs-body);
+    color: var(--text-secondary);
+    text-align: justify;
+    margin-bottom: 20px;
+}
+
+p strong {
+    color: var(--accent-cyan);
+    font-weight: 600;
+}
+
+.section-desc {
+    margin-bottom: 36px;
+    font-size: var(--fs-body);
+    font-style: normal;
+    color: var(--text-muted);
+    border-left: 2px solid var(--border-color);
+    padding-left: 14px;
+}
+
+/* 7. Dynamic Graphic Banner Component */
+.hero-banner-wrapper {
+    width: 100%;
+    height: 200px;
+    border-radius: 16px;
+    margin-bottom: 40px;
+    background: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    box-shadow: inset 0 0 40px rgba(56, 189, 248, 0.08);
     position: relative;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.005) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border-radius: 32px;
-    padding: 4.5rem;
     overflow: hidden;
-    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 40px;
+    box-sizing: border-box;
 }
 
-/* Glowing Background Matrix inside Card */
-.card-aura-glow {
+.hero-banner-wrapper::before {
+    content: '';
     position: absolute;
-    bottom: -30%;
-    right: -10%;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, rgba(0,0,0,0) 70%);
-    z-index: 0;
+    top: -40%;
+    right: -5%;
+    width: 360px;
+    height: 360px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.2) 0%, transparent 70%);
+    border-radius: 50%;
     pointer-events: none;
 }
 
-.creator-content-layout {
-    display: grid;
-    grid-template-columns: 1.4fr 0.8fr;
-    gap: 4rem;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-}
-
-/* 📝 Text Block Typography */
-.creator-tag {
-    display: block;
-    font-family: var(--font-body);
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--accent-purple);
-    letter-spacing: 3px;
-    margin-bottom: 1rem;
-}
-
-.creator-title {
-    font-family: var(--font-heading);
-    font-size: clamp(1.8rem, 4vw, 3rem); /* Fixed: Starts at 1.8rem for small devices */
+.hero-graphic-overlay h4 {
+    font-family: var(--font-display);
+    font-size: 26px;
     font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -1px;
-    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+    margin-top: 12px;
+    letter-spacing: -0.01em;
 }
 
-.creator-description {
-    font-size: 1.05rem;
-    color: var(--text-muted);
-    line-height: 1.7;
-    margin-bottom: 1.25rem;
-    font-weight: 300;
-    text-align: justify;
-}
-
-.creator-direction-text {
-    font-size: 1rem;
-    color: var(--text-main);
-    font-weight: 400;
-    margin-top: 1.5rem;
-}
-
-/* 🔘 Interactive Magnetic Action Button Engine */
-.creator-action-block {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-
-.action-btn-wrapper {
-    position: relative;
-    z-index: 2;
-    width: auto;
-}
-
-.btn-magnetic-cta {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    padding: 1.2rem 2.5rem;
-    background: #ffffff;
-    color: #020617;
-    text-decoration: none;
-    font-family: var(--font-heading);
-    font-size: 1.1rem;
+.banner-badge {
+    font-size: 11px;
     font-weight: 700;
-    border-radius: 100px;
-    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease, color 0.3s ease;
-}
-
-.btn-arrow {
-    font-size: 1.3rem;
-    transition: transform 0.3s ease;
-}
-
-/* Hover States for CTA */
-.btn-magnetic-cta:hover {
-    transform: scale(1.05) translateY(-3px);
-    background: linear-gradient(45deg, var(--accent-cyan), var(--accent-purple));
-    color: #ffffff;
-}
-
-.btn-magnetic-cta:hover .btn-arrow {
-    transform: translateX(6px);
-}
-
-/* Breathing Shadow Ring Behind Button */
-.btn-shadow-pulse {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 105%; height: 105%;
-    border-radius: 100px;
-    background: rgba(255, 255, 255, 0.05);
-    z-index: -1;
-    animation: pulseGlow 2.5s infinite;
-}
-
-@keyframes pulseGlow {
-    0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-    100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0; }
-}
-
-/* =========================================================================
-   📱 RESPONSIVE ADJUSTMENTS (PERFECTLY OPTIMIZED)
-   ========================================================================= */
-@media (max-width: 968px) {
-    .about-creator-section {
-        padding: 4rem 1rem;
-    }
-
-    .creator-card {
-        padding: 3rem 1.5rem; /* Reduced padding inside card to save mobile horizontal space */
-        border-radius: 24px;
-    }
-    
-    .creator-content-layout {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-        text-align: center;
-    }
-
-    .creator-description {
-        text-align: center;
-        font-size: 1rem;
-    }
-    
-    .creator-action-block {
-        width: 100%;
-    }
-
-    .action-btn-wrapper {
-        width: 100%; /* Spans gracefully on tiny screens */
-        max-width: 320px; /* Restricts button from becoming awkwardly wide */
-    }
-
-    .btn-magnetic-cta {
-        padding: 1rem 1.5rem;
-        font-size: 1rem;
-        width: 100%; /* Fills the wrapper cleanly */
-        white-space: normal; /* Fixed: Allows text to wrap safely on ultra-small displays */
-        text-align: center;
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* =========================================================================
-   📱 SECTION 5: WEBPAGE GUIDE STYLES
-   ========================================================================= */
-.about-guide-section {
-    position: relative;
-    padding: 6rem 1.5rem;
-    background: linear-gradient(180deg, rgba(10, 15, 30, 0.7) 0%, var(--bg-color) 100%);
-}
-
-.guide-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-}
-
-/* 📝 Centralized Header Block */
-.guide-header-block {
-    text-align: center;
-    max-width: 700px;
-    margin: 0 auto 4.5rem;
-}
-
-.guide-tag {
-    display: block;
-    font-family: var(--font-body);
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--accent-cyan);
-    letter-spacing: 3px;
-    margin-bottom: 1rem;
-}
-
-.guide-main-title {
-    font-family: var(--font-heading);
-    font-size: clamp(2.2rem, 5vw, 3.5rem);
-    font-weight: 700;
-    line-height: 1.15;
-    letter-spacing: -1.5px;
-    margin-bottom: 1.5rem;
-}
-
-.guide-lead-text {
-    font-size: 1.1rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-    font-weight: 300;
-}
-
-/* 🗓️ Timeline Grid System */
-.guide-timeline-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2.5rem;
-    position: relative;
-}
-
-/* 🎴 Advanced Step Blueprint Cards */
-.glass-step {
-    position: relative;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.015) 0%, rgba(255, 255, 255, 0.002) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    padding: 3.5rem 2.5rem 2.5rem;
-    border-radius: 24px;
-    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.3s ease;
-}
-
-/* Top Neon Gradient Border Bar */
-.glass-step::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 10%; width: 80%; height: 3px;
-    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
-    border-radius: 0 0 100px 100px;
-    opacity: 0.3;
-    transition: opacity 0.3s ease, width 0.3s ease;
-}
-
-/* Big Structural Watermark Step Counters */
-.step-badge {
-    position: absolute;
-    top: 1.5rem;
-    right: 2rem;
-    font-family: var(--font-heading);
-    font-size: 3.5rem;
-    font-weight: 900;
-    line-height: 1;
-    color: rgba(255, 255, 255, 0.02);
-    letter-spacing: -2px;
-    transition: color 0.3s ease;
-}
-
-.step-icon-wrap {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    display: inline-block;
-    filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.2));
-}
-
-.step-title {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    margin-bottom: 1rem;
-    color: #ffffff;
-}
-
-.step-description {
-    font-size: 1rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-    font-weight: 300;
-    text-align: justify;
-}
-
-/* ⚡ Interactive Hover States */
-.glass-step:hover {
-    transform: translateY(-10px);
-    border-color: rgba(6, 182, 212, 0.15);
-}
-
-.glass-step:hover::before {
-    opacity: 1;
-    width: 100%;
-    left: 0;
-    border-radius: 0;
-}
-
-.glass-step:hover .step-badge {
-    color: rgba(6, 182, 212, 0.08);
-}
-
-/* =========================================================================
-   📱 RESPONSIVE ADJUSTMENTS (FOR PERFECT BREAKDOWNS)
-   ========================================================================= */
-@media (max-width: 968px) {
-    .guide-timeline-grid {
-        grid-template-columns: 1fr; /* Stacks vertically on smaller viewport dimensions */
-        gap: 2rem;
-    }
-
-    .glass-step {
-        padding: 3rem 2rem 2rem;
-    }
-
-    .step-title, .step-description {
-        text-align: center;
-    }
-    
-    .step-icon-wrap {
-        display: block;
-        text-align: center;
-        margin: 0 auto 1.5rem;
-    }
-
-    .step-badge {
-        top: 1rem;
-        right: 1.5rem;
-        font-size: 2.8rem;
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* =========================================================================
-   🌌 SECTION 6: EXTRAORDINARY BENTO GLASS FOOTER STYLES
-   ========================================================================= */
-.about-footer {
-    position: relative;
-    background-color: var(--bg-color); /* Matches your deep dark #020617 perfectly */
-    padding: 6rem 1.5rem 3rem;
-    width: 100%;
-    overflow: hidden;
-}
-
-.footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-}
-
-/* 🧱 Modern Bento Box Layout Integration */
-.footer-grid-layout {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr;
-    gap: 2rem;
-    margin-bottom: 3rem;
-}
-
-/* 🎴 Bento Box Card Wrapper styles */
-.footer-brand-column, 
-.footer-links-column {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.015) 0%, rgba(255, 255, 255, 0.002) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-radius: 24px;
-    padding: 3rem 2.5rem;
-    transition: border-color 0.4s ease, transform 0.4s ease;
-}
-
-.footer-brand-column:hover, 
-.footer-links-column:hover {
-    border-color: rgba(6, 182, 212, 0.15);
-    transform: translateY(-4px);
-}
-
-/* 🌟 Brand Styling (Card 1) */
-.footer-logo-row {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1.25rem;
-}
-
-.brand-dot {
-    width: 10px;
-    height: 10px;
-    background: linear-gradient(45deg, var(--accent-cyan), var(--accent-purple));
-    border-radius: 50%;
-    box-shadow: 0 0 15px var(--accent-cyan);
-}
-
-.footer-brand-name {
-    font-family: var(--font-heading);
-    font-size: 1.8rem;
-    font-weight: 700;
-    letter-spacing: -1px;
-    color: #ffffff;
-}
-
-.brand-pitch-text {
-    font-size: 1rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-    font-weight: 300;
-    margin-bottom: 2rem;
-}
-
-/* 🔗 Column Links & Floating Animations (Card 2 & 3) */
-.column-title {
-    font-family: var(--font-heading);
-    font-size: 1.1rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    color: #ffffff;
-    margin-bottom: 1.5rem;
     text-transform: uppercase;
+    color: var(--accent-cyan);
+    background-color: rgba(56, 189, 248, 0.12);
+    padding: 6px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.06em;
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* 8. Fully Responsive Grid Matrix (Optimized stretch layout for broad monitors) */
+.feature-matrix {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(440px, 1fr)); /* Autofit matrix distribution system */
+    gap: 32px;
+    width: 100%;
+}
+
+.feature-item {
+    background: linear-gradient(145deg, rgba(30, 41, 59, 0.3) 0%, rgba(15, 23, 42, 0.4) 100%);
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    border-radius: 16px;
+    padding: 36px;
     position: relative;
-    display: inline-block;
-}
-
-/* Line under header link categories */
-.column-title::after {
-    content: '';
-    position: absolute;
-    bottom: -6px; left: 0; width: 20px; height: 2px;
-    background: var(--accent-cyan);
-    border-radius: 10px;
-}
-
-.footer-link-list {
-    list-style: none;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
 }
 
-.footer-nav-link {
-    font-size: 1rem;
-    color: var(--text-muted);
-    text-decoration: none;
-    font-weight: 300;
-    transition: color 0.3s ease, transform 0.3s ease;
-    display: inline-block;
+.full-width {
+    grid-column: 1 / -1; /* Flawless edge stretch handling */
 }
 
-/* Premium Glow Slide Effect */
-.footer-nav-link:hover {
-    color: #ffffff;
-    transform: translateX(6px);
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
-}
-
-/* 📸 Custom Social Media Strip Integration inside Card 1 */
-.social-links-row {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1.5rem;
-}
-
-.social-circle-btn {
-    width: 48px;
-    height: 48px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 16px; /* Squircle design instead of generic circles */
+.feature-icon-wrapper {
+    width: 52px;
+    height: 52px;
+    background-color: #070d19;
+    border: 1px solid rgba(51, 65, 85, 0.8);
+    color: var(--accent-cyan);
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-decoration: none;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    font-size: 22px;
+    margin-bottom: 24px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.social-icon {
-    font-size: 1.2rem;
-    color: var(--text-muted);
-    transition: color 0.3s ease, transform 0.3s ease;
+.feature-item:hover {
+    border-color: rgba(56, 189, 248, 0.5);
+    background: linear-gradient(145deg, rgba(30, 41, 59, 0.45) 0%, rgba(15, 23, 42, 0.6) 100%);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(56, 189, 248, 0.08);
 }
 
-.social-circle-btn:hover {
-    transform: translateY(-5px) rotate(8deg);
-    border-color: var(--accent-purple);
-    background: rgba(168, 85, 247, 0.1);
-    box-shadow: 0 10px 20px rgba(168, 85, 247, 0.2);
+.feature-item:hover .feature-icon-wrapper {
+    color: #020617;
+    background-color: var(--accent-cyan);
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 15px var(--accent-cyan);
+    transform: scale(1.05);
 }
 
-.social-circle-btn:hover .social-icon {
-    color: #ffffff;
-    transform: scale(1.1);
+.feature-title {
+    font-size: var(--fs-h3);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 12px;
 }
 
-/* 🏁 Clean Copyright Architecture Strip */
-.footer-bottom-strip {
-    background: rgba(255, 255, 255, 0.01);
-    border: 1px solid rgba(255, 255, 255, 0.02);
-    border-radius: 100px;
-    padding: 1.2rem 2.5rem;
+/* Sub-List Setup inside high-density reader cards */
+.sub-feature-list {
+    list-style: none;
+    margin-top: 24px;
+    padding-left: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.sub-feature-list li {
+    font-size: var(--fs-body);
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.list-bullet {
+    color: var(--accent-cyan);
+    font-size: 11px;
+    margin-right: 8px;
+}
+
+/* 9. Premium Founder Component Architecture */
+.founder-commitment-container {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(2, 6, 23, 0.95) 100%);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), inset 0 0 24px rgba(56, 189, 248, 0.05);
+    border-radius: 20px;
+    padding: 44px;
+    margin: 44px 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.founder-profile-wrapper {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.95rem;
+    align-items: flex-start;
+    gap: 36px;
+}
+
+/* CEO Frame Config with Animated Glow Core Ring */
+.founder-avatar-frame {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    flex-shrink: 0;
+}
+
+.founder-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 2;
+}
+
+.avatar-glow-ring {
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    background: linear-gradient(135deg, var(--accent-cyan), #6366f1, transparent);
+    border-radius: 20px;
+    z-index: 1;
+    opacity: 0.6;
+    animation: spinRing 8s linear infinite;
+}
+
+@keyframes spinRing {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.founder-quote-content {
+    flex-grow: 1;
+    position: relative;
+}
+
+.quote-bracket-icon {
+    position: absolute;
+    top: -12px;
+    left: -16px;
+    font-size: 36px;
+    color: rgba(56, 189, 248, 0.15);
+}
+
+.vision-statement {
+    font-style: italic;
+    color: var(--text-primary);
+    font-size: 16.5px;
+    line-height: 1.85;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+.founder-signature-block {
+    display: block;
+    font-style: normal;
+}
+
+.founder-name {
+    font-family: var(--font-display);
+    font-size: var(--fs-h3);
+    color: var(--accent-cyan);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.founder-title {
+    font-size: var(--fs-meta);
     color: var(--text-muted);
-    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    display: block;
+    margin-top: 4px;
 }
 
-.highlight-white {
-    color: #ffffff;
-    font-weight: 500;
+/* 10. Contact Gateways & Technical Communication Block */
+.contact-channels-wrapper {
+    font-style: normal;
+    margin-top: 24px;
 }
 
-/* =========================================================================
-   📱 RESPONSIVE ADJUSTMENTS (BENTO BOX GRID CONVERTER)
-   ========================================================================= */
-@media (max-width: 968px) {
-    .footer-grid-layout {
-        grid-template-columns: 1fr; /* Stacks nicely as large clean panels */
-        gap: 1.5rem;
+.support-channels-list {
+    list-style: none;
+}
+
+.support-channels-list li strong {
+    color: var(--text-primary);
+    display: block;
+    margin-bottom: 10px;
+}
+
+.scope-text-block {
+    font-size: var(--fs-body);
+    color: var(--text-secondary);
+}
+
+.support-email-link {
+    color: var(--accent-cyan);
+    font-family: monospace;
+    font-size: 16px;
+    font-weight: 700;
+    background-color: #070d19;
+    padding: 8px 20px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.support-email-link:hover {
+    border-color: var(--accent-cyan);
+    background-color: var(--accent-glow);
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+    transform: translateX(4px);
+}
+
+/* ==========================================================================
+   11. CSS Performance Keyframes & Micro-Animations Modules
+   ========================================================================== */
+.animate-fade-in {
+    animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-pulse-subtle {
+    animation: pulseSubtle 4s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseSubtle {
+    0%, 100% { border-color: rgba(56, 189, 248, 0.25); box-shadow: inset 0 0 40px rgba(56, 189, 248, 0.08); }
+    50% { border-color: rgba(56, 189, 248, 0.45); box-shadow: inset 0 0 50px rgba(56, 189, 248, 0.18); }
+}
+
+.reveal-on-scroll {
+    animation: revealSetup both;
+    animation-timeline: view();
+    animation-range: entry 5% cover 25%;
+}
+
+@keyframes revealSetup {
+    from { opacity: 0; transform: translateY(24px); filter: blur(1px); }
+    to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+/* ==========================================================================
+   12. Fully Responsive Media Queries (Adaptive Breakdown Layouts)
+   ========================================================================== */
+@media (max-width: 1200px) {
+    .feature-matrix {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    #about-container {
+        width: 95%;
+        padding: 40px 24px;
+        margin-bottom: 40px;
     }
 
-    .footer-brand-column, 
-    .footer-links-column {
-        padding: 2.5rem 2rem;
+    :root {
+        --fs-h2: 24px;
+        --fs-h3: 18px;
+        --fs-body: 14.5px;
+        --padding-inline: 4%;
+    }
+
+    .feature-matrix {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .full-width {
+        grid-column: span 1;
+    }
+
+    .sub-feature-list {
+        grid-template-columns: 1fr;
+        gap: 14px;
     }
 }
 
 @media (max-width: 600px) {
-    .about-footer {
-        padding: 4rem 1rem 2rem;
+    #about-container {
+        width: 100%;
+        border-radius: 0px; /* Snaps flat perfectly on mobile screens */
+        border-left: none;
+        border-right: none;
+        padding: 32px 16px;
     }
 
-    .footer-brand-column, 
-    .footer-links-column {
+    :root {
+        --fs-h2: 21px;
+        --fs-h3: 16.5px;
+        --fs-body: 14px;
+        --fs-meta: 12px;
+    }
+
+    .top-bar {
+        flex-direction: row; 
+        align-items: center;
+    }
+
+    .logo-text {
+        font-size: 24px;
+    }
+
+    .doc-tag {
+        font-size: 10.5px;
+        padding: 5px 12px;
+    }
+
+    .hero-banner-wrapper {
+        height: 140px;
+        padding: 24px;
+        margin-bottom: 28px;
+    }
+
+    .hero-graphic-overlay h4 {
+        font-size: 19px;
+    }
+
+    .founder-profile-wrapper {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 24px;
+    }
+
+    .founder-avatar-frame {
+        width: 110px;
+        height: 110px;
+    }
+
+    .quote-bracket-icon {
+        display: none; 
+    }
+
+    p, .feature-desc {
+        text-align: left; 
+    }
+}
+
+/* ==========================================================================
+   13. HYPER-MOTION GLOBAL CORE FOOTER (FULL SCREEN LOCK)
+   ========================================================================== */
+.ti-core-footer {
+    --f-navy: #020617;
+    --f-accent: #6366f1;
+    --f-glow: #a855f7;
+    --f-white: #f8fafc;
+    --f-border: rgba(255, 255, 255, 0.04);
+    --f-surface: #070b19;
+    
+    background: linear-gradient(180deg, var(--f-navy) 0%, var(--f-surface) 100%);
+    border-top: 1px solid var(--f-border);
+    padding: 60px var(--padding-inline) 20px var(--padding-inline);
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    margin-top: 80px;
+}
+
+.footer-laser-line {
+    position: absolute;
+    top: -1px; left: 0; width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--f-accent), var(--f-glow), transparent);
+    background-size: 200% auto;
+    animation: footerLaserShift 6s linear infinite;
+}
+@keyframes footerLaserShift { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
+
+.footer-container {
+    max-width: 100%;               /* Sync footer container to break box limits */
+    width: 100%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.4fr 0.8fr 0.8fr;
+    gap: 40px;
+    box-sizing: border-box;
+}
+
+.footer-brand-section .footer-logo {
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: var(--f-white);
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+}
+.footer-brand-section .footer-logo .logo-dot {
+    color: var(--f-accent);
+}
+.footer-tagline {
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 360px;
+    margin-bottom: 24px;
+}
+
+.footer-heading {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: #475569;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+.links-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.app-link-node {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid transparent;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.app-link-node .link-icon {
+    color: #475569;
+    font-size: 1rem;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s;
+}
+.app-link-node:hover {
+    background: rgba(99, 102, 241, 0.06);
+    color: var(--f-white);
+    border-color: rgba(99, 102, 241, 0.15);
+    transform: translateX(4px);
+}
+.app-link-node:hover .link-icon {
+    color: var(--f-accent);
+    transform: scale(1.2) rotate(-5deg);
+}
+
+.footer-social-grid {
+    display: flex;
+    gap: 12px;
+}
+.social-node {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--f-border);
+    color: #94a3b8;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.15rem;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.social-node:hover {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: rgba(99, 102, 241, 0.4);
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+}
+
+.footer-meta-bar {
+    max-width: 100%; 
+    margin: 40px auto 0 auto;
+    padding: 20px 0 0 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.02);
+    display: flex; 
+    justify-content: space-between;
+    color: #334155; font-size: 0.8rem; font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .ti-core-footer {
+        padding: 40px 20px;
+    }
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 32px;
         text-align: center;
     }
-
-    .column-title::after {
-        left: 50%;
-        transform: translateX(-50%);
+    .footer-brand-section .footer-tagline {
+        margin: 12px auto 24px auto;
     }
-
-    .footer-logo-row,
-    .social-links-row {
+    .footer-social-grid {
         justify-content: center;
     }
-
-    .footer-nav-link:hover {
-        transform: translateY(-2px); /* Vertical lift on mobile instead of horizontal slide */
+    .links-grid {
+        align-items: center;
     }
-
-    .footer-bottom-strip {
-        flex-direction: column;
-        gap: 1rem;
-        border-radius: 24px; /* Soft block variant on mobile */
-        padding: 1.5rem;
+    .app-link-node {
+        width: 100%;
+        max-width: 280px;
+        justify-content: flex-start;
+    }
+    .footer-meta-bar {
         text-align: center;
-    }
-}
-/* =========================================================================
-   🏁 PREMIUM FLOATING PILL STRIP (FOOTER BOTTOM ROW)
-   ========================================================================= */
-.footer-bottom-row {
-    position: relative;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.01) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(255, 255, 255, 0.01) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    border-radius: 100px; /* Creative capsule/pill shape layout */
-    padding: 1.2rem 2.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 2rem;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.02);
-}
-
-/* Left Content: Clean Professional Copyright Typography */
-.copyright-text {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    font-weight: 300;
-    letter-spacing: 0.3px;
-}
-
-.highlight-white {
-    color: #ffffff;
-    font-weight: 600;
-    letter-spacing: -0.2px;
-    position: relative;
-}
-
-/* Right Content: Developer Signature Identity Tag */
-.developer-tag {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    font-weight: 300;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-}
-
-/* Pulsing Micro-Animation for Heart Icon */
-.developer-tag:: some-heart {
-    animation: heartBeat 1.5s infinite;
-}
-
-/* ⚡ Extraordinary Hover State: Entire row lights up slightly */
-.footer-bottom-row:hover {
-    border-color: rgba(6, 182, 212, 0.08);
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.015) 0%, rgba(6, 182, 212, 0.01) 50%, rgba(255, 255, 255, 0.015) 100%);
-    transition: all 0.5s ease;
-}
-
-/* =========================================================================
-   📱 RESPONSIVE CONFIGURATION (ANTI-BREAK SMARTPHONE FIX)
-   ========================================================================= */
-@media (max-width: 768px) {
-    .footer-bottom-row {
         flex-direction: column;
-        gap: 0.8rem;
-        border-radius: 20px; /* Transforms beautifully into a rounded card on mobile */
-        padding: 1.5rem 1.25rem;
-        text-align: center;
-        margin-top: 1.5rem;
-    }
-    
-    .copyright-text, 
-    .developer-tag {
-        font-size: 0.85rem;
-        line-height: 1.4;
+        gap: 12px;
+        justify-content: center;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
