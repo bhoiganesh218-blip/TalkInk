@@ -4878,9 +4878,9 @@ window.syncFloatingWidgetState = function(userData) {
 
 
 /**
- * 🎨 DYNAMIC LOCAL PDF UPLOADER MODAL SYSTEM
+ * 🎨 DYNAMIC LOCAL PDF UPLOADER MODAL SYSTEM (MONETAG OPTIMIZED)
  * Generates an interactive file parsing frame for guest PDF conversions.
- * Fully optimized for production-level Google H5 Programmatic Ad Gates.
+ * Fully integrated with Monetag Full-Screen Vignette Ad Gate.
  */
 window.openLocalPdfModal = () => {
     // Check if modal already exists to block duplicate injection leaks
@@ -4944,22 +4944,19 @@ window.openLocalPdfModal = () => {
             return;
         }
 
-        // Show metadata layouts maps
         fileNameTxt.innerText = file.name;
         fileSizeTxt.innerText = (file.size / (1024 * 1024)).toFixed(2) + " MB";
         
         feedbackBlock.style.display = "flex";
         dropZone.classList.add('file-attached');
         
-        // Activate interactive triggers
         launchBtn.classList.remove('disabled-state');
         launchBtn.removeAttribute('disabled');
 
-        // Temporal window reference cache to be used post ad validation
         window.tempSelectedPdfFile = file; 
     };
 
-    // 🚀 INTERACTIVE TRIGGER: CLICK HANDLER FOR LAUNCH BUTTON WITH ZERO-EFFORT GOOGLE AD GATE
+    // 🚀 MONETAG INJECTION ENGINE & AD GATE PIPELINE
     launchBtn.addEventListener('click', async () => {
         if (!window.tempSelectedPdfFile) {
             alert("Bhai, pehle koi PDF file select karo! 📄");
@@ -4969,92 +4966,97 @@ window.openLocalPdfModal = () => {
         if (window.showLoader) window.showLoader();
         console.log("🎬 Ad Gate Channel Requested for Local File:", window.tempSelectedPdfFile.name);
 
-        let adDeliverySuccess = false;
+        const IS_TEST_MODE = false; // 🚨 Live push karne se pehle ise FALSE kar dena bhaa!
 
-        try {
-            // 🌐 AUTOMATED GOOGLE H5 INTERCEPTOR
-            // Jab future me Google AdSense/Ad Manager ki global script page par active hogi,
-            // toh ye automatic initialize ho jayega bina kisi manual update ke!
-            if (typeof window.adBreak === 'function') {
-                console.log("🎯 Real Google H5 Ads API active. Streamlining commercial break matrix...");
-                
-                // Privacy compliance shield directly embedded to keep operations robust
-                if (window.googletag && window.googletag.pubads) {
-                    window.googletag.pubads().setPrivacySettings({ nonPersonalizedAds: true });
-                }
-
-                adDeliverySuccess = await new Promise((resolve) => {
-                    window.adBreak({
-                        type: 'reward',
-                        name: 'unlock_local_3d_reader',
-                        beforeAd: () => { console.log("Ad stream overlay active."); },
-                        afterAd: () => { console.log("Ad stream overlay closed."); },
-                        
-                        // 🪙 Triggered only when user watches the full video ad
-                        adViewed: () => {
-                            console.log("💰 Google Verified Reward: Token claimed successfully.");
-                            resolve(true);
-                        },
-                        
-                        // ❌ Triggered if user skips/closes the ad before completion
-                        adDismissed: () => {
-                            console.warn("⚠️ User broke the value exchange layer by closing ad early.");
-                            resolve(false);
-                        },
-                        
-                        // 🛠️ Failsafe: Triggered if network fails or no ad inventory is available
-                        adBreakDone: (placementInfo) => {
-                            if (placementInfo.breakStatus === 'notReady' || placementInfo.breakStatus === 'error') {
-                                console.log("⚡ Ad engine empty or blocked. Passing user via structural bypass.");
-                                resolve(true); // User ko access de do taaki system responsive rahe
-                            }
-                        }
-                    });
-                });
-
-            } else {
-                // 🤖 NO-EFFORT LOCAL DEVELOPMENT MODE
-                // Jab tak Google live nahi hai, tab tak bina crash kiye ye virtual delay simulator chalega
-                console.log("🤖 Simulated Ad Pipeline active (Waiting for Google H5 Script Approval)...");
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                adDeliverySuccess = true; 
-            }
-
-            // =========================================================================
-            // 🔀 DYNAMIC SECURITY APPLICATION ROUTER
-            // =========================================================================
-            if (adDeliverySuccess) {
-                console.log("🎯 Access Authorized! Launching premium environment context.");
-                
-                // 1. Cleanly pull out the modal layout container from document DOM tree
-                document.getElementById('local-pdf-modal').remove();
-                
-                // 2. Safely call the independent core dual-mode 3D rendering pipeline
-                if (typeof startBookReader === 'function') {
-                    await startBookReader(window.tempSelectedPdfFile, true);
-                } else if (window.startBookReader) {
-                    await window.startBookReader(window.tempSelectedPdfFile, true);
-                }
-                
-                // 3. Purge reference data object to ensure maximum garbage collection efficiency
-                window.tempSelectedPdfFile = null;
-
-            } else {
-                if (window.hideLoader) window.hideLoader();
-                alert("Bhai, free 3D Reader use karne ke liye ad poora dekhna padega! 😉 🪙");
-            }
-
-        } catch (adError) {
-            console.error("🚨 Critical Gateway Fault Handled Safely:", adError);
-            if (window.hideLoader) window.hideLoader();
+        if (IS_TEST_MODE) {
+            console.log("🤖 Simulated Ad Pipeline active (Test Mode)...");
+            // Test mode me 2.5 seconds ka delay loading block simulation chalega
+            setTimeout(async () => {
+                await executeCore3DReaderPipeline();
+            }, 2500);
+        } else {
+            console.log("🔥 PRODUCTION ACTIVE: Injecting Monetag Full-Screen Ad Gate...");
             
-            // Absolute Emergency Bypass: Content environment should never freeze up for users
-            document.getElementById('local-pdf-modal').remove();
-            if (window.startBookReader) window.startBookReader(window.tempSelectedPdfFile, true);
+            // Monetag Script Dynamic Injection Framework
+            if (!document.getElementById('monetag-pdf-gate-sdk')) {
+                const script = document.createElement('script');
+                script.id = 'monetag-pdf-gate-sdk';
+                script.src = 'https://n6wxm.com/vignette.min.js';
+                script.dataset.zone = '11073043'; // Your Exact Monetag Zone ID
+                script.async = true;
+
+                script.onload = () => {
+                    console.log("🎯 Monetag Script Loaded. Registering blur hook...");
+                    window.addEventListener('blur', handlePdfGateTelemetry);
+                };
+
+                script.onerror = async () => {
+                    console.warn("⚠️ Ad network blocked or failed. Failsafe activated.");
+                    await executeCore3DReaderPipeline();
+                };
+
+                [document.documentElement, document.body].filter(Boolean).pop().appendChild(script);
+            } else {
+                // If script is already in memory, attach listener and trigger window focus loop
+                window.addEventListener('blur', handlePdfGateTelemetry);
+                console.log("🔄 Ad Engine already initialized. Ready for fullscreen display switch.");
+            }
+
+            // Fallback safety to release screen if ad fails to steal focus within 4 seconds
+            setTimeout(async () => {
+                window.removeEventListener('blur', handlePdfGateTelemetry);
+                if (document.getElementById('local-pdf-modal')) {
+                    console.log("🛡️ Ad timeout bypass triggered to keep application responsive.");
+                    await executeCore3DReaderPipeline();
+                }
+            }, 4000);
         }
     });
 };
 
+// 🎯 MONETAG AD ENGAGEMENT METRIC TELEMETRY FOR PDF GATE
+async function handlePdfGateTelemetry() {
+    window.removeEventListener('blur', handlePdfGateTelemetry);
+    console.log("💰 Ad display focus shifted. Provisioning 3D Reader launch pipeline...");
+    
+    // Gives user time to close the full-screen window before breaking DOM structure
+    setTimeout(async () => {
+        await executeCore3DReaderPipeline();
+    }, 1500);
+}
+
+// 🔀 DYNAMIC SECURITY APPLICATION ROUTER FOR 3D ENVIRONMENT
+async function executeCore3DReaderPipeline() {
+    try {
+        if (!window.tempSelectedPdfFile) return;
+        
+        console.log("🎯 Access Authorized! Rendering 3D book canvas layout.");
+        
+        // 1. Remove the tool uploader window layer completely
+        const modalContainer = document.getElementById('local-pdf-modal');
+        if (modalContainer) modalContainer.remove();
+        
+        if (window.hideLoader) window.hideLoader();
+
+        // 2. Safely bootstrap your independent 3D rendering system
+        if (typeof startBookReader === 'function') {
+            await startBookReader(window.tempSelectedPdfFile, true);
+        } else if (window.startBookReader) {
+            await window.startBookReader(window.tempSelectedPdfFile, true);
+        }
+        
+        // 3. Purge data pointer to optimize mobile performance
+        window.tempSelectedPdfFile = null;
+
+    } catch (error) {
+        console.error("🚨 Emergency bypass crash inside core reader engine:", error);
+        if (window.hideLoader) window.hideLoader();
+        
+        const modalContainer = document.getElementById('local-pdf-modal');
+        if (modalContainer) modalContainer.remove();
+        if (window.startBookReader) window.startBookReader(window.tempSelectedPdfFile, true);
+    }
+}
 
 
 
