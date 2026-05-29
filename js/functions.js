@@ -525,17 +525,14 @@ export const animateBookClick = (target, bookId) => {
 
 
 // =========================================================================
-// 📚 BOOK DETAILS & DYNAMIC FREE-CONDITIONAL LOGIC PIPELINE
+// 📚 BOOK DETAILS & DYNAMIC FREE-CONDITIONAL LOGIC PIPELINE (UPGRADED FOR ADSENSE)
 // =========================================================================
 export const showBookDetails = async (bookId) => {
     window.showLoader();
     try {
         const user = auth.currentUser;
-        if (!user) {
-            window.hideLoader();
-            window.render("profile");
-            return;
-        }
+        
+        // 🚨 REMOVED GENERAL PROFILE REDIRECT: Guest and Google Bots can now see full details!
 
         const bookSnap = await getDoc(doc(db, "books", bookId));
         if (!bookSnap.exists()) throw new Error("Book not found!");
@@ -547,8 +544,8 @@ export const showBookDetails = async (bookId) => {
         const isPurchased = userData.purchasedBooks?.includes(bookId);
         const isFree = Number(bookData.price) === 0;
 
-        // 🟢 RULE 1: Agar user ne premium book pehle se kharid rakhi hai, toh seedha reader kholo
-        if (isPurchased) {
+        // 🟢 RULE 1: User logged in hai AUR premium book purchased hai, tabhi direct reader kholo
+        if (user && isPurchased) {
             window.hideLoader();
             window.openReader(bookId);
             return;
@@ -562,10 +559,15 @@ export const showBookDetails = async (bookId) => {
             window.hideLoader();
             popupElement.classList.add('active'); 
 
-            // Action A: Just Read (Direct bypass path to streaming canvas - No Permanent Save)
+            // Action A: Just Read Path Intercept (Protected by Auth Check)
             document.getElementById('freeJustReadBtn').onclick = () => {
                 popupElement.classList.remove('active');
-                window.openReader(bookId);
+                if (!user) {
+                    // Agar guest click karega, toh profile/auth matrix par trigger hoga
+                    window.render("profile");
+                } else {
+                    window.openReader(bookId);
+                }
             };
 
             // Action B: Show Details
@@ -579,7 +581,7 @@ export const showBookDetails = async (bookId) => {
             return;
         }
 
-        // --- FULL REGULAR DATA BINDING (For Paid Books & Free Details Target) ---
+        // --- FULL REGULAR DATA BINDING (Visible to Google bots & Guest Users) ---
         window.render("BookPage"); 
 
         const safeSet = (id, val) => { if(document.getElementById(id)) document.getElementById(id).innerText = val; };
@@ -645,9 +647,8 @@ export const showBookDetails = async (bookId) => {
             };
         }
 
-
         // =========================================================================
-        // 🎯 ACTION BAR ACTIONS INJECTIONS (DYNAMIC ROUTING + FREE READER BUTTON)
+        // 🎯 ACTION BAR ACTIONS INJECTIONS (DYNAMIC AUTH INTERCEPT HOOKS)
         // =========================================================================
         const buyBtn = document.getElementById('buyAction');
         const couponBtn = document.getElementById('couponAction');
@@ -656,28 +657,34 @@ export const showBookDetails = async (bookId) => {
         if (isFree) {
             // 🟢 IF BOOK IS 100% FREE (Price === 0)
             
-            // 1. "Read Free" button ko dikhao aur click event lagao
             if (readFreeBtn) {
                 readFreeBtn.style.display = "flex";
                 readFreeBtn.onclick = () => {
-                    console.log("📖 Direct streaming mode triggered via Action Bar.");
-                    window.openReader(bookId);
+                    if (!user) {
+                        // 🔐 Auth Intercept: Content dekhne diya, par read karne ke liye login zaruri hai
+                        window.render("profile");
+                    } else {
+                        console.log("📖 Direct streaming mode triggered via Action Bar.");
+                        window.openReader(bookId);
+                    }
                 };
             }
 
-            // 2. Coupon button ko chhupa do (Kyunki free book me coupon ka koi kaam nahi)
             if (couponBtn) couponBtn.style.display = "none";
 
-            // 3. "Buy Now" button ko badal kar "Save Free Book" (Wishlist Intercept) banao
             if (buyBtn) {
                 buyBtn.setAttribute('data-book-id', bookId);
                 buyBtn.innerHTML = `<i class="fa-solid fa-heart-circle-plus"></i> Save Free`;
-                buyBtn.style.background = "rgba(255, 255, 255, 0.05)"; // Neutral design taaki green read button highlight ho
+                buyBtn.style.background = "rgba(255, 255, 255, 0.05)"; 
                 buyBtn.style.border = "1px solid var(--ink-border)";
                 buyBtn.style.color = "var(--ink-text-main)";
                 buyBtn.style.boxShadow = "none";
 
                 buyBtn.onclick = () => {
+                    if (!user) {
+                        window.render("profile");
+                        return;
+                    }
                     triggerActionConfirmation({
                         title: "Save Free Book?",
                         desc: "This book is free, if you want to save it you can save it in your wish list.",
@@ -691,22 +698,22 @@ export const showBookDetails = async (bookId) => {
         } else {
             // 🔴 IF BOOK IS PREMIUM (Price > 0)
             
-            // 1. Naye "Read Free" button ko poori tarah chhupa do
             if (readFreeBtn) readFreeBtn.style.display = "none";
-
-            // 2. Coupon button ko wapas dikhao
             if (couponBtn) couponBtn.style.display = "flex";
 
-            // 3. Buy Now button ko default state me set karo
             if (buyBtn) {
                 buyBtn.setAttribute('data-book-id', bookId);
                 buyBtn.innerHTML = `<i class="fa-solid fa-bolt"></i> Buy Now`;
-                buyBtn.style.background = ""; // Default CSS automatic load ho jayegi
+                buyBtn.style.background = ""; 
                 buyBtn.style.border = "";
                 buyBtn.style.color = "";
                 buyBtn.style.boxShadow = "";
 
                 buyBtn.onclick = () => {
+                    if (!user) {
+                        window.render("profile");
+                        return;
+                    }
                     if (bookData.isFeatured === true) {
                         openCoinPurchaseGateway(bookId, bookData.price);
                     } else {
@@ -715,7 +722,6 @@ export const showBookDetails = async (bookId) => {
                 };
             }
         }
-
 
         // =========================================================================
         // 🔗 NATIVE MOBILE WEB SHARE API INTEGRATION
@@ -730,16 +736,14 @@ export const showBookDetails = async (bookId) => {
                 if (navigator.share) {
                     try {
                         await navigator.share({ title: shareTitle, text: shareText, url: shareURL });
-                        console.log("🚀 Vault core share link broadcasted successfully!");
                     } catch (shareErr) {
                         console.log("Share sheet dismissed by user:", shareErr);
                     }
                 } else {
                     try {
                         await navigator.clipboard.writeText(shareURL);
-                        alert("Sharing Link copied to clipboard vault! 🎉\nYou can now paste and share it anywhere.");
+                        alert("Sharing Link copied to clipboard vault! 🎉");
                     } catch (copyErr) {
-                        console.error("Clipboard node execution blocked:", copyErr);
                         alert(`Copy link manually: ${shareURL}`);
                     }
                 }
@@ -747,12 +751,11 @@ export const showBookDetails = async (bookId) => {
         }
 
         // =========================================================================
-        // ❤️ WISHLIST MATRIX & ANIMATION ENGINE (Standard Side-Heart Trigger)
+        // ❤️ WISHLIST MATRIX & ANIMATION ENGINE (Protected via User Token check)
         // =========================================================================
         const wishlistBtn = document.getElementById('wishlistAction');
         if (wishlistBtn) {
             const heartIcon = wishlistBtn.querySelector('i');
-            
             const currentWishlist = window.currentUserData?.wishlist || [];
             const isAlreadyWishlisted = currentWishlist.includes(bookId);
 
@@ -765,8 +768,12 @@ export const showBookDetails = async (bookId) => {
             }
 
             wishlistBtn.onclick = async () => {
+                if (!user) {
+                    window.render("profile");
+                    return;
+                }
+
                 wishlistBtn.style.transform = "scale(0.8)";
-                
                 if (heartIcon) {
                     heartIcon.className = "fa-solid fa-heart"; 
                     wishlistBtn.style.color = "#ef4444";
@@ -796,8 +803,6 @@ export const showBookDetails = async (bookId) => {
                     } catch (dbErr) {
                         console.error("Critical failure during wishlist asset binding:", dbErr);
                     }
-                } else {
-                    console.log("⚡ Token already inside matrix cache vault. Skipping database write protocol.");
                 }
             };
         }
@@ -810,6 +815,9 @@ export const showBookDetails = async (bookId) => {
         window.hideLoader();
     }
 };
+
+
+
 
 // =========================================================================
 // 🌐 SYSTEM WIDE CONFIRMATION MODAL UTILITY HANDLERS
@@ -5170,8 +5178,3 @@ export const openCategoryViewPage = async (db, categoryId, categoryName, current
         await renderBooksGrid('.ink-grid', 21, currentUser, true, categoryId, db);
     }
 };
-     
-
-
-
-
