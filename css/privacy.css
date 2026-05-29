@@ -1,23 +1,29 @@
 /* =========================================================================
-   🌌 TALKINK PRIVACY POLICY - STANDALONE CORE STYLESHEET
+   🌌 TALKINK PRIVACY POLICY - ULTRA-WIDE COMPACT CORE STYLESHEET
    ========================================================================= */
 
-/* 🎨 1. CORE DESIGN TOKENS & VARIABLES */
+/* 🎨 1. CORE DESIGN TOKENS */
 :root {
-    --bg-color: #020617;        /* Deep Navy Blue #020617 (Aapka Signature Color) */
-    --text-main: #ffffff;       /* Pure White Title Text */
-    --text-muted: #94a3b8;      /* Premium Slate Muted Text */
-    --accent-cyan: #06b6d4;     /* Neon Cyan Electric Spark */
-    --accent-purple: #a855f7;   /* Cyberpunk Neon Purple */
+    --bg-color: #020617;        
+    --text-main: #ffffff;       
+    --text-muted: #94a3b8;      
+    --accent-cyan: #06b6d4;     
+    --accent-purple: #a855f7;   
     --font-heading: 'Bricolage Grotesque', sans-serif;
     --font-body: 'Inter', sans-serif;
 }
 
-/* 🎯 2. GLOBAL RESET & CORE VIEWPORT MATRIX */
+/* 🎯 2. GLOBAL RESET (NO UNNECESSARY MARGINS) */
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
 }
 
 body {
@@ -27,9 +33,10 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
+    line-height: 1.4;
 }
 
-/* 🪐 3. CINEMATIC BLURRY GLOWING BACKDROP */
+/* 🪐 3. FIXED BACKDROP GLOW */
 .glow-bg {
     position: fixed;
     top: 0;
@@ -51,63 +58,51 @@ body {
     opacity: 0.12;
 }
 
-.blob-1 {
-    top: -10%;
-    left: -10%;
-    background: var(--accent-cyan);
-}
+.blob-1 { top: -10%; left: -10%; background: var(--accent-cyan); }
+.blob-2 { bottom: -10%; right: -10%; background: var(--accent-purple); }
 
-.blob-2 {
-    bottom: -10%;
-    right: -10%;
-    background: var(--accent-purple);
-}
-
-/* 💻 4. POLICY VIEWPORT & LAYOUT BOUNDARIES */
+/* 💻 4. FULL-SCREEN VIEWPORT PORT MATRIX (OPTIMIZED SPACINGS) */
 .policy-viewport {
     position: relative;
     width: 100%;
-    padding: 7rem 1.5rem 5rem;
+    padding: 2rem 1rem; /* Badi padding bilkul khatam */
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .policy-container {
-    max-width: 850px; /* Scientifically optimized for reading comfort */
-    width: 100%;
+    width: 95%; /* 900px se hata kar full-screen stretch kiya */
+    max-width: 1400px; 
     margin: 0 auto;
 }
 
-/* 📝 5. J落实 TYPOGRAPHY HEADER ENGINE */
+/* 📝 5. COMPACT HEADER SECTION */
 .policy-header-section {
-    max-width: 800px;
-    margin: 0 auto 4rem;
+    width: 100%;
+    margin-bottom: 2rem; /* Margin tight kar di */
     text-align: center;
 }
 
 .policy-tag {
-    display: block;
-    font-family: var(--font-body);
-    font-size: 0.85rem;
+    display: inline-block;
+    font-size: 0.75rem;
     font-weight: 600;
     color: var(--accent-purple);
-    letter-spacing: 4px;
-    margin-bottom: 1.25rem;
+    letter-spacing: 3px;
+    margin-bottom: 0.5rem;
     text-transform: uppercase;
 }
 
 .policy-main-title {
     font-family: var(--font-heading);
-    font-size: clamp(2.5rem, 6vw, 4.2rem);
+    font-size: clamp(2rem, 5vw, 3.5rem);
     font-weight: 700;
-    letter-spacing: -2px;
-    line-height: 1.1;
-    margin-bottom: 1.25rem;
+    letter-spacing: -1px;
+    margin-bottom: 0.5rem;
     color: #ffffff;
 }
 
-/* Dynamic Gradient Text Helper */
 .gradient-text {
     background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-purple) 100%);
     -webkit-background-clip: text;
@@ -115,92 +110,89 @@ body {
 }
 
 .policy-meta-text {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: var(--accent-cyan);
-    font-family: var(--font-body);
-    font-weight: 400;
-    letter-spacing: 1px;
-    margin-bottom: 2rem;
-    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 1rem;
 }
 
 .policy-lead-text {
-    font-size: 1.15rem;
+    font-size: 1.05rem;
     color: var(--text-muted);
-    line-height: 1.75;
-    font-weight: 300;
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
-/* 🎴 6. THE PREMIUM GLASSMORPHIC CARD HUB */
+/* 🎴 6. FULL ULTRA-WIDE GLASS PANEL */
 .policy-glass-card {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.015) 0%, rgba(255, 255, 255, 0.002) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    border-radius: 32px;
-    padding: 5rem 4rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.003) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 2.5rem; /* Padding drastically reduced for maximum screen usage */
     display: flex;
     flex-direction: column;
-    gap: 3.5rem; /* Spacious professional splitting */
-    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5);
+    gap: 2.5rem; 
+    box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.6);
 }
 
-/* Legal Clause Blocks */
+/* Structural Interface Blocks */
 .policy-block {
     position: relative;
+    width: 100%;
 }
 
 .policy-section-title {
     font-family: var(--font-heading);
-    font-size: 1.65rem;
+    font-size: 1.4rem;
     font-weight: 700;
-    letter-spacing: -0.5px;
     color: #ffffff;
-    margin-bottom: 1.25rem;
-    background: linear-gradient(90deg, #ffffff 30%, var(--text-muted) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 0.5rem;
 }
 
 .policy-text {
-    font-size: 1.05rem;
+    font-size: 1rem;
     color: var(--text-muted);
-    line-height: 1.8;
-    font-weight: 300;
-    margin-bottom: 1.2rem;
-    text-align: justify;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+    text-align: left;
 }
 
-/* 📋 7. CUSTOM NEON SQUARE BULLET LISTS */
+.policy-text strong {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* 📋 7. COMPACT LIST ENGINE */
 .policy-list {
     list-style: none;
-    padding-left: 0.5rem;
     display: flex;
     flex-direction: column;
-    gap: 1.1rem;
-    margin-top: 1.5rem;
+    gap: 0.8rem;
+    margin-top: 1rem;
 }
 
 .policy-list li {
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: var(--text-muted);
-    line-height: 1.65;
-    font-weight: 300;
+    line-height: 1.5;
     position: relative;
-    padding-left: 1.75rem;
+    padding-left: 1.5rem;
 }
 
-/* Cyberpunk-ish Block Bullets */
 .policy-list li::before {
     content: '';
     position: absolute;
     left: 4px;
-    top: 9px;
-    width: 6px;
-    height: 6px;
+    top: 8px;
+    width: 5px;
+    height: 5px;
     background: var(--accent-cyan);
-    box-shadow: 0 0 10px var(--accent-cyan);
-    border-radius: 2px;
+    box-shadow: 0 0 8px 1px var(--accent-cyan);
+    border-radius: 1px;
 }
 
 .policy-list li strong {
@@ -208,111 +200,537 @@ body {
     font-weight: 600;
 }
 
-/* 📩 8. HIGHLIGHTED CUSTOMER QUARRY INFRASTRUCTURE */
+/* 📩 8. COMPLIANCE INFORMATION STRIP */
 .text-highlight-cyan {
-    background: linear-gradient(90deg, rgba(6, 182, 212, 0.04) 0%, rgba(0,0,0,0) 100%);
+    background: rgba(6, 182, 212, 0.03);
     border-left: 3px solid var(--accent-cyan);
-    padding: 1.5rem;
-    border-radius: 0 16px 16px 0;
+    padding: 1rem;
+    border-radius: 0 12px 12px 0;
     font-weight: 400;
     color: #ffffff;
+    margin-top: 1rem;
 }
 
 .policy-inline-link {
     color: var(--accent-cyan);
     text-decoration: none;
     font-weight: 600;
-    transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
 .policy-inline-link:hover {
     color: var(--accent-purple);
-    text-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
 }
 
-/* 🔘 9. BACK TO DASHBOARD ACTION BUTTON */
+/* 🔘 9. COMPACT ACTION CONTROL ROW */
 .policy-action-row {
-    margin-top: 4rem;
+    margin-top: 2rem;
     display: flex;
     justify-content: center;
 }
 
 .btn-primary {
     display: inline-block;
-    padding: 1.1rem 2.8rem;
+    padding: 0.8rem 2.5rem;
     background: #ffffff;
     color: #020617;
     text-decoration: none;
     font-family: var(--font-heading);
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 700;
-    border-radius: 100px;
-    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.08);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border-radius: 50px;
+    transition: all 0.3s ease;
 }
 
 .btn-primary:hover {
-    transform: translateY(-4px);
-    background: linear-gradient(45deg, var(--accent-cyan), var(--accent-purple));
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
     color: #ffffff;
-    box-shadow: 0 15px 30px rgba(6, 182, 212, 0.2);
+    box-shadow: 0 10px 20px rgba(6, 182, 212, 0.2);
 }
 
-/* 🎬 10. SCROLL REVEAL INITIALIZATION ENGINE */
+/* 🎬 10. FORCE-VISIBLE TIMELINE ENGINE (ZERO BLANK DELAYS) */
 .reveal {
-    opacity: 1;
-    transform: translateY(30px);
-    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    transition: none !important;
 }
 
-.reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Helper Class */
 .text-center {
     text-align: center;
 }
 
 /* =========================================================================
-   📱 11. RESPONSIVE MATRIX TRANSLATIONS (MOBILE VIEWPORT FIX)
+   📱 11. CLEAN RESPONSIVE SCALING MODULES
    ========================================================================= */
 @media (max-width: 768px) {
     .policy-viewport {
-        padding: 5rem 1rem 3rem;
+        padding: 1.5rem 0.5rem;
     }
 
     .policy-glass-card {
-        padding: 3rem 1.75rem; /* Safeguards mobile content edge boundaries */
-        border-radius: 24px;
-        gap: 2.5rem;
+        padding: 1.5rem;
+        border-radius: 12px;
+        gap: 2rem;
     }
 
     .policy-main-title {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
 
     .policy-section-title {
-        font-size: 1.4rem;
-        margin-bottom: 1rem;
-    }
-
-    .policy-text, 
-    .policy-list li {
-        font-size: 1rem;
-        line-height: 1.65;
-        text-align: left; /* Eliminates messy gaps on narrow vertical columns */
-    }
-
-    .text-highlight-cyan {
-        padding: 1.25rem 1rem;
-    }
-
-    .btn-primary {
-        width: 100%;
-        max-width: 280px;
-        text-align: center;
-        padding: 1rem 2rem;
+        font-size: 1.2rem;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================================
+   🧬 SCOPED REINFORCEMENTS - CLAUSE 1 HYPER-STRUCTURED ENGINE
+   ========================================================================= */
+
+/* 1. SECTION BOUNDARY & METADATA GRID */
+.structured-clause-node {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.clause-metadata-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 0.75rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.clause-index-badge {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    background: rgba(6, 182, 212, 0.08);
+    border: 1px solid rgba(6, 182, 212, 0.2);
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.1);
+    flex-shrink: 0;
+}
+
+.elite-lead-paragraph {
+    font-size: 1.12rem !important;
+    line-height: 1.7 !important;
+    color: #cbd5e1 !important;
+}
+
+/* 2. TECHNICAL INSIGHTS GRID MATRIX (PC BEST-FIT) */
+.technical-insights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+    margin: 1rem 0;
+    box-sizing: border-box;
+}
+
+.insight-item-box {
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.01);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.insight-item-box:hover {
+    border-color: rgba(6, 182, 212, 0.15);
+    transform: translateY(-2px);
+}
+
+.insight-metric-label {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    position: relative;
+    padding-left: 0.75rem;
+}
+
+.insight-metric-label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 12px;
+    background: var(--accent-purple);
+    border-radius: 2px;
+}
+
+.insight-text-content {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* 3. POLICY FIGURE MATRIX (HIGH-END DATA TABLE) */
+.policy-figure-matrix-box {
+    width: 100%;
+    margin: 1.5rem 0;
+    box-sizing: border-box;
+}
+
+.figure-caption-tag {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent-purple);
+    letter-spacing: 2px;
+    margin-bottom: 0.75rem;
+}
+
+.policy-metric-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.policy-metric-table th, 
+.policy-metric-table td {
+    padding: 1rem 1.25rem;
+    text-align: left;
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.policy-metric-table th {
+    background: rgba(255, 255, 255, 0.02);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+}
+
+.policy-metric-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.status-badge-local { color: var(--accent-cyan) !important; font-weight: 600; }
+.status-badge-cloud { color: var(--accent-purple) !important; font-weight: 600; }
+
+.clause-summary-strip {
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+    margin-top: 1rem;
+}
+
+/* =========================================================================
+   📱 100% BULLETPROOF MOBILE ENGINE (MAX-WIDTH: 768px)
+   ========================================================================= */
+@media (max-width: 768px) {
+    
+    /* Strict Layout Lock - Content ko screen frame me baandhne ke liye */
+    html, body {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important; /* Global horizontal scroll destroy */
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Outer Wrapper Reset */
+    .policy-viewport {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 1rem 0.5rem !important; /* Micro gutters */
+        box-sizing: border-box !important;
+        display: block !important; /* Flexbox breakout fix */
+    }
+
+    .policy-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Main Card Protection */
+    .policy-glass-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 1.25rem 0.85rem !important; /* Squeezed padding so content gets space */
+        box-sizing: border-box !important;
+        gap: 1.75rem !important;
+        border-radius: 12px !important;
+    }
+
+    /* Clause Structuring elements */
+    .structured-clause-node {
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .clause-metadata-row {
+        gap: 0.5rem !important;
+    }
+
+    /* Technical Insight Cards Crash Protection */
+    .technical-insights-grid {
+        grid-template-columns: 1fr !important; /* Strictly vertical stacking */
+        gap: 0.75rem !important;
+        width: 100% !important;
+    }
+
+    .insight-item-box {
+        padding: 1rem !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 🚨 Table Horizontal Ghost Scroll Fix 🚨 */
+    .policy-figure-matrix-box {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 1rem 0 !important;
+        overflow-x: auto !important; /* Swipe internal table only, not screen */
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        border-radius: 8px !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+        box-sizing: border-box !important;
+    }
+
+    .policy-metric-table {
+        width: auto !important;
+        min-width: 520px !important; /* Safely render content inside layout matrix */
+    }
+
+    .policy-metric-table th, 
+    .policy-metric-table td {
+        padding: 0.6rem 0.5rem !important;
+        font-size: 0.78rem !important;
+        white-space: normal !important; /* Direct line breaks wrapping text */
+        word-break: break-word !important;
+    }
+
+    /* Typography Responsive Standardisation */
+    .policy-main-title {
+        font-size: 1.75rem !important;
+    }
+
+    .policy-lead-text, .policy-text {
+        font-size: 0.9rem !important;
+        line-height: 1.45 !important;
+        word-wrap: break-word;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- HYPER-MOTION APP-DOCK FOOTER CORE CORE --- */
+.ti-core-footer {
+    --f-navy: #020617;
+    --f-accent: #6366f1;
+    --f-glow: #a855f7;
+    --f-white: #f8fafc;
+    --f-border: rgba(255, 255, 255, 0.04);
+    --f-surface: #070b19;
+    
+    background: linear-gradient(180deg, var(--f-navy) 0%, var(--f-surface) 100%);
+    border-top: 1px solid var(--f-border);
+    padding: 60px 0 20px 0;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Moving Laser Top Border Effect */
+.footer-laser-line {
+    position: absolute;
+    top: -1px; left: 0; width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--f-accent), var(--f-glow), transparent);
+    background-size: 200% auto;
+    animation: footerLaserShift 6s linear infinite;
+}
+@keyframes footerLaserShift { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
+
+/* Structure Layout Wrapper */
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 5%;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 40px;
+}
+
+/* Brand Branding Typography Frame */
+.footer-brand-section .footer-logo {
+    font-family: 'Syncopate', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--f-white);
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+}
+.footer-brand-section .footer-logo .logo-dot {
+    color: var(--f-accent);
+}
+.footer-tagline {
+    color: #64748b;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    max-width: 320px;
+    margin-bottom: 24px;
+}
+
+/* Micro-Animated App Style Links */
+.footer-heading {
+    font-family: 'Syncopate', sans-serif;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #475569;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+.links-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.app-link-node {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid transparent;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.app-link-node .link-icon {
+    color: #475569;
+    font-size: 1rem;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s;
+}
+.app-link-node:hover {
+    background: rgba(99, 102, 241, 0.06);
+    color: var(--f-white);
+    border-color: rgba(99, 102, 241, 0.15);
+    transform: translateX(4px);
+}
+.app-link-node:hover .link-icon {
+    color: var(--f-accent);
+    transform: scale(1.2) rotate(-5deg);
+}
+
+/* Futuristic Social Grid Controller Nodes */
+.footer-social-grid {
+    display: flex;
+    gap: 12px;
+}
+.social-node {
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--f-border);
+    color: #94a3b8;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.social-node:hover {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: rgba(99, 102, 241, 0.4);
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+}
+
+/* Bottom Copyright Bar */
+.footer-meta-bar {
+    max-width: 1200px; margin: 40px auto 0 auto;
+    padding: 20px 5% 0 5%;
+    border-top: 1px solid rgba(255, 255, 255, 0.02);
+    display: flex; justify-content: space-between;
+    color: #334155; font-size: 0.8rem; font-weight: 500;
+}
+
+/* ========================================================================= */
+/* 📱 ULTRA-PWA ADAPTIVE MOBILE BREAKPOINT MAPPING                           */
+/* ========================================================================= */
+@media (max-width: 768px) {
+    /* Pure App Bottom Nav Bar transformation setup */
+    .ti-core-footer {
+        padding: 30px 0 90px 0; /* Extra space at bottom so app content doesn't get cut by screen */
+    }
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+    }
+    .footer-brand-section .footer-tagline {
+        margin: 12px auto 20px auto;
+    }
+    .footer-social-grid {
+        justify-content: center;
+    }
+    .links-grid {
+        align-items: center;
+    }
+    .app-link-node {
+        width: 80%;
+        justify-content: center;
+    }
+    .footer-meta-bar {
+        text-align: center;
+        justify-content: center;
+    }
+}
+
+
