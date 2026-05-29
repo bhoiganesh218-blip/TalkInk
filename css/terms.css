@@ -1,10 +1,10 @@
 /* =========================================================================
-   📜 TALKINK TERMS & CONDITIONS - STANDALONE ZEHER TYPOGRAPHY STYLESHEET
+   📜 TALKINK TERMS & CONDITIONS - PRODUCTION MATRIX ENGINE (UPGRADED)
    ========================================================================= */
 
 /* 🎨 1. CORE BRAND DESIGN TOKENS */
 :root {
-    --bg-color: #020617;        /* Aapka signature Deep Navy Blue */
+    --bg-color: #020617;        /* Signature Deep Navy Dark Node */
     --text-main: #ffffff;       /* Sharp Pure White Title Text */
     --text-muted: #94a3b8;      /* Premium Muted Slate Text */
     --accent-cyan: #06b6d4;     /* Neon Cyan Electric Spark */
@@ -14,19 +14,24 @@
     --font-body: 'Inter', sans-serif;
 }
 
-/* 🎯 2. GLOBAL RESET & CORE CANVAS ARCHITECTURE */
+/* 🎯 2. GLOBAL RESET & TERMINAL BOUNDARY LOCK */
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-body {
+html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden; /* Direct Horizontal Overflow Prevention */
     background-color: var(--bg-color);
     color: var(--text-main);
     font-family: var(--font-body);
     min-height: 100vh;
-    overflow-x: hidden;
+}
+
+body {
     position: relative;
 }
 
@@ -49,7 +54,7 @@ body {
     height: min(600px, 120vw);
     border-radius: 50%;
     filter: blur(160px);
-    opacity: 0.1;
+    opacity: 0.08;
 }
 
 .purple-orb {
@@ -72,12 +77,14 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-sizing: border-box;
 }
 
 .terms-container {
-    max-width: 850px; /* Scientifically tested reading length for maximum focus */
+    max-width: 850px; /* Optimal text width for dynamic focus reading */
     width: 100%;
     margin: 0 auto;
+    box-sizing: border-box;
 }
 
 /* 📝 5. HIGH-CONTRAST TYPOGRAPHY HEADER */
@@ -108,7 +115,6 @@ body {
     color: #ffffff;
 }
 
-/* Fluid Gradient Engine */
 .gradient-text {
     background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-purple) 100%);
     -webkit-background-clip: text;
@@ -142,13 +148,41 @@ body {
     padding: 5.5rem 4.5rem;
     display: flex;
     flex-direction: column;
-    gap: 4rem; /* Generous spacing so rules don't look clumsy */
+    gap: 4.5rem; /* Spacious clause layouts */
     box-shadow: 0 60px 120px rgba(0, 0, 0, 0.6);
+    box-sizing: border-box;
 }
 
-/* Legal Clauses Blocks */
-.terms-clause {
-    position: relative;
+/* 🧬 7. HYPER-STRUCTURED ENGINE NODES (NEW ARCHITECTURE) */
+.terms-structured-node {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.terms-metadata-row {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.04);
+    padding-bottom: 0.85rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.terms-index-badge {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    background: rgba(6, 182, 212, 0.06);
+    border: 1px solid rgba(6, 182, 212, 0.18);
+    padding: 0.25rem 0.65rem;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.08);
+    flex-shrink: 0;
 }
 
 .clause-heading {
@@ -157,8 +191,8 @@ body {
     font-weight: 700;
     letter-spacing: -0.5px;
     color: #ffffff;
-    margin-bottom: 1.5rem;
-    background: linear-gradient(90deg, #ffffff 40%, var(--text-muted) 100%);
+    margin: 0;
+    background: linear-gradient(90deg, #ffffff 50%, var(--text-muted) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -168,30 +202,95 @@ body {
     color: var(--text-muted);
     line-height: 1.85;
     font-weight: 300;
-    margin-bottom: 1.2rem;
     text-align: justify;
 }
 
-/* ⛔ 7. CRISP CRITICAL RED ALERT CALLOUT */
+/* 💻 TECHNICAL DATA GRID SUB-SYSTEM */
+.terms-technical-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.25rem;
+    width: 100%;
+    margin: 0.5rem 0;
+    box-sizing: border-box;
+}
+
+.terms-insight-box {
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.01);
+    box-sizing: border-box;
+}
+
+.terms-insight-box strong {
+    display: block;
+    font-family: var(--font-heading);
+    color: #ffffff;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* 📊 DATA TABLE ISOLATION METRIC CONTAINER */
+.terms-matrix-box {
+    width: 100%;
+    margin: 1rem 0;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.terms-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.005);
+}
+
+.terms-data-table th, 
+.terms-data-table td {
+    padding: 1.1rem 1.4rem;
+    text-align: left;
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.terms-data-table th {
+    background: rgba(255, 255, 255, 0.015);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+}
+
+.terms-data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.terms-badge-active { color: var(--accent-cyan) !important; font-weight: 600; }
+.terms-badge-restrict { color: var(--accent-purple) !important; font-weight: 600; }
+
+/* ⛔ 8. CRISP CRITICAL RED ALERT CALLOUT */
 .text-alert-warning {
     background: linear-gradient(90deg, rgba(239, 68, 68, 0.06) 0%, rgba(0, 0, 0, 0) 100%);
     border-left: 3px solid var(--accent-warning);
     padding: 1.5rem;
     border-radius: 0 20px 20px 0;
-    color: #fca5a5 !important; /* Soft, readable crimson text */
+    color: #fca5a5 !important;
     font-weight: 400;
     font-size: 1rem;
     line-height: 1.7;
+    box-sizing: border-box;
 }
 
-/* 📋 8. PREMIUM BULLET POINTS FRAMEWORK */
+/* 📋 9. PREMIUM BULLET POINTS FRAMEWORK */
 .terms-bullet-list {
     list-style: none;
-    padding-left: 0.5rem;
+    padding-left: 0.25rem;
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
-    margin-top: 1.5rem;
 }
 
 .terms-bullet-list li {
@@ -200,20 +299,19 @@ body {
     line-height: 1.7;
     font-weight: 300;
     position: relative;
-    padding-left: 2rem;
+    padding-left: 1.75rem;
 }
 
-/* Custom Neon Dots */
 .terms-bullet-list li::before {
     content: '';
     position: absolute;
     left: 4px;
-    top: 10px;
+    top: 9px;
     width: 6px;
     height: 6px;
     background: var(--accent-purple);
     box-shadow: 0 0 10px var(--accent-purple);
-    border-radius: 50%; /* Rounded bullet points here for contrast with privacy page */
+    border-radius: 50%;
 }
 
 .terms-bullet-list li strong {
@@ -221,16 +319,17 @@ body {
     font-weight: 600;
 }
 
-/* 📩 9. LEGAL CONTACT ARBITRATION CALLOUT BOX */
+/* 📩 10. LEGAL CONTACT ARBITRATION CALLOUT BOX */
 .terms-contact-callout {
-    background: linear-gradient(90deg, rgba(168, 85, 247, 0.04) 0%, rgba(0,0,0,0) 100%);
+    background: linear-gradient(90deg, rgba(168, 85, 247, 0.04) 0%, rgba(0, 0, 0, 0) 100%);
     border-left: 3px solid var(--accent-purple);
     padding: 1.5rem;
     border-radius: 0 20px 20px 0;
     font-weight: 400;
     color: #ffffff;
     line-height: 1.7;
-    margin-top: 2rem;
+    margin-top: 1rem;
+    box-sizing: border-box;
 }
 
 .terms-link {
@@ -247,7 +346,7 @@ body {
     transform: translateY(-1px);
 }
 
-/* 🔘 10. PREMIUM RETURN CTA BUTTON */
+/* 🔘 11. PREMIUM RETURN CTA BUTTON */
 .terms-action-wrapper {
     margin-top: 5rem;
     display: flex;
@@ -275,7 +374,7 @@ body {
     box-shadow: 0 15px 35px rgba(168, 85, 247, 0.25);
 }
 
-/* 🎬 11. SCROLL REVEAL TIMING METRICS */
+/* 🎬 12. SCROLL REVEAL TIMING METRICS */
 .reveal {
     opacity: 1;
     transform: translateY(35px);
@@ -292,45 +391,109 @@ body {
 }
 
 /* =========================================================================
-   📱 12. RESPONSIVE MEDIA GRID CONVERTER (MOBILE OPTIMIZATIONS)
+   📱 13. 100% BULLETPROOF MOBILE ENGINE (MAX-WIDTH: 768px)
    ========================================================================= */
 @media (max-width: 768px) {
-    .terms-viewport {
-        padding: 6rem 1rem 4rem;
+    
+    /* Layout Enforcer - Global parameters reset to lock frame bounds */
+    html, body {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
+    .terms-viewport {
+        padding: 6rem 0.5rem 4rem !important; /* Micro gutters */
+        display: block !important; /* Disables parent flex clipping loops */
+        box-sizing: border-box !important;
+    }
+
+    .terms-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+    }
+
+    /* Core Card Squeeze Protection */
     .terms-glass-card {
-        padding: 3.5rem 1.75rem; /* Prevents overflow clipping on small rows */
-        border-radius: 24px;
-        gap: 2.5rem;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 3rem 1.25rem !important; /* Interior space buffer */
+        border-radius: 20px !important;
+        gap: 3rem !important;
+    }
+
+    /* Structures & Metadata Alignment */
+    .terms-structured-node {
+        gap: 1.25rem !important;
+    }
+
+    .terms-metadata-row {
+        gap: 0.75rem !important;
+    }
+
+    .terms-index-badge {
+        padding: 0.15rem 0.5rem !important;
+        font-size: 0.95rem !important;
     }
 
     .terms-title {
-        font-size: 2.6rem;
+        font-size: 2.5rem !important;
     }
 
     .clause-heading {
-        font-size: 1.4rem;
-        margin-bottom: 1rem;
+        font-size: 1.35rem !important;
+    }
+
+    /* Stacking grids vertically on small screens */
+    .terms-technical-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+
+    .terms-insight-box {
+        padding: 1.25rem !important;
+    }
+
+    /* 🚨 Table Swiping Container Logic (Zero Overflow Injection) 🚨 */
+    .terms-matrix-box {
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    }
+
+    .terms-data-table {
+        min-width: 520px !important; /* Safe render scale */
+        width: auto !important;
+    }
+
+    .terms-data-table th, 
+    .terms-data-table td {
+        padding: 0.75rem 0.85rem !important;
+        font-size: 0.82rem !important;
+        white-space: normal !important;
+        word-break: break-word !important;
     }
 
     .clause-text, 
     .terms-bullet-list li {
-        font-size: 1rem;
-        line-height: 1.7;
-        text-align: left; /* Changes text-justify to standard left for readability on mobile phone */
+        font-size: 0.95rem !important;
+        line-height: 1.65 !important;
+        text-align: left !important; /* Left alignment for better readability on phones */
     }
 
     .text-alert-warning,
     .terms-contact-callout {
-        padding: 1.25rem 1rem;
-        border-radius: 12px;
+        padding: 1.25rem 1rem !important;
+        border-radius: 12px !important;
     }
 
     .btn-return {
-        width: 100%;
-        max-width: 300px;
-        text-align: center;
-        padding: 1rem 2rem;
+        width: 100% !important;
+        max-width: 280px !important;
+        padding: 1rem 1.5rem !important;
     }
 }
