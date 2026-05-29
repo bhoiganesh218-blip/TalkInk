@@ -1,12 +1,12 @@
 /* =========================================================================
-   💳 TALKINK PAYMENTS & REFUNDS - STANDALONE TYPOGRAPHY STYLESHEET
+   💳 TALKINK PAYMENTS & REFUNDS - UPGRADED PRODUCTION ENGINE
    ========================================================================= */
 
 /* 🎨 1. CORE BRAND DESIGN TOKENS */
 :root {
-    --bg-color: #020617;        /* Aapka signature Deep Navy Blue background */
-    --text-main: #ffffff;       /* Pure White Text */
-    --text-muted: #94a3b8;      /* Premium Slate Muted Text */
+    --bg-color: #020617;        /* Signature Deep Navy Dark Node */
+    --text-main: #ffffff;       /* Sharp Pure White Title Text */
+    --text-muted: #94a3b8;      /* Premium Muted Slate Text */
     --accent-cyan: #06b6d4;     /* Neon Cyan Electric Spark */
     --accent-purple: #a855f7;   /* Cyberpunk Neon Purple */
     --accent-amber: #f59e0b;    /* Gold/Amber Warning Accent for Piracy Alert */
@@ -14,19 +14,24 @@
     --font-body: 'Inter', sans-serif;
 }
 
-/* 🎯 2. GLOBAL RESET & CORE CANVAS ARCHITECTURE */
+/* 🎯 2. GLOBAL RESET & TERMINAL BOUNDARY LOCK */
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-body {
+html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden; /* Direct Horizontal Overflow Prevention */
     background-color: var(--bg-color);
     color: var(--text-main);
     font-family: var(--font-body);
     min-height: 100vh;
-    overflow-x: hidden;
+}
+
+body {
     position: relative;
 }
 
@@ -49,7 +54,7 @@ body {
     height: min(550px, 110vw);
     border-radius: 50%;
     filter: blur(150px);
-    opacity: 0.1;
+    opacity: 0.08;
 }
 
 .orb-cyan {
@@ -64,7 +69,7 @@ body {
     background: var(--accent-purple);
 }
 
-/* 💻 4. PAYMENTS VIEWPORT & CONTENT LAYOUT boundaries */
+/* 💻 4. PAYMENTS VIEWPORT & CONTENT LAYOUT BOUNDARIES */
 .pay-viewport {
     position: relative;
     width: 100%;
@@ -72,15 +77,17 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-sizing: border-box;
 }
 
 .pay-container {
-    max-width: 850px; /* Scientifically tested reading length for premium readability */
+    max-width: 850px; /* Optimal reading layout for scanning heavy compliance details */
     width: 100%;
     margin: 0 auto;
+    box-sizing: border-box;
 }
 
-/* 📝 5. J落实 TYPOGRAPHY HEADER ENGINE */
+/* 📝 5. TYPOGRAPHY HEADER ENGINE */
 .pay-header {
     max-width: 800px;
     margin: 0 auto 5rem;
@@ -108,7 +115,6 @@ body {
     color: #ffffff;
 }
 
-/* Fluid Gradient Text Helper */
 .gradient-text {
     background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-purple) 100%);
     -webkit-background-clip: text;
@@ -142,13 +148,41 @@ body {
     padding: 5.5rem 4.5rem;
     display: flex;
     flex-direction: column;
-    gap: 4rem; /* Wide structural gaps between legal clauses */
+    gap: 4.5rem; /* Symmetric layout blocks gap */
     box-shadow: 0 60px 120px rgba(0, 0, 0, 0.6);
+    box-sizing: border-box;
 }
 
-/* Legal Clauses Blocks */
-.pay-clause {
-    position: relative;
+/* 🧬 7. HYPER-STRUCTURED SUBSYSTEMS (COMPLIANCE INJECTIONS) */
+.pay-structured-node {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.pay-metadata-row {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.04);
+    padding-bottom: 0.85rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.pay-index-badge {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--accent-purple);
+    background: rgba(168, 85, 247, 0.06);
+    border: 1px solid rgba(168, 85, 247, 0.18);
+    padding: 0.25rem 0.65rem;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.08);
+    flex-shrink: 0;
 }
 
 .clause-title {
@@ -157,7 +191,7 @@ body {
     font-weight: 700;
     letter-spacing: -0.5px;
     color: #ffffff;
-    margin-bottom: 1.5rem;
+    margin: 0;
     background: linear-gradient(90deg, #ffffff 50%, var(--text-muted) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -168,21 +202,87 @@ body {
     color: var(--text-muted);
     line-height: 1.85;
     font-weight: 300;
-    margin-bottom: 1.2rem;
     text-align: justify;
 }
 
-/* 🚫 7. PREMIUM ANTI-PIRACY WARNING CALLOUT BOX */
+/* 💻 FINANCIAL ASYNCHRONOUS MICRO-GRID */
+.pay-technical-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.25rem;
+    width: 100%;
+    margin: 0.5rem 0;
+    box-sizing: border-box;
+}
+
+.pay-insight-box {
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.01);
+    box-sizing: border-box;
+}
+
+.pay-insight-box strong {
+    display: block;
+    font-family: var(--font-heading);
+    color: #ffffff;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* 📊 METRICS & SLA CONFORMANCE DATA TABLE */
+.pay-matrix-box {
+    width: 100%;
+    margin: 1rem 0;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.pay-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.005);
+}
+
+.pay-data-table th, 
+.pay-data-table td {
+    padding: 1.1rem 1.4rem;
+    text-align: left;
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.pay-data-table th {
+    background: rgba(255, 255, 255, 0.015);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+}
+
+.pay-data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.pay-badge-active { color: var(--accent-cyan) !important; font-weight: 600; }
+.pay-badge-restrict { color: var(--accent-warning) !important; font-weight: 600; }
+
+/* 🚫 8. PREMIUM ANTI-PIRACY WARNING CALLOUT BOX */
 .pay-alert-box {
-    background: linear-gradient(90deg, rgba(245, 158, 11, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(90deg, rgba(245, 158, 11, 0.04) 0%, rgba(0, 0, 0, 0) 100%);
     border-left: 3px solid var(--accent-amber);
     padding: 1.5rem;
     border-radius: 0 20px 20px 0;
-    color: #fde68a; /* Soft readable amber text over dark background */
+    color: #fde68a; 
     font-size: 1rem;
     line-height: 1.7;
-    margin: 1.5rem 0;
+    margin: 0.5rem 0;
     font-weight: 300;
+    box-sizing: border-box;
 }
 
 .pay-alert-box strong {
@@ -193,14 +293,13 @@ body {
     margin-bottom: 0.5rem;
 }
 
-/* 📋 8. MODERN TICK/DOT BULLET DESIGN FRAMEWORK */
+/* 📋 9. MODERN TICK/DOT BULLET DESIGN FRAMEWORK */
 .pay-bullet-list {
     list-style: none;
-    padding-left: 0.5rem;
+    padding-left: 0.25rem;
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
-    margin-top: 1.5rem;
 }
 
 .pay-bullet-list li {
@@ -209,15 +308,14 @@ body {
     line-height: 1.7;
     font-weight: 300;
     position: relative;
-    padding-left: 2rem;
+    padding-left: 1.75rem;
 }
 
-/* Premium Gold-Cyan Geometric Dot */
 .pay-bullet-list li::before {
     content: '';
     position: absolute;
     left: 4px;
-    top: 10px;
+    top: 9px;
     width: 6px;
     height: 6px;
     background: var(--accent-cyan);
@@ -230,16 +328,17 @@ body {
     font-weight: 600;
 }
 
-/* 📩 9. CORE RESOLUTION DESK CALLOUT MATRIX */
+/* 📩 10. CORE RESOLUTION DESK CALLOUT MATRIX */
 .pay-contact-callout {
-    background: linear-gradient(90deg, rgba(6, 182, 212, 0.04) 0%, rgba(0,0,0,0) 100%);
+    background: linear-gradient(90deg, rgba(6, 182, 212, 0.04) 0%, rgba(0, 0, 0, 0) 100%);
     border-left: 3px solid var(--accent-cyan);
     padding: 1.5rem;
     border-radius: 0 20px 20px 0;
     font-weight: 400;
     color: #ffffff;
     line-height: 1.7;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
+    box-sizing: border-box;
 }
 
 .pay-inline-link {
@@ -256,7 +355,7 @@ body {
     transform: translateY(-1px);
 }
 
-/* 🔘 10. PREMIUM RETURN NAVIGATION BUTTON */
+/* 🔘 11. PREMIUM RETURN NAVIGATION BUTTON */
 .pay-action-row {
     margin-top: 5rem;
     display: flex;
@@ -284,7 +383,7 @@ body {
     box-shadow: 0 15px 35px rgba(6, 182, 212, 0.25);
 }
 
-/* 🎬 11. SCROLL REVEAL OPTIMIZATION INTERFACES */
+/* 🎬 12. SCROLL REVEAL OPTIMIZATION INTERFACES */
 .reveal {
     opacity: 1;
     transform: translateY(35px);
@@ -301,45 +400,297 @@ body {
 }
 
 /* =========================================================================
-   📱 12. RESPONSIVE MEDIA BREAKPOINTS (MOBILE ANTI-CRASH OPTIMIZATION)
+   📱 13. 100% BULLETPROOF MOBILE ENGINE (MAX-WIDTH: 768px)
    ========================================================================= */
 @media (max-width: 768px) {
-    .pay-viewport {
-        padding: 6rem 1rem 4rem;
+    
+    /* Layout Enforcer - Resets all parents layout to stop text pushing frames out */
+    html, body {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
+    .pay-viewport {
+        padding: 6rem 0.5rem 4rem !important; /* Minimal gutters prevent squeezing */
+        display: block !important; /* Suspends block constraints */
+        box-sizing: border-box !important;
+    }
+
+    .pay-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+    }
+
+    /* Core Panel Mobile Compression Safeguard */
     .pay-glass-card {
-        padding: 3.5rem 1.75rem; /* Secures critical layout limits on tight mobile screens */
-        border-radius: 24px;
-        gap: 2.5rem;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 3rem 1.25rem !important; /* Perfect fluid boundary spacing */
+        border-radius: 20px !important;
+        gap: 3rem !important;
+    }
+
+    /* Node & Badges Structuring Alignment */
+    .pay-structured-node {
+        gap: 1.25rem !important;
+    }
+
+    .pay-metadata-row {
+        gap: 0.75rem !important;
+    }
+
+    .pay-index-badge {
+        padding: 0.15rem 0.5rem !important;
+        font-size: 0.95rem !important;
     }
 
     .pay-title {
-        font-size: 2.6rem;
+        font-size: 2.5rem !important;
     }
 
     .clause-title {
-        font-size: 1.4rem;
-        margin-bottom: 1rem;
+        font-size: 1.35rem !important;
+    }
+
+    /* Collapse multi-column grid items to standard list */
+    .pay-technical-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+
+    .pay-insight-box {
+        padding: 1.25rem !important;
+    }
+
+    /* 🚨 Table Swiping Containment Layer (Prevents Horizontal Page Stretching) 🚨 */
+    .pay-matrix-box {
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    }
+
+    .pay-data-table {
+        min-width: 520px !important; /* Retains crisp layout width during swipe loops */
+        width: auto !important;
+    }
+
+    .pay-data-table th, 
+    .pay-data-table td {
+        padding: 0.75rem 0.85rem !important;
+        font-size: 0.82rem !important;
+        white-space: normal !important;
+        word-break: break-word !important;
     }
 
     .clause-desc, 
     .pay-bullet-list li {
-        font-size: 1rem;
-        line-height: 1.7;
-        text-align: left; /* Changes text justification to clean left layout for narrow columns */
+        font-size: 0.95rem !important;
+        line-height: 1.65 !important;
+        text-align: left !important; /* Text justification dropped to left alignment on high-density displays */
     }
 
     .pay-alert-box,
     .pay-contact-callout {
-        padding: 1.25rem 1rem;
-        border-radius: 12px;
+        padding: 1.25rem 1rem !important;
+        border-radius: 12px !important;
     }
 
     .btn-dashboard {
-        width: 100%;
-        max-width: 300px;
-        text-align: center;
-        padding: 1rem 2rem;
+        width: 100% !important;
+        max-width: 280px !important;
+        padding: 1rem 1.5rem !important;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- HYPER-MOTION APP-DOCK FOOTER CORE CORE --- */
+.ti-core-footer {
+    --f-navy: #020617;
+    --f-accent: #6366f1;
+    --f-glow: #a855f7;
+    --f-white: #f8fafc;
+    --f-border: rgba(255, 255, 255, 0.04);
+    --f-surface: #070b19;
+    
+    background: linear-gradient(180deg, var(--f-navy) 0%, var(--f-surface) 100%);
+    border-top: 1px solid var(--f-border);
+    padding: 60px 0 20px 0;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Moving Laser Top Border Effect */
+.footer-laser-line {
+    position: absolute;
+    top: -1px; left: 0; width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--f-accent), var(--f-glow), transparent);
+    background-size: 200% auto;
+    animation: footerLaserShift 6s linear infinite;
+}
+@keyframes footerLaserShift { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
+
+/* Structure Layout Wrapper */
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 5%;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 40px;
+}
+
+/* Brand Branding Typography Frame */
+.footer-brand-section .footer-logo {
+    font-family: 'Syncopate', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--f-white);
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+}
+.footer-brand-section .footer-logo .logo-dot {
+    color: var(--f-accent);
+}
+.footer-tagline {
+    color: #64748b;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    max-width: 320px;
+    margin-bottom: 24px;
+}
+
+/* Micro-Animated App Style Links */
+.footer-heading {
+    font-family: 'Syncopate', sans-serif;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #475569;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+.links-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.app-link-node {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid transparent;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.app-link-node .link-icon {
+    color: #475569;
+    font-size: 1rem;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s;
+}
+.app-link-node:hover {
+    background: rgba(99, 102, 241, 0.06);
+    color: var(--f-white);
+    border-color: rgba(99, 102, 241, 0.15);
+    transform: translateX(4px);
+}
+.app-link-node:hover .link-icon {
+    color: var(--f-accent);
+    transform: scale(1.2) rotate(-5deg);
+}
+
+/* Futuristic Social Grid Controller Nodes */
+.footer-social-grid {
+    display: flex;
+    gap: 12px;
+}
+.social-node {
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--f-border);
+    color: #94a3b8;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.social-node:hover {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: rgba(99, 102, 241, 0.4);
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+}
+
+/* Bottom Copyright Bar */
+.footer-meta-bar {
+    max-width: 1200px; margin: 40px auto 0 auto;
+    padding: 20px 5% 0 5%;
+    border-top: 1px solid rgba(255, 255, 255, 0.02);
+    display: flex; justify-content: space-between;
+    color: #334155; font-size: 0.8rem; font-weight: 500;
+}
+
+/* ========================================================================= */
+/* 📱 ULTRA-PWA ADAPTIVE MOBILE BREAKPOINT MAPPING                           */
+/* ========================================================================= */
+@media (max-width: 768px) {
+    /* Pure App Bottom Nav Bar transformation setup */
+    .ti-core-footer {
+        padding: 30px 0 90px 0; /* Extra space at bottom so app content doesn't get cut by screen */
+    }
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+    }
+    .footer-brand-section .footer-tagline {
+        margin: 12px auto 20px auto;
+    }
+    .footer-social-grid {
+        justify-content: center;
+    }
+    .links-grid {
+        align-items: center;
+    }
+    .app-link-node {
+        width: 80%;
+        justify-content: center;
+    }
+    .footer-meta-bar {
+        text-align: center;
+        justify-content: center;
+    }
+}
+
+
