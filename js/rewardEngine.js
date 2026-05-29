@@ -4,15 +4,12 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/fi
 import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // --- 🎚️ SYSTEM HARD-CORE CONFIGURATION ---
-const COOLDOWN_TIME = 60 * 1000; // 90 Seconds Cooldown
+const COOLDOWN_TIME = 15 * 1000; // 60 Seconds Cooldown
 const MAX_ADS_PER_DAY = 10;
-const IS_TEST_MODE = true; // 🚨 Production pe jaate hi ise false kar dena bhaa
+const IS_TEST_MODE = false; // 🚨 Production pe jaate hi ise false kar dena bhaa
 
-// Global States for Google Publisher Tags (GPT)
-window.googletag = window.googletag || { cmd: [] };
-let rewardedSlot;
+// Global States for Monetag Framework Transformation
 let isAdReady = false;
-let showRewardedAdFn = null;
 let currentUID = null;
 
 // Live Local State Cache
@@ -29,7 +26,6 @@ onAuthStateChanged(auth, async (user) => {
         console.log("👤 User Authenticated:", currentUID);
         
         try {
-            // Live data pull out from Firestore root database
             const res = await getSingleDoc("users", currentUID);
             if (res && res.success && res.data) {
                 localUserProgress.coins = res.data.coins || 0;
@@ -41,10 +37,8 @@ onAuthStateChanged(auth, async (user) => {
                 const todayDate = new Date().toDateString();
 
                 if (lastAdDate !== todayDate && localUserProgress.adsWatchedToday > 0) {
-                    console.log("📅 New day cycle detected! Resetting daily ad limits on cloud & local cache.");
-                    localUserProgress.adsWatchedToday = 0; // Local state fresh kardo
-                    
-                    // Cloud data synchronization (Reset count to 0)
+                    console.log("📅 New day cycle detected! Resetting daily ad limits.");
+                    localUserProgress.adsWatchedToday = 0;
                     await updateData("users", currentUID, { adsWatchedToday: 0 });
                 }
             }
@@ -52,76 +46,61 @@ onAuthStateChanged(auth, async (user) => {
             console.error("❌ Firestore read pipeline error:", error);
         }
         
-        // Init updated state configurations
         updateRewardModalUI();
         checkActiveCooldown();
         
-        // If system is completely clean and under limits, initialize the ad stack
+        // If system is completely clean and under limits, init the asset matrix
         if (localUserProgress.adsWatchedToday < MAX_ADS_PER_DAY && !isSystemInCooldown()) {
-            initGoogleRewardedAdEngine();
+            initMonetagRewardedEngine();
         }
     } else {
         console.warn("🔒 No session found, running guest structural fallsafe...");
-        
-        // 🛡️ CRITICAL FIX: Direct parameters reset to block null script execution leaks
         currentUID = null;
         localUserProgress = { coins: 0, adsWatchedToday: 0, lastAdTimestamp: 0 };
         
-        // Render UI with zeros safely so screen never breaks or look unstyled
         updateRewardModalUI();
         
-        // Redirect if someone tries to breach directly inside ads.html without login
         setTimeout(() => {
             window.location.href = "index.html"; 
         }, 100);
     }
 });
 
-// --- 🛑 GOOGLE REWARDED AD ENGINE INITIALIZATION ---
-// --- 🛑 GOOGLE REWARDED AD ENGINE INITIALIZATION ---
-function initGoogleRewardedAdEngine() {
-    googletag.cmd.push(() => {
-        const adUnitID = IS_TEST_MODE 
-            ? '/22639388115/rewarded_web_example' 
-            : '/YOUR_ADSENSE_ACCOUNT_ID/YOUR_REWARDED_AD_UNIT';
+// --- 🛑 MONETAG REWARDED / VIGNETTE AD ENGINE INITIALIZATION ---
+// --- 🛑 MONETAG REWARDED / VIGNETTE AD ENGINE INITIALIZATION ---
+function initMonetagRewardedEngine() {
+    console.log("🛠️ Mapping Monetag secure channels...");
+    
+    // Check if script is already injected to prevent duplicates
+    if (document.getElementById('monetag-core-sdk')) {
+        isAdReady = true;
+        toggleWatchButtonState(true);
+        return;
+    }
 
-        rewardedSlot = googletag.defineOutOfPageSlot(adUnitID, googletag.enums.OutOfPageFormat.REWARDED);
+    const script = document.createElement('script');
+    script.id = 'monetag-core-sdk';
+    script.src = "https://n6wxm.com/vignette.min.js"; // 🔥 Aapka Monetag Script Link Injected
+    script.async = true;
+    script.dataset.zone = '11073043'; // 🔥 Aapka Exact Zone ID Locked
 
-        if (rewardedSlot) {
-            rewardedSlot.addService(googletag.pubads());
+    script.onload = () => {
+        console.log("🎯 Monetag Vignette network streamlined successfully active!");
+        isAdReady = true;
+        toggleWatchButtonState(true);
+        
+        // Tracking window blur state change when ad covers the screen
+        window.addEventListener('blur', handleUserAdEngagementTelemetry);
+    };
 
-            // [Event 1]: Ad Load Success Hook
-            googletag.pubads().addEventListener('rewardedSlotReady', (event) => {
-                console.log("🎯 Google Ad network streamlined successfully!");
-                isAdReady = true;
-                showRewardedAdFn = event.makeRewardedVisible;
-                toggleWatchButtonState(true);
-            });
+    script.onerror = (err) => {
+        console.error("❌ Failed to stream Monetag asset nodes:", err);
+        isAdReady = false;
+        toggleWatchButtonState(false);
+    };
 
-            // [Event 2]: 🔴 THE ANTI-CHEAT GATEWAY (User finishes the video)
-            googletag.pubads().addEventListener('rewardedSlotGranted', async (event) => {
-                console.log("💰 Reward verified by server-side event payload.");
-                await processSuccessfulAdWatch(); 
-            });
-
-            // [Event 3]: Ad Close/Cancelled event handler
-            googletag.pubads().addEventListener('slotRenderEnded', (event) => {
-                if (event.slot === rewardedSlot) {
-                    isAdReady = false;
-                    showRewardedAdFn = null;
-                    toggleWatchButtonState(false);
-                }
-            });
-
-            // 🔥 HIGH-RISK SAFETY SHIELD: Put it just before enabling services
-            googletag.pubads().setPrivacySettings({
-                nonPersonalizedAds: true 
-            });
-
-            googletag.enableServices();
-            googletag.display(rewardedSlot); 
-        }
-    });
+    // Appending using your strict standard logical structure
+    [document.documentElement, document.body].filter(Boolean).pop().appendChild(script);
 }
 
 
@@ -137,19 +116,48 @@ window.triggerAdWatchingProcess = async function() {
         return;
     }
 
-    if (isAdReady && showRewardedAdFn) {
-        showRewardedAdFn(); // 🎬 Launches the video ad stream instantly
+    if (isAdReady) {
+        console.log("🎬 Launching Monetag vignette display intercept...");
+        
+        // Monoetag direct link execute model trigger call
+        if (typeof window.showMonetagAd === 'function') {
+            window.showMonetagAd(); 
+        } else {
+            // Fallback for native interstitial redirect targets
+            console.log("Triggering explicit layout simulation nodes.");
+        }
+        
+        // Simulate programmatic reward extraction safely for test channels
+        if (IS_TEST_MODE) {
+            alert("TEST MODE ACTIVE: Simulating 5 seconds watch reward loop...");
+            setTimeout(async () => {
+                await processSuccessfulAdWatch();
+            }, 5000);
+        }
     } else {
         alert("⏳ Ad is caching on your browser node, please give it 2-3 seconds.");
-        googletag.cmd.push(() => { googletag.pubads().refresh([rewardedSlot]); });
+        initMonetagRewardedEngine();
     }
 };
+
+// --- 🎯 USER INTERACTION TELEMETRY (Monetag Callback Fix) ---
+async function handleUserAdEngagementTelemetry() {
+    // Monetag natively callback events return nahi karta, toh hum tab visibility/blur window check karte hain
+    if (currentUID && isAdReady && !isSystemInCooldown() && !IS_TEST_MODE) {
+        window.removeEventListener('blur', handleUserAdEngagementTelemetry);
+        console.log("💰 Window blur event detected. Syncing ad compliance tracker reward state...");
+        
+        // Reward allocation channel fire out
+        setTimeout(async () => {
+            await processSuccessfulAdWatch();
+        }, 1000);
+    }
+}
 
 // --- ⚙️ CORE MUTATION PROTOCOL (Save -> Redirect) ---
 async function processSuccessfulAdWatch() {
     if (!currentUID) return;
 
-    // Increment properties safely
     localUserProgress.adsWatchedToday += 1;
     localUserProgress.coins += 50; 
     localUserProgress.lastAdTimestamp = Date.now();
@@ -157,7 +165,6 @@ async function processSuccessfulAdWatch() {
     const watchBtn = document.getElementById('modal-watch-btn');
     if (watchBtn) watchBtn.innerText = "🏁 COMMITTING REWARD TO CLOUD...";
 
-    // Save directly via the pre-compiled helper from firebase.js
     const updateStatus = await updateData("users", currentUID, {
         coins: localUserProgress.coins,
         adsWatchedToday: localUserProgress.adsWatchedToday,
@@ -353,7 +360,6 @@ function copyUnlockedCoupon() {
     }
 }
 
-// Global binding window namespace layout for HTML components triggers
 window.copyUnlockedCoupon = copyUnlockedCoupon;
 
 function fallbackCopyMethod(text, buttonElement) {
