@@ -5089,7 +5089,7 @@ window.openLocalPdfModal = () => {
         window.tempSelectedPdfFile = file; 
     };
 
-    // 🚀 HIGH-FREQUENCY SMARTLINK AD DELIVERY ENGINE
+        // 🚀 MONETAG PWA-SAFE SMARTLINK AD DELIVERY ENGINE
     launchBtn.addEventListener('click', async () => {
         if (!window.tempSelectedPdfFile) {
             alert("Bhai, pehle koi PDF file select karo! 📄");
@@ -5097,30 +5097,36 @@ window.openLocalPdfModal = () => {
         }
 
         if (window.showLoader) window.showLoader();
-        console.log("🎬 Smartlink Ad Delivery Triggered for:", window.tempSelectedPdfFile.name);
+        console.log("🎬 PWA Streamlining Smartlink Ad Channel...");
 
-        const IS_TEST_MODE = false; // 🔥 Live production par locked hai!
+        const smartlinkUrl = "https://omg10.com/4/11073468"; 
 
-        if (!IS_TEST_MODE) {
-            try {
-                // 🎯 Aapka official Monetag Smartlink URL yahan permanently set kar diya hai!
-                const smartlinkUrl = "https://omg10.com/4/11073468"; 
-                
-                // Native window launcher to pop ad in a clean background/foreground tab
-                window.open(smartlinkUrl, '_blank');
-                console.log("🎯 Monetag Smartlink node popped successfully!");
-            } catch (adError) {
-                console.error("Ad block interceptor or popup block handled:", adError);
-            }
+        try {
+            // 🌐 METHOD A: PWA Standard Native Anchor Simulation (Bypasses Sandbox Blocks)
+            const pwaLinkContainer = document.createElement('a');
+            pwaLinkContainer.href = smartlinkUrl;
+            pwaLinkContainer.target = '_system'; // '_system' or '_blank' handles external browser routing in installed PWAs
+            pwaLinkContainer.rel = 'noopener noreferrer';
+            
+            // Appending temporary node to trigger click simulation safely
+            document.body.appendChild(pwaLinkContainer);
+            pwaLinkContainer.click();
+            pwaLinkContainer.remove(); // Self destruct node element
+            
+            console.log("🎯 External execution node successfully fired into device context.");
+        } catch (adError) {
+            console.error("PWA security channel blocked click event:", adError);
+            // Fallback: Direct window replacement if standalone tab injection crashes
+            window.location.href = smartlinkUrl; 
+            return;
         }
 
         // 🚀 STEP 2: Instantly trigger the core application 3D Reader framework
-        // Bina user ko loading screen par fansaaye, background me reader chalu ho jayega
         setTimeout(async () => {
             await executeCore3DReaderPipeline();
-        }, 500);
+        }, 800);
     });
-};
+
 
 // 🔀 DYNAMIC SECURITY APPLICATION ROUTER FOR 3D ENVIRONMENT
 async function executeCore3DReaderPipeline() {
