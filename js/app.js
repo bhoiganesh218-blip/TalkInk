@@ -330,6 +330,19 @@ window.render = (pageId) => {
         }
     }
 
+
+
+if (pageId === 'LibraryPage' && bookId) {
+    document.title = `Read Book ${bookId} | TalkInk Premium`;
+    document.querySelector('meta[name="description"]').setAttribute("content", `Listen to the exclusive AI audio explanation for Book ID: ${bookId} inside TalkInk vault.`);
+}
+
+
+
+
+
+
+
     window.scrollTo(0, 0);
 };
 
