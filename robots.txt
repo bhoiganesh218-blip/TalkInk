@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /?page=profile
+Disallow: /?page=Dashboard
+
+Sitemap: https://bhoiganesh218.github.io/talkink/sitemap.xml
