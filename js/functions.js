@@ -5094,12 +5094,12 @@ window.openLocalPdfModal = () => {
         if (window.showLoader) window.showLoader();
         console.log("🎬 Smartlink Ad Delivery Triggered for:", window.tempSelectedPdfFile.name);
 
-        const IS_TEST_MODE = false; // 🔥 Live production par locked hai!
+        const IS_TEST_MODE = true; // 🔥 Live production par locked hai!
 
         if (!IS_TEST_MODE) {
             try {
                 // 🎯 Aapka official Monetag Smartlink URL yahan permanently set kar diya hai!
-                const smartlinkUrl = "https://omg10.com/4/11073468"; 
+                const smartlinkUrl=""; 
                 
                 // Native window launcher to pop ad in a clean background/foreground tab
                 window.open(smartlinkUrl, '_blank');
