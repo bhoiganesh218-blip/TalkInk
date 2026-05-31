@@ -9,7 +9,7 @@ const MAX_ADS_PER_DAY = 10;
 const IS_TEST_MODE = true; // 🚨 Production pe jaate hi ise false kar dena bhaa
 
 // Global States for Monetag Framework Transformation
-let isAdReady = false;
+let isAdReady = true;
 let currentUID = null;
 
 // Live Local State Cache
@@ -79,10 +79,10 @@ function initMonetagRewardedEngine() {
     }
 
     const script = document.createElement('script');
-    script.id = 'monetag-core-sdk';
-    script.src = "https://n6wxm.com/vignette.min.js"; // 🔥 Aapka Monetag Script Link Injected
+    script.id = '';
+    script.src = ""; // 🔥 Aapka Monetag Script Link Injected
     script.async = true;
-    script.dataset.zone = '11073043'; // 🔥 Aapka Exact Zone ID Locked
+    script.dataset.zone = ''; // 🔥 Aapka Exact Zone ID Locked
 
     script.onload = () => {
         console.log("🎯 Monetag Vignette network streamlined successfully active!");
