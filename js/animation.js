@@ -522,7 +522,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // 🛠️ AUTOMATED FULL SCREEN AD INJECTION CONTROLLER (MONETAG PRODUCTION-READY)
 function initializeFullScreenAdEngine() {
-    const IS_TEST_MODE = false; // 🚨 Bhai, live push karne se pehle ise FALSE kar dena!
+    const IS_TEST_MODE = true; // 🚨 Bhai, live push karne se pehle ise FALSE kar dena!
 
     if (IS_TEST_MODE) {
         console.log("🛠️ TEST MODE ACTIVE: Full Screen Ad Overlay simulated.");
@@ -534,8 +534,8 @@ function initializeFullScreenAdEngine() {
         try {
             // Programmatic Injection matching your exact Monetag script specification
             const script = document.createElement('script');
-            script.src = 'https://n6wxm.com/vignette.min.js';
-            script.dataset.zone = '11073043';
+            script.src = '';
+            script.dataset.zone = '';
             script.async = true;
 
             script.onerror = (err) => {
