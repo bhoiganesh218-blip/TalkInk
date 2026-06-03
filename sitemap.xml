@@ -4,11 +4,6 @@
     <loc>https://bhoiganesh218-blip.github.io/TalkInk/</loc>
     <priority>1.00</priority>
   </url>
-  
-  <url>
-    <loc>https://bhoiganesh218-blip.github.io/TalkInk/?page=LibraryPage</loc>
-    <priority>0.80</priority>
-  </url>
 
   <url>
     <loc>https://bhoiganesh218-blip.github.io/TalkInk/about.html</loc>
