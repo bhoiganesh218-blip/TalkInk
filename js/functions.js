@@ -5005,12 +5005,9 @@ export const openCategoryViewPage = async (db, categoryId, categoryName, current
 
 
 /**
- * 🎨 HIGH-FREQUENCY LOCAL PDF UPLOADER MODAL SYSTEM (CLEAN PRODUCTION VERSION)
- * Generates an interactive file parsing frame for guest PDF conversions.
- * Fully optimized with 0% external scripts for instant load speed.
+ * 🎨 HIGH-FREQUENCY LOCAL PDF UPLOADER MODAL SYSTEM (BODY AD INTEGRATED)
  */
 window.openLocalPdfModal = () => {
-    // Check if modal already exists to block duplicate injection leaks
     if (document.getElementById('local-pdf-modal')) return;
 
     const modal = document.createElement('div');
@@ -5019,14 +5016,17 @@ window.openLocalPdfModal = () => {
     
     modal.innerHTML = `
         <div class="pdf-upload-modal-card animate-modal-in" style="display: flex; flex-direction: column; align-items: center;">
-            <button class="modal-close-btn" onclick="document.getElementById('local-pdf-modal').remove()">✕</button>
+            <button class="modal-close-btn" onclick="window.closeLocalPdfModal()">✕</button>
             
-            <div class="modal-header-block" style="width: 100%; text-align: center; margin-top: 10px;">
+            <div id="adsterra-modal-slot" style="margin-bottom: 20px; min-height: 250px; width: 300px; display: flex; align-items: center; justify-content: center; border-radius: 8px; overflow: hidden;">
+                </div>
+
+            <div class="modal-header-block" style="width: 100%; text-align: center;">
                 <h3>3D PDF ENGINE</h3>
                 <p>Upload your own PDF to read in a premium 3D page-flip environment.</p>
             </div>
 
-            <div class="upload-drop-zone" id="pdfDropZone" onclick="document.getElementById('localPdfInput').click()" style="width: 100%; box-sizing: border-box;">
+            <div class="upload-drop-zone" id="pdfDropZone" onclick="document.getElementById('localPdfInput').click()" style="width: 100%;">
                 <div class="upload-icon-wrap">
                     <i class="fa-solid fa-cloud-arrow-up"></i>
                 </div>
@@ -5035,7 +5035,7 @@ window.openLocalPdfModal = () => {
                 <input type="file" id="localPdfInput" accept="application/pdf" style="display: none;" />
             </div>
 
-            <div class="selected-file-feedback" id="fileFeedback" style="display: none; width: 100%; box-sizing: border-box;">
+            <div class="selected-file-feedback" id="fileFeedback" style="display: none; width: 100%;">
                 <i class="fa-solid fa-file-pdf feedback-pdf-icon"></i>
                 <div class="file-meta">
                     <span class="file-name-txt" id="feedbackFileName">document.pdf</span>
@@ -5043,7 +5043,7 @@ window.openLocalPdfModal = () => {
                 </div>
             </div>
 
-            <button class="action-read-btn disabled-state" id="startLocalReadBtn" disabled style="width: 100%; margin-top: 15px;">
+            <button class="action-read-btn disabled-state" id="startLocalReadBtn" disabled style="width: 100%;">
                 <span>LAUNCH 3D READER</span> <i class="fa-solid fa-circle-play"></i>
             </button>
         </div>
@@ -5051,7 +5051,15 @@ window.openLocalPdfModal = () => {
 
     document.body.appendChild(modal);
 
-    // --- INTERNAL ELEMENT POINTERS & REACTIVE LISTENERS ---
+    // 🚀 AD TELEPORTATION: Body se ad uthao aur modal ke andar daal do!
+    const globalAdBox = document.getElementById('adsterra-global-holder');
+    const modalAdSlot = document.getElementById('adsterra-modal-slot');
+    if (globalAdBox && modalAdSlot) {
+        globalAdBox.style.display = 'block'; // Ad ko visible karo
+        modalAdSlot.appendChild(globalAdBox); // Modal ke slot mein transfer karo
+    }
+
+    // --- LISTENERS ---
     const fileInput = document.getElementById('localPdfInput');
     const dropZone = document.getElementById('pdfDropZone');
     const feedbackBlock = document.getElementById('fileFeedback');
@@ -5059,53 +5067,48 @@ window.openLocalPdfModal = () => {
     const fileSizeTxt = document.getElementById('feedbackFileSize');
     const launchBtn = document.getElementById('startLocalReadBtn');
 
-    fileInput.addEventListener('change', (e) => {
-        handleFileSelection(e.target.files[0]);
-    });
+    fileInput.addEventListener('change', (e) => { handleFileSelection(e.target.files[0]); });
 
     const handleFileSelection = (file) => {
         if (!file || file.type !== "application/pdf") {
             alert("Bhai, please select a valid PDF file only! 📄");
             return;
         }
-
         fileNameTxt.innerText = file.name;
         fileSizeTxt.innerText = (file.size / (1024 * 1024)).toFixed(2) + " MB";
-        
         feedbackBlock.style.display = "flex";
         dropZone.classList.add('file-attached');
-        
         launchBtn.classList.remove('disabled-state');
         launchBtn.removeAttribute('disabled');
-
         window.tempSelectedPdfFile = file; 
     };
 
-    // 🚀 ULTRA-FAST LAUNCH ROUTE (NO EXTERNAL INTERRUPTIONS)
     launchBtn.addEventListener('click', async () => {
-        if (!window.tempSelectedPdfFile) {
-            alert("Bhai, pehle koi PDF file select karo! 📄");
-            return;
-        }
-
+        if (!window.tempSelectedPdfFile) return;
         if (window.showLoader) window.showLoader();
-        console.log("🎬 Activating Core 3D Reader Framework for:", window.tempSelectedPdfFile.name);
-
-        setTimeout(async () => {
-            await executeCore3DReaderPipeline();
-        }, 500);
+        setTimeout(async () => { await window.executeCore3DReaderPipeline(); }, 500);
     });
 };
 
-// 🔀 DYNAMIC SECURITY APPLICATION ROUTER FOR 3D ENVIRONMENT
-async function executeCore3DReaderPipeline() {
+// 🛑 MODAL CLOSE FUNCTION (Ad ko bacha kar wapas body mein bhejne ke liye)
+window.closeLocalPdfModal = () => {
+    const globalAdBox = document.getElementById('adsterra-global-holder');
+    const modalContainer = document.getElementById('local-pdf-modal');
+    
+    if (globalAdBox) {
+        globalAdBox.style.display = 'none'; // Ad chupao
+        document.body.appendChild(globalAdBox); // Wapas main body mein bhej do
+    }
+    if (modalContainer) modalContainer.remove();
+};
+
+// 🔀 PIPELINE ROUTER
+window.executeCore3DReaderPipeline = async () => {
     try {
         if (!window.tempSelectedPdfFile) return;
         
-        console.log("🎯 Access Authorized! Rendering 3D book canvas layout.");
-        
-        const modalContainer = document.getElementById('local-pdf-modal');
-        if (modalContainer) modalContainer.remove();
+        // Modal clear karne se pehle ad ko safely rescue karo
+        window.closeLocalPdfModal();
         
         if (window.hideLoader) window.hideLoader();
 
@@ -5114,15 +5117,10 @@ async function executeCore3DReaderPipeline() {
         } else if (window.startBookReader) {
             await window.startBookReader(window.tempSelectedPdfFile, true);
         }
-        
         window.tempSelectedPdfFile = null;
-
     } catch (error) {
-        console.error("🚨 Emergency bypass crash inside core reader engine:", error);
-        if (window.hideLoader) window.hideLoader();
-        
-        const modalContainer = document.getElementById('local-pdf-modal');
-        if (modalContainer) modalContainer.remove();
+        console.error("🚨 Error:", error);
+        window.closeLocalPdfModal();
         if (window.startBookReader) window.startBookReader(window.tempSelectedPdfFile, true);
     }
-}
+};
