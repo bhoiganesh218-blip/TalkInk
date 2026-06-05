@@ -5005,17 +5005,12 @@ export const openCategoryViewPage = async (db, categoryId, categoryName, current
 
 
 /**
- * 🎨 HIGH-FREQUENCY LOCAL PDF UPLOADER MODAL SYSTEM (ADSTERRA WITH SAFETY TEST-MODE)
- * Generates an interactive file parsing frame for guest PDF conversions.
- * Fully integrated with your personal Adsterra clean banner with self-clicking protection.
+ * 🎨 HIGH-FREQUENCY LOCAL PDF UPLOADER MODAL SYSTEM (ADSTERRA BLANK-SCREEN FIXED)
  */
 window.openLocalPdfModal = () => {
-    // Check if modal already exists to block duplicate injection leaks
     if (document.getElementById('local-pdf-modal')) return;
 
-    // 🛑 SAFETY CONTROLLER FOR DEVELOPER TESTING
-    // true  -> Ad block ho jayega, sirf green dummy box dikhega (Testing ke liye safe)
-    // false -> Live Ads chalenge (Jab user ko dikhana ho tab false kar dena)
+    // 🛑 AGAR APNE MOBILE MEIN ADS DEKHNA HAI TO ISE "false" KAR DO BHAI
     const IS_TEST_MODE = false; 
 
     const modal = document.createElement('div');
@@ -5023,20 +5018,22 @@ window.openLocalPdfModal = () => {
     modal.className = 'pdf-upload-modal-overlay';
     
     modal.innerHTML = `
-        <div class="pdf-upload-modal-card animate-modal-in" style="display: flex; flex-direction: column; align-items: center;">
+        <div class="pdf-upload-modal-card animate-modal-in" style="display: flex; flex-direction: column; align-items: center; max-width: 340px; margin: 0 auto;">
             <button class="modal-close-btn" onclick="document.getElementById('local-pdf-modal').remove()">✕</button>
             
-            <!-- 🎯 CLEAN ADSTERRA BANNER CONTAINER -->
-            <div id="adsterra-modal-ad" style="margin-bottom: 20px; min-height: 250px; width: 300px; background: #020617; display: flex; align-items: center; justify-content: center; border-radius: 8px; overflow: hidden;">
-                <!-- Adsterra Code Injector Slot -->
+            <div id="adsterra-modal-ad" style="margin-bottom: 20px; height: 250px; width: 300px; background: #0f172a; display: flex; align-items: center; justify-content: center; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); position: relative;">
+                <div id="ad-fallback-text" style="color: rgba(255,255,255,0.3); font-family: sans-serif; font-size: 12px; text-align: center; position: absolute; z-index: 1;">
+                    <i class="fa-solid fa-rectangle-ad" style="font-size: 24px; margin-bottom: 5px; color: #a855f7;"></i>
+                    <p style="margin:0;">Loading Premium Canvas...</p>
+                </div>
             </div>
 
             <div class="modal-header-block" style="width: 100%; text-align: center;">
-                <h3>3D PDF ENGINE</h3>
+                <h3 style="margin-top: 0;">3D PDF ENGINE</h3>
                 <p>Upload your own PDF to read in a premium 3D page-flip environment.</p>
             </div>
 
-            <div class="upload-drop-zone" id="pdfDropZone" onclick="document.getElementById('localPdfInput').click()" style="width: 100%;">
+            <div class="upload-drop-zone" id="pdfDropZone" onclick="document.getElementById('localPdfInput').click()" style="width: 100%; box-sizing: border-box;">
                 <div class="upload-icon-wrap">
                     <i class="fa-solid fa-cloud-arrow-up"></i>
                 </div>
@@ -5045,7 +5042,7 @@ window.openLocalPdfModal = () => {
                 <input type="file" id="localPdfInput" accept="application/pdf" style="display: none;" />
             </div>
 
-            <div class="selected-file-feedback" id="fileFeedback" style="display: none; width: 100%;">
+            <div class="selected-file-feedback" id="fileFeedback" style="display: none; width: 100%; box-sizing: border-box;">
                 <i class="fa-solid fa-file-pdf feedback-pdf-icon"></i>
                 <div class="file-meta">
                     <span class="file-name-txt" id="feedbackFileName">document.pdf</span>
@@ -5053,7 +5050,7 @@ window.openLocalPdfModal = () => {
                 </div>
             </div>
 
-            <button class="action-read-btn disabled-state" id="startLocalReadBtn" disabled style="width: 100%;">
+            <button class="action-read-btn disabled-state" id="startLocalReadBtn" disabled style="width: 100%; margin-top: 15px;">
                 <span>LAUNCH 3D READER</span> <i class="fa-solid fa-circle-play"></i>
             </button>
         </div>
@@ -5061,23 +5058,22 @@ window.openLocalPdfModal = () => {
 
     document.body.appendChild(modal);
 
-    // 🚀 SAFE DYNAMIC ADSTERRA SCRIPT INJECTION ENGINE
+    // 🚀 ADSTERRA INJECTION ENGINE WITH AUTO-HIDE FALLBACK
     setTimeout(() => {
         const adContainer = document.getElementById('adsterra-modal-ad');
+        const fallbackText = document.getElementById('ad-fallback-text');
+        
         if (adContainer) {
             if (IS_TEST_MODE) {
-                // Testing Mode: Safe container box with no real ad requests
-                adContainer.style.background = "#064e3b"; // Dark Green background
-                adContainer.style.border = "2px dashed #10b981";
-                adContainer.innerHTML = `
-                    <div style="color: #10b981; font-family: sans-serif; text-align: center; font-weight: bold; font-size: 14px;">
-                        <p style="margin: 0; font-size: 20px;">🛠️</p>
-                        <p style="margin: 5px 0 0 0;">TEST MODE ACTIVE</p>
-                        <p style="margin: 3px 0 0 0; font-size: 11px; font-weight: normal; color: #a7f3d0;">No real ads loading. Safe for self-clicking.</p>
-                    </div>
-                `;
+                if (fallbackText) {
+                    fallbackText.innerHTML = `
+                        <p style="margin: 0; font-size: 18px; color: #10b981;">🛠️</p>
+                        <p style="margin: 5px 0 0 0; color: #10b981; font-weight: bold;">TEST MODE ACTIVE</p>
+                        <p style="margin: 2px 0 0 0; font-size: 10px; color: #64748b;">Safe environment for dev testing.</p>
+                    `;
+                }
             } else {
-                // Live Mode: Injects real Adsterra code for real traffic
+                // Live Script Injection
                 const adConfigScript = document.createElement('script');
                 adConfigScript.type = 'text/javascript';
                 adConfigScript.innerHTML = `
@@ -5096,11 +5092,18 @@ window.openLocalPdfModal = () => {
                 
                 adContainer.appendChild(adConfigScript);
                 adContainer.appendChild(adSourceScript);
+                
+                // Hide loading fallback text after a brief delay once ad loads inside iframe
+                setTimeout(() => {
+                    if(fallbackText && adContainer.getElementsByTagName('iframe').length > 0) {
+                        fallbackText.style.display = 'none';
+                    }
+                }, 1500);
             }
         }
     }, 50);
 
-    // --- INTERNAL ELEMENT POINTERS & REACTIVE LISTENERS ---
+    // --- LEAVE INTERNAL LISTENERS UNTOUCHED ---
     const fileInput = document.getElementById('localPdfInput');
     const dropZone = document.getElementById('pdfDropZone');
     const feedbackBlock = document.getElementById('fileFeedback');
@@ -5108,69 +5111,25 @@ window.openLocalPdfModal = () => {
     const fileSizeTxt = document.getElementById('feedbackFileSize');
     const launchBtn = document.getElementById('startLocalReadBtn');
 
-    fileInput.addEventListener('change', (e) => {
-        handleFileSelection(e.target.files[0]);
-    });
+    fileInput.addEventListener('change', (e) => { handleFileSelection(e.target.files[0]); });
 
     const handleFileSelection = (file) => {
         if (!file || file.type !== "application/pdf") {
             alert("Bhai, please select a valid PDF file only! 📄");
             return;
         }
-
         fileNameTxt.innerText = file.name;
         fileSizeTxt.innerText = (file.size / (1024 * 1024)).toFixed(2) + " MB";
-        
         feedbackBlock.style.display = "flex";
         dropZone.classList.add('file-attached');
-        
         launchBtn.classList.remove('disabled-state');
         launchBtn.removeAttribute('disabled');
-
         window.tempSelectedPdfFile = file; 
     };
 
     launchBtn.addEventListener('click', async () => {
-        if (!window.tempSelectedPdfFile) {
-            alert("Bhai, pehle koi PDF file select karo! 📄");
-            return;
-        }
-
+        if (!window.tempSelectedPdfFile) return;
         if (window.showLoader) window.showLoader();
-        console.log("🎬 Activating Core 3D Reader Framework for:", window.tempSelectedPdfFile.name);
-
-        setTimeout(async () => {
-            await executeCore3DReaderPipeline();
-        }, 500);
+        setTimeout(async () => { await executeCore3DReaderPipeline(); }, 500);
     });
 };
-
-// 🔀 DYNAMIC SECURITY APPLICATION ROUTER FOR 3D ENVIRONMENT
-async function executeCore3DReaderPipeline() {
-    try {
-        if (!window.tempSelectedPdfFile) return;
-        
-        console.log("🎯 Access Authorized! Rendering 3D book canvas layout.");
-        
-        const modalContainer = document.getElementById('local-pdf-modal');
-        if (modalContainer) modalContainer.remove();
-        
-        if (window.hideLoader) window.hideLoader();
-
-        if (typeof startBookReader === 'function') {
-            await startBookReader(window.tempSelectedPdfFile, true);
-        } else if (window.startBookReader) {
-            await window.startBookReader(window.tempSelectedPdfFile, true);
-        }
-        
-        window.tempSelectedPdfFile = null;
-
-    } catch (error) {
-        console.error("🚨 Emergency bypass crash inside core reader engine:", error);
-        if (window.hideLoader) window.hideLoader();
-        
-        const modalContainer = document.getElementById('local-pdf-modal');
-        if (modalContainer) modalContainer.remove();
-        if (window.startBookReader) window.startBookReader(window.tempSelectedPdfFile, true);
-    }
-}
