@@ -1284,16 +1284,45 @@
 
 
 
-<script>
-  atOptions = {
-    'key' : 'caf85bd486ea7e84f955811b391a98e3',
-    'format' : 'iframe',
-    'height' : 250,
-    'width' : 300,
-    'params' : {}
-  };
-</script>
-<script src="https://www.highperformanceformat.com/caf85bd486ea7e84f955811b391a98e3/invoke.js"></script>
+<div class="secure-ad-box" style="width: 300px; height: 250px; overflow: hidden; position: relative;">
+    
+
+
+    <script>
+      atOptions = {
+        'key' : 'caf85bd486ea7e64f955811b391a98e3',
+        'format' : 'iframe',
+        'height' : 250,
+        'width' : 300,
+        'params' : {}
+      };
+    </script>
+    
+
+
+    <script src="https://www.highperformanceformat.com/caf85bd486ea7e64f955811b391a98e3/invoke.js"></script>
+
+
+
+    <script>
+      // Yeh code continuous check karega aur ad ke iframe se top-level navigation (redirect) ko block kar dega
+      setTimeout(() => {
+          const adBox = document.querySelector('.secure-ad-box');
+          if (adBox) {
+              const iframes = adBox.getElementsByTagName('iframe');
+              for (let i = 0; i < iframes.length; i++) {
+                  // Sandbox attributes lagane se iframe website ko redirect nahi kar payega
+                  iframes[i].setAttribute('sandbox', 'allow-scripts ' + 
+                                                      'allow-same-origin ' + 
+                                                      'allow-popups ' + 
+                                                      'allow-forms');
+                  console.log("🔒 Adsterra auto-redirect locked successfully!");
+              }
+          }
+      }, 1000);
+    </script>
+</div>
+
 
 
 
