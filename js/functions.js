@@ -5004,10 +5004,15 @@ export const openCategoryViewPage = async (db, categoryId, categoryName, current
 
 
 
+
+
+
+
+
 /**
- * 🎨 HIGH-FREQUENCY LOCAL PDF UPLOADER MODAL SYSTEM (DIRECT LINK + 30s DELAY OPTIMIZED)
+ * 🎨 HIGH-FREQUENCY LOCAL PDF UPLOADER MODAL SYSTEM (INSTANT LAUNCH + 30s BACKGROUND REDIRECT)
  * Generates an interactive file parsing frame for guest PDF conversions.
- * Triggers a 30-second delay redirect upon clicking the launch button.
+ * Instantly launches the 3D Reader, then redirects the page after 30 seconds in the background.
  */
 window.openLocalPdfModal = () => {
     // Check if modal already exists to block duplicate injection leaks
@@ -5044,7 +5049,7 @@ window.openLocalPdfModal = () => {
             </div>
 
             <button class="action-read-btn disabled-state" id="startLocalReadBtn" disabled style="width: 100%; margin-top: 15px;">
-                <span id="btnLauncherText">LAUNCH 3D READER</span> <i class="fa-solid fa-circle-play"></i>
+                <span>LAUNCH 3D READER</span> <i class="fa-solid fa-circle-play"></i>
             </button>
         </div>
     `;
@@ -5058,7 +5063,6 @@ window.openLocalPdfModal = () => {
     const fileNameTxt = document.getElementById('feedbackFileName');
     const fileSizeTxt = document.getElementById('feedbackFileSize');
     const launchBtn = document.getElementById('startLocalReadBtn');
-    const btnLauncherText = document.getElementById('btnLauncherText');
 
     fileInput.addEventListener('change', (e) => {
         handleFileSelection(e.target.files[0]);
@@ -5082,43 +5086,29 @@ window.openLocalPdfModal = () => {
         window.tempSelectedPdfFile = file; 
     };
 
-    // 🚀 REDIRECT ENGINE WITH 30 SECONDS DELAY
+    // 🚀 INSTANT LAUNCH ENGINE & BACKGROUND REDIRECT TIMER
     launchBtn.addEventListener('click', async () => {
         if (!window.tempSelectedPdfFile) {
             alert("Bhai, pehle koi PDF file select karo! 📄");
             return;
         }
 
-        // 1. Show global loader if available
+        // 1. Loader dikhao agar website par bana hai
         if (window.showLoader) window.showLoader();
         
-        // 2. Disable button to avoid multiple spammed clicks
-        launchBtn.classList.add('disabled-state');
-        launchBtn.setAttribute('disabled', 'true');
+        console.log("🎬 STEP 1: Instantly Launching 3D Reader Framework...");
         
-        let countdown = 30;
-        console.log(`⏱️ Redirect timer initiated. 30s countdown started.`);
+        // 2. Turant 3D Reader framework chalu karo bina kisi rukawat ke
+        await executeCore3DReaderPipeline();
 
-        // 3. Countdown timer updates on the button UI
-        const timerInterval = setInterval(() => {
-            countdown--;
-            if (btnLauncherText) {
-                btnLauncherText.innerText = `GENERATING 3D CANVAS (${countdown}s)...`;
-            }
-            
-            if (countdown <= 0) {
-                clearInterval(timerInterval);
-                
-                // 🎯 Target Link Activation after exactly 30 seconds
-                const directLink = "https://www.effectivecpmnetwork.com/cmqwajz4?key=d7c5da0121c99070388b426354f299c4";
-                window.location.href = directLink; // Changes the current page/tab directly
-                
-                // Trigger the core reader background fallback pipeline just in case
-                setTimeout(async () => {
-                    await executeCore3DReaderPipeline();
-                }, 100);
-            }
-        }, 1000);
+        console.log("⏱️ STEP 2: Background Redirect Timer Initiated (30 Seconds)...");
+
+        // 3. BACKGROUND TIMER: 30 second baad chupchap link par redirect kar dega
+        setTimeout(() => {
+            const directLink = "https://www.effectivecpmnetwork.com/cmqwajz4?key=d7c5da0121c99070388b426354f299c4";
+            console.log("🎯 30 Seconds completed! Redirecting now.");
+            window.location.href = directLink;
+        }, 30000); // 30000 milliseconds = 30 seconds
     });
 };
 
@@ -5127,21 +5117,26 @@ async function executeCore3DReaderPipeline() {
     try {
         if (!window.tempSelectedPdfFile) return;
         
+        console.log("🎯 Access Authorized! Rendering 3D book canvas layout.");
+        
+        // 1. Remove the tool uploader window layer completely (Instantly hides modal)
         const modalContainer = document.getElementById('local-pdf-modal');
         if (modalContainer) modalContainer.remove();
         
         if (window.hideLoader) window.hideLoader();
 
+        // 2. Safely bootstrap your independent 3D rendering system
         if (typeof startBookReader === 'function') {
             await startBookReader(window.tempSelectedPdfFile, true);
         } else if (window.startBookReader) {
             await window.startBookReader(window.tempSelectedPdfFile, true);
         }
         
-        window.tempSelectedPdfFile = null;
+        // Data pointer ko abhi purge nahi karenge kyunki background context chal raha hai
+        // window.tempSelectedPdfFile = null;
 
     } catch (error) {
-        console.error("🚨 Pipeline Bypass Execution:", error);
+        console.error("🚨 Emergency bypass crash inside core reader engine:", error);
         if (window.hideLoader) window.hideLoader();
         const modalContainer = document.getElementById('local-pdf-modal');
         if (modalContainer) modalContainer.remove();
