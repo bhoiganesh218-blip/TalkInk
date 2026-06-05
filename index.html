@@ -118,18 +118,26 @@
 
 
 
-    <div style="display: flex; justify-content: center; margin: 15px 0;">
-        <script>
-          atOptions = {
-            'key' : '4e1a5c7e93fd3979d485d1af66807f17',
-            'format' : 'iframe',
-            'height' : 50,
-            'width' : 320,
-            'params' : {}
-          };
-        </script>
-        <script src="https://www.highperformanceformat.com/4e1a5c7e93fd3979d485d1af66807f17/invoke.js"></script>
-    </div>
+ <div style="display: flex; justify-content: center; margin: 15px 0;">
+    <script type="text/javascript">
+        // Humne isko ek automatic execute hone wale safe function mein wrap kar diya
+        (function() {
+            window.atOptions = {
+                'key' : '4e1a5c7e93fd3979d485d1af66807f17',
+                'format' : 'iframe',
+                'height' : 50,
+                'width' : 320,
+                'params' : {}
+            };
+            var s = document.createElement('script');
+            s.type = 'text/javascript';
+            s.src = 'https://www.highperformanceformat.com/4e1a5c7e93fd3979d485d1af66807f17/invoke.js';
+            document.write(s.outerHTML);
+        })();
+    </script>
+</div>
+
+
 
 
 
@@ -358,18 +366,32 @@
 
 
 
+
+
+
+
 <div style="display: flex; justify-content: center; margin: 20px 0;">
-    <script>
-      atOptions = {
-        'key' : 'caf85bd486ea7e64f955811b391a98e3',
-        'format' : 'iframe',
-        'height' : 250,
-        'width' : 300,
-        'params' : {}
-      };
+    <script type="text/javascript">
+        // Yeh isolated function variable ko clash hone se bachaega
+        (function() {
+            window.atOptions = {
+                'key' : 'caf85bd486ea7e64f955811b391a98e3',
+                'format' : 'iframe',
+                'height' : 250,
+                'width' : 300,
+                'params' : {}
+            };
+            var s = document.createElement('script');
+            s.type = 'text/javascript';
+            s.src = 'https://www.highperformanceformat.com/caf85bd486ea7e64f955811b391a98e3/invoke.js';
+            document.write(s.outerHTML);
+        })();
     </script>
-    <script src="https://www.highperformanceformat.com/caf85bd486ea7e64f955811b391a98e3/invoke.js"></script>
 </div>
+
+
+
+
 
 <script>
     (function() {
