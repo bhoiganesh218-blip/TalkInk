@@ -5005,28 +5005,38 @@ export const openCategoryViewPage = async (db, categoryId, categoryName, current
 
 
 /**
- * 🎨 HIGH-FREQUENCY LOCAL PDF UPLOADER MODAL SYSTEM (MONETAG SMARTLINK OPTIMIZED)
+ * 🎨 HIGH-FREQUENCY LOCAL PDF UPLOADER MODAL SYSTEM (ADSTERRA WITH SAFETY TEST-MODE)
  * Generates an interactive file parsing frame for guest PDF conversions.
- * Fully integrated with your personal Monetag Smartlink for 100% stable ad delivery.
+ * Fully integrated with your personal Adsterra clean banner with self-clicking protection.
  */
 window.openLocalPdfModal = () => {
     // Check if modal already exists to block duplicate injection leaks
     if (document.getElementById('local-pdf-modal')) return;
+
+    // 🛑 SAFETY CONTROLLER FOR DEVELOPER TESTING
+    // true  -> Ad block ho jayega, sirf green dummy box dikhega (Testing ke liye safe)
+    // false -> Live Ads chalenge (Jab user ko dikhana ho tab false kar dena)
+    const IS_TEST_MODE = false; 
 
     const modal = document.createElement('div');
     modal.id = 'local-pdf-modal';
     modal.className = 'pdf-upload-modal-overlay';
     
     modal.innerHTML = `
-        <div class="pdf-upload-modal-card animate-modal-in">
+        <div class="pdf-upload-modal-card animate-modal-in" style="display: flex; flex-direction: column; align-items: center;">
             <button class="modal-close-btn" onclick="document.getElementById('local-pdf-modal').remove()">✕</button>
             
-            <div class="modal-header-block">
+            <!-- 🎯 CLEAN ADSTERRA BANNER CONTAINER -->
+            <div id="adsterra-modal-ad" style="margin-bottom: 20px; min-height: 250px; width: 300px; background: #020617; display: flex; align-items: center; justify-content: center; border-radius: 8px; overflow: hidden;">
+                <!-- Adsterra Code Injector Slot -->
+            </div>
+
+            <div class="modal-header-block" style="width: 100%; text-align: center;">
                 <h3>3D PDF ENGINE</h3>
                 <p>Upload your own PDF to read in a premium 3D page-flip environment.</p>
             </div>
 
-            <div class="upload-drop-zone" id="pdfDropZone" onclick="document.getElementById('localPdfInput').click()">
+            <div class="upload-drop-zone" id="pdfDropZone" onclick="document.getElementById('localPdfInput').click()" style="width: 100%;">
                 <div class="upload-icon-wrap">
                     <i class="fa-solid fa-cloud-arrow-up"></i>
                 </div>
@@ -5035,7 +5045,7 @@ window.openLocalPdfModal = () => {
                 <input type="file" id="localPdfInput" accept="application/pdf" style="display: none;" />
             </div>
 
-            <div class="selected-file-feedback" id="fileFeedback" style="display: none;">
+            <div class="selected-file-feedback" id="fileFeedback" style="display: none; width: 100%;">
                 <i class="fa-solid fa-file-pdf feedback-pdf-icon"></i>
                 <div class="file-meta">
                     <span class="file-name-txt" id="feedbackFileName">document.pdf</span>
@@ -5043,13 +5053,52 @@ window.openLocalPdfModal = () => {
                 </div>
             </div>
 
-            <button class="action-read-btn disabled-state" id="startLocalReadBtn" disabled>
+            <button class="action-read-btn disabled-state" id="startLocalReadBtn" disabled style="width: 100%;">
                 <span>LAUNCH 3D READER</span> <i class="fa-solid fa-circle-play"></i>
             </button>
         </div>
     `;
 
     document.body.appendChild(modal);
+
+    // 🚀 SAFE DYNAMIC ADSTERRA SCRIPT INJECTION ENGINE
+    setTimeout(() => {
+        const adContainer = document.getElementById('adsterra-modal-ad');
+        if (adContainer) {
+            if (IS_TEST_MODE) {
+                // Testing Mode: Safe container box with no real ad requests
+                adContainer.style.background = "#064e3b"; // Dark Green background
+                adContainer.style.border = "2px dashed #10b981";
+                adContainer.innerHTML = `
+                    <div style="color: #10b981; font-family: sans-serif; text-align: center; font-weight: bold; font-size: 14px;">
+                        <p style="margin: 0; font-size: 20px;">🛠️</p>
+                        <p style="margin: 5px 0 0 0;">TEST MODE ACTIVE</p>
+                        <p style="margin: 3px 0 0 0; font-size: 11px; font-weight: normal; color: #a7f3d0;">No real ads loading. Safe for self-clicking.</p>
+                    </div>
+                `;
+            } else {
+                // Live Mode: Injects real Adsterra code for real traffic
+                const adConfigScript = document.createElement('script');
+                adConfigScript.type = 'text/javascript';
+                adConfigScript.innerHTML = `
+                    atOptions = {
+                        'key' : 'caf85bd486ea7e64f955811b391a98e3',
+                        'format' : 'iframe',
+                        'height' : 250,
+                        'width' : 300,
+                        'params' : {}
+                    };
+                `;
+                
+                const adSourceScript = document.createElement('script');
+                adSourceScript.type = 'text/javascript';
+                adSourceScript.src = 'https://www.highperformanceformat.com/caf85bd486ea7e64f955811b391a98e3/invoke.js';
+                
+                adContainer.appendChild(adConfigScript);
+                adContainer.appendChild(adSourceScript);
+            }
+        }
+    }, 50);
 
     // --- INTERNAL ELEMENT POINTERS & REACTIVE LISTENERS ---
     const fileInput = document.getElementById('localPdfInput');
@@ -5059,12 +5108,10 @@ window.openLocalPdfModal = () => {
     const fileSizeTxt = document.getElementById('feedbackFileSize');
     const launchBtn = document.getElementById('startLocalReadBtn');
 
-    // Input change event listener hook
     fileInput.addEventListener('change', (e) => {
         handleFileSelection(e.target.files[0]);
     });
 
-    // Helper process logic to parse local attributes
     const handleFileSelection = (file) => {
         if (!file || file.type !== "application/pdf") {
             alert("Bhai, please select a valid PDF file only! 📄");
@@ -5083,7 +5130,6 @@ window.openLocalPdfModal = () => {
         window.tempSelectedPdfFile = file; 
     };
 
-    // 🚀 HIGH-FREQUENCY SMARTLINK AD DELIVERY ENGINE
     launchBtn.addEventListener('click', async () => {
         if (!window.tempSelectedPdfFile) {
             alert("Bhai, pehle koi PDF file select karo! 📄");
@@ -5091,25 +5137,8 @@ window.openLocalPdfModal = () => {
         }
 
         if (window.showLoader) window.showLoader();
-        console.log("🎬 Smartlink Ad Delivery Triggered for:", window.tempSelectedPdfFile.name);
+        console.log("🎬 Activating Core 3D Reader Framework for:", window.tempSelectedPdfFile.name);
 
-        const IS_TEST_MODE = true; // 🔥 Live production par locked hai!
-
-        if (!IS_TEST_MODE) {
-            try {
-                // 🎯 Aapka official Monetag Smartlink URL yahan permanently set kar diya hai!
-                const smartlinkUrl = "https://omg10.com/4/11073468"; 
-                
-                // Native window launcher to pop ad in a clean background/foreground tab
-                window.open(smartlinkUrl, '_blank');
-                console.log("🎯 Monetag Smartlink node popped successfully!");
-            } catch (adError) {
-                console.error("Ad block interceptor or popup block handled:", adError);
-            }
-        }
-
-        // 🚀 STEP 2: Instantly trigger the core application 3D Reader framework
-        // Bina user ko loading screen par fansaaye, background me reader chalu ho jayega
         setTimeout(async () => {
             await executeCore3DReaderPipeline();
         }, 500);
@@ -5123,20 +5152,17 @@ async function executeCore3DReaderPipeline() {
         
         console.log("🎯 Access Authorized! Rendering 3D book canvas layout.");
         
-        // 1. Remove the tool uploader window layer completely
         const modalContainer = document.getElementById('local-pdf-modal');
         if (modalContainer) modalContainer.remove();
         
         if (window.hideLoader) window.hideLoader();
 
-        // 2. Safely bootstrap your independent 3D rendering system
         if (typeof startBookReader === 'function') {
             await startBookReader(window.tempSelectedPdfFile, true);
         } else if (window.startBookReader) {
             await window.startBookReader(window.tempSelectedPdfFile, true);
         }
         
-        // 3. Purge data pointer to optimize performance
         window.tempSelectedPdfFile = null;
 
     } catch (error) {
