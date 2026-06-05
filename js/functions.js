@@ -5016,7 +5016,7 @@ window.openLocalPdfModal = () => {
     // 🛑 SAFETY CONTROLLER FOR DEVELOPER TESTING
     // true  -> Ad block ho jayega, sirf green dummy box dikhega (Testing ke liye safe)
     // false -> Live Ads chalenge (Jab user ko dikhana ho tab false kar dena)
-    const IS_TEST_MODE = false; 
+    const IS_TEST_MODE = true; 
 
     const modal = document.createElement('div');
     modal.id = 'local-pdf-modal';
