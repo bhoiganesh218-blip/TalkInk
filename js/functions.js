@@ -1077,7 +1077,7 @@ const initiatePurchase = async (bookId, originalAmount) => {
             return;
         }
 
-        // 💳 Render Backend Server ko hit karo
+        // 💳 Render Backend Server ko hit karo (Now passing exact userId)
         const res = await fetch('https://talkinkbackend.onrender.com/create-order', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -1086,7 +1086,8 @@ const initiatePurchase = async (bookId, originalAmount) => {
                 purpose: `Purchase Book ID: ${bookId}`,
                 buyer_name: user.displayName || "Ganesh User",
                 email: user.email,
-                bookId: bookId
+                bookId: bookId,
+                userId: user.uid 
             })
         });
 
@@ -1094,8 +1095,6 @@ const initiatePurchase = async (bookId, originalAmount) => {
         window.hideLoader();
 
         if (res.ok && orderData.success && orderData.longurl) {
-            // 🎯 TEST MODE FIX: Instamojo overlay pop-up block hone se bachne ke liye 
-            // seedhe user ko Instamojo ke safe test check-out page par redirect karo
             window.location.href = orderData.longurl;
             resetCouponState();
         } else {
