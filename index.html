@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    
     <title>TalkInk | Listen & Read Premium eBooks & Audiobooks Vault</title>
     <meta name="description" content="Unlock unlimited premium eBooks and high-quality AI audio explanations on TalkInk. Read, listen, and dive into your personal eBook vault today!">
     <meta name="keywords" content="TalkInk, audiobooks, premium ebooks, AI book explanation, read books online, ebook vault">
@@ -12,7 +12,6 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://bhoiganesh218.github.io/talkink/">
     <meta property="og:title" content="TalkInk | Premium eBook & Audiobook Vault">
-    <meta property="og:description" content="Immerse yourself in books with high-quality AI-driven audio explanations. Access your premium vault now.">
     <meta property="og:image" content="https://bhoiganesh218.github.io/talkink/assets/og-banner.jpg">
 
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Inter:wght@300;500;800&display=swap" rel="stylesheet">
@@ -22,367 +21,998 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.min.js"></script>
-
+    
     <link rel="manifest" href="manifest.json">
+
     <meta name="theme-color" content="#020617">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/sw.js')
-            .then((registration) => {
-                console.log('Service Worker registered successfully!');
-                registration.addEventListener('updatefound', () => {
-                    const newWorker = registration.installing;
-                    newWorker.addEventListener('statechange', () => {
-                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                            console.log('✨ Naya update mil gaya! App auto-refresh ho raha hai...');
-                            window.location.reload();
-                        }
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                .then((registration) => {
+                    console.log('Service Worker registered successfully!');
+
+                    // 🔥 Auto-Update Check Loop
+                    registration.addEventListener('updatefound', () => {
+                        const newWorker = registration.installing;
+                        
+                        newWorker.addEventListener('statechange', () => {
+                            // Jab naya worker install ho kar ready ho jaye
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                console.log('✨ Naya update mil gaya! App auto-refresh ho raha hai...');
+                                
+                                // Ek chota sweet refresh jo naye cache ko load kar dega
+                                window.location.reload();
+                            }
+                        });
                     });
+                })
+                .catch((err) => {
+                    console.error('Service Worker registration failed:', err);
                 });
-            })
-            .catch((err) => {
-                console.error('Service Worker registration failed:', err);
             });
-        });
-      }
+        }
     </script>
 
-    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
     <meta name="google-site-verification" content="eDJEKHV-LxR7-17PpgzyecDoYLDUZHvbBEtiFjinr6M" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6689215480309340" crossorigin="anonymous"></script>
 </head>
 
 <body>
 
-<div class="ink-overlay" id="overlay"></div>
+    <div class="ink-overlay" id="overlay"></div>
 
-<nav class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-        <div class="logo">TI<span class="logo-dot">.</span></div>
-    </div>
-    <div class="nav-items">
-        <a onclick="render('home')" class="nav-item active">
-            <div class="nav-icon-wrap"><i class="fa-solid fa-house-user"></i></div>
-            <span>Home</span>
-        </a>
-        <a onclick="window.openLatestSection()" class="nav-item">
-            <div class="nav-icon-wrap"><i class="fa-solid fa-bolt"></i></div>
-            <span>New Arrivals</span>
-        </a>
-        <a onclick="openPremiumSectionStore()" class="nav-item">
-            <div class="nav-icon-wrap"><i class="fa-solid fa-gem"></i></div>
-            <span>Premium</span>
-        </a>
-        <a onclick="render('LibraryPage')" class="nav-item">
-            <div class="nav-icon-wrap"><i class="fa-solid fa-bookmark"></i></div>
-            <span>My Library</span>
-        </a>
-        <a onclick="window.openLocalPdfModal()" class="nav-item" id="navLocalPdfBtn">
-            <div class="nav-icon-wrap"><i class="fa-solid fa-file-pdf" style="color: #6366f1;"></i></div>
-            <span>3D PDF Viewer</span>
-        </a>
-        <a onclick="window.openWishlistPageStore()" class="nav-item" id="navWishlistBtn">
-            <div class="nav-icon-wrap"><i class="fa-solid fa-heart" style="color: #ef4444;"></i></div>
-            <span>Wishlist</span>
-        </a>
-        <div class="nav-divider"></div>
-        <a onclick="window.openSettingPageStore()" class="nav-item">
-            <div class="nav-icon-wrap"><i class="fa-solid fa-gear"></i></div>
-            <span>Settings</span>
-        </a>
-    </div>
-</nav>
-
-<header class="top-nav" id="topNav">
-    <div class="top-nav-laser"></div>
-    <div class="menu-trigger" id="menuBtn"><i class="fa-solid fa-bars-staggered"></i></div>
-    <div class="brand-logo">Talk<span>Ink</span></div>
-    <div class="user-action">
-        <div onclick="window.openSearchPanelEngine()" class="search-circle"><i class="fa-solid fa-magnifying-glass"></i></div>
-        <div class="profile-frame" onclick="render('profile')">
-            <img src="https://ui-avatars.com/api/?name=TI&background=6366f1&color=fff" alt="Profile" id="profimg">
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">TI<span class="logo-dot">.</span></div>
         </div>
-    </div>
-</header>
+        
+        <div class="nav-items">
+            <a onclick="render('home')" class="nav-item active">
+                <div class="nav-icon-wrap"><i class="fa-solid fa-house-user"></i></div>
+                <span>Home</span>
+            </a>
+            <a onclick="window.openLatestSection()" class="nav-item">
+                <div class="nav-icon-wrap"><i class="fa-solid fa-bolt"></i></div>
+                <span>New Arrivals</span>
+            </a>
+            <a onclick="openPremiumSectionStore()" class="nav-item">
+                <div class="nav-icon-wrap"><i class="fa-solid fa-gem"></i></div>
+                <span>Premium</span>
+            </a>
+            <a onclick="render('LibraryPage')" class="nav-item">
+                <div class="nav-icon-wrap"><i class="fa-solid fa-bookmark"></i></div>
+                <span>My Library</span>
+            </a>
+            <a onclick="window.openLocalPdfModal()" class="nav-item" id="navLocalPdfBtn">
+                <div class="nav-icon-wrap">
+                    <i class="fa-solid fa-file-pdf" style="color: #6366f1;"></i>
+                </div>
+                <span>3D PDF Viewer</span>
+            </a>
+            <a onclick="window.openWishlistPageStore()" class="nav-item" id="navWishlistBtn">
+                <div class="nav-icon-wrap">
+                    <i class="fa-solid fa-heart" style="color: #ef4444;"></i>
+                </div>
+                <span>Wishlist</span>
+            </a>
 
-<main class="main-wrapper" id="home">
-    <div id="hero-slider-root"></div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <nav class="ti-categories-navbar" id="categoriesNavContainer">
-        <div class="categories-scroll-wrapper">
-            <button class="category-pill active"><i class="fa-solid fa-spinner fa-spin"></i> <span>Syncing Vaults...</span></button>
+            <div class="nav-divider"></div>
+            
+            <a onclick="window.openSettingPageStore()" class="nav-item">
+                <div class="nav-icon-wrap"><i class="fa-solid fa-gear"></i></div>
+                <span>Settings</span>
+            </a>
         </div>
     </nav>
 
-    <section class="book-container">
-        <a href="ads.html">        
-            <button class="ti-floating-reward-widget" id="reward-widget-trigger" aria-label="Open Reward Hub">
-                <span class="widget-icon">🎁</span>
-                <span class="widget-status-badge" id="widget-badge-count">0</span>
-                <span class="widget-ping-ring"></span>
-            </button>
-        </a>
-        <div class="section-header">
-            <h2>Trending Vault</h2>
-            <a onclick="render('LibraryPage')">LIBRARY <i class="fa-solid fa-arrow-right-long"></i></a>
+    <header class="top-nav" id="topNav">
+        <div class="top-nav-laser"></div>
+
+        <div class="menu-trigger" id="menuBtn">
+            <i class="fa-solid fa-bars-staggered"></i>
         </div>
-        <div class="ink-grid"></div>
+        
+        <div class="brand-logo">Talk<span>Ink</span></div>
+        
+        <div class="user-action">
+            <div onclick="window.openSearchPanelEngine()" class="search-circle">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <div class="profile-frame" onclick="render('profile')">
+                <img src="https://ui-avatars.com/api/?name=TI&background=6366f1&color=fff" alt="Profile" id="profimg">
+            </div>
+        </div>
+    </header>
+
+    <main class="main-wrapper" id="home">
+        <div id="hero-slider-root"></div>
+
+        <nav class="ti-categories-navbar" id="categoriesNavContainer">
+            <div class="categories-scroll-wrapper">
+                <button class="category-pill active">
+                    <i class="fa-solid fa-spinner fa-spin"></i> <span>Syncing Vaults...</span>
+                </button>
+            </div>
+        </nav>
+
+        <section class="book-container">
+            <a href="ads.html">        
+                <button class="ti-floating-reward-widget" id="reward-widget-trigger" aria-label="Open Reward Hub">
+                    <span class="widget-icon">🎁</span>
+                    <span class="widget-status-badge" id="widget-badge-count">0</span>
+                    <span class="widget-ping-ring"></span>
+                </button>
+            </a>
+
+            <div class="section-header">
+                <h2>Trending Vault</h2>
+                <a onclick="render('LibraryPage')">LIBRARY <i class="fa-solid fa-arrow-right-long"></i></a>
+            </div>
+
+            <div class="ink-grid">
+                </div>
+        </section>
+    </main>
+ 
+    <section id="profile"></section>
+
+    <section id="BookPage">
+        <div class="book-detail-wrapper">
+            <header class="detail-header">
+                <button class="icon-btn" onclick="render('home')" aria-label="Go Back">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <span class="header-title">Book Details</span>
+                <button class="icon-btn share-trigger" aria-label="Share Vault Profile">
+                    <i class="fa-solid fa-share-nodes"></i>
+                </button>
+            </header>
+
+            <div class="relative-media-wrapper">
+                <div class="book-media-container" id="scrollContainer"> 
+                    <div class="media-track" id="mediaTrack"></div>
+                </div>
+                <div class="media-dots" id="mediaDots"></div>
+            </div>
+
+            <div class="book-main-info">
+                <h1 id="detailTitle">Loading Book Title...</h1>
+                <div class="author-tag">By <span id="detailAuthor">Author Name</span></div>
+                
+                <div class="pricing-card">
+                    <span class="curr-price" id="detailPrice">₹0</span>
+                    <span class="old-price" id="detailOldPrice">₹0</span>
+                    <span class="discount-tag" id="detailDiscount">0% OFF</span>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h3 class="section-label">Description</h3>
+                <p id="detailDesc" class="description-text">Loading plot description...</p>
+            </div>
+
+            <div class="book-stats-grid">
+                <div class="stat-item">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span id="detailGenre">Genre</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <span id="detailPages">0 Pages</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fa-solid fa-language"></i>
+                    <span id="detailLang">Language</span>
+                </div>
+            </div>
+
+            <div class="action-bar-fixed">
+                <button class="wishlist-btn" id="wishlistAction" aria-label="Save to Vault">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+                <button class="coupon-btn" id="couponAction" onclick="openCouponModal()">
+                    <i class="fa-solid fa-ticket"></i> Coupon
+                </button>
+                <button class="read-free-btn" id="readFreeAction" style="display: none;">
+                    <i class="fa-solid fa-book-open"></i> Read Free
+                </button>
+                <button class="buy-now-btn" id="buyAction">
+                    <i class="fa-solid fa-bolt"></i> Buy Now
+                </button>
+            </div>
+        </div>
     </section>
-</main>
 
-<section id="profile"></section>
-<section id="BookPage">
-    <div class="book-detail-wrapper">
-        <header class="detail-header">
-            <button class="icon-btn" onclick="render('home')"><i class="fa-solid fa-chevron-left"></i></button>
-            <span class="header-title">Book Details</span>
-            <button class="icon-btn share-trigger"><i class="fa-solid fa-share-nodes"></i></button>
-        </header>
-        <div class="relative-media-wrapper">
-            <div class="book-media-container" id="scrollContainer"> 
-                <div class="media-track" id="mediaTrack"></div>
-            </div>
-            <div class="media-dots" id="mediaDots"></div>
-        </div>
-        <div class="book-main-info">
-            <h1 id="detailTitle">Loading Book Title...</h1>
-            <div class="author-tag">By <span id="detailAuthor">Author Name</span></div>
-            <div class="pricing-card">
-                <span class="curr-price" id="detailPrice">₹0</span>
-                <span class="old-price" id="detailOldPrice">₹0</span>
-                <span class="discount-tag" id="detailDiscount">0% OFF</span>
-            </div>
-        </div>
-        <div class="info-section">
-            <h3 class="section-label">Description</h3>
-            <p id="detailDesc" class="description-text">Loading plot description...</p>
-        </div>
-        <div class="book-stats-grid">
-            <div class="stat-item"><i class="fa-solid fa-layer-group"></i><span id="detailGenre">Genre</span></div>
-            <div class="stat-item"><i class="fa-solid fa-file-lines"></i><span id="detailPages">0 Pages</span></div>
-            <div class="stat-item"><i class="fa-solid fa-language"></i><span id="detailLang">Language</span></div>
-        </div>
-        <div class="action-bar-fixed">
-            <button class="wishlist-btn" id="wishlistAction"><i class="fa-regular fa-heart"></i></button>
-            <button class="coupon-btn" id="couponAction" onclick="openCouponModal()"><i class="fa-solid fa-ticket"></i> Coupon</button>
-            <button class="read-free-btn" id="readFreeAction" style="display: none;"><i class="fa-solid fa-book-open"></i> Read Free</button>
-            <button class="buy-now-btn" id="buyAction"><i class="fa-solid fa-bolt"></i> Buy Now</button>
-        </div>
-    </div>
-</section>
-
-<section id="LibraryPage" class="page-view">
-    <div class="lib-wrapper">
-        <header class="lib-nav">
-            <button class="mini-back-btn" onclick="window.render('home')"><i class="fa-solid fa-arrow-left-long"></i></button>
-            <div class="lib-title-box">
-                <h1 class="glitch-text">Vault<span>.</span>lib</h1>
-                <div class="lib-meta-status"><span class="status-indicator"></span><span id="lib-count">12 Synchronized Units</span></div>
-            </div>
-        </header>
-        <div class="compact-grid" id="purchasedBooksGrid"></div>
-    </div>
-</section>
-
-<section id="ReaderPage" class="page-view">
-    <div class="reader-nav">
-        <button class="reader-back" onclick="window.render('LibraryPage')"><i class="fa-solid fa-arrow-left"></i></button>
-        <div class="reader-title-info">
-            <h2 id="currentReadingTitle">Loading Book...</h2>
-            <div class="reader-meta"><span class="brand-tag">TalkInk 3D Premium</span></div>
-        </div>
-        <div class="reader-actions">
-            <button id="fullscreenToggleBtn" class="action-dock-btn"><i class="fa-solid fa-expand"></i></button>
-            <button id="ambientSoundBtn" class="action-dock-btn" onclick="window.ambientEngine.togglePopup(event)"><i class="fa-solid fa-music"></i></button>
-        </div>
-    </div>
-    <div class="reading-progress-container" id="progressBarContainer">
-        <div id="readingProgress"><div id="progressThumb"><span id="progressTooltip">1</span></div></div>
-    </div>
-    <div class="reader-container">
-        <div id="flipbook-wrapper"><div id="flipbook"></div></div>
-    </div>
-    <div class="reader-bottom-dock">
-        <div class="dock-content">
-            <div class="dock-group zoom-controls">
-                <button onclick="window.zoomOut()"><i class="fa-solid fa-minus"></i></button>
-                <span class="dock-label">Zoom</span>
-                <button onclick="window.zoomIn()"><i class="fa-solid fa-plus"></i></button>
-            </div>
-            <div class="dock-group main-nav">
-                <button id="prevBtn" class="nav-btn prev" onclick="$('#flipbook').turn('previous')"><i class="fa-solid fa-circle-chevron-left"></i></button>
-                <div class="page-indicator" onclick="openJumpToPage()"><span id="dockPageCounter">1 / 1</span></div>
-                <button id="nextBtn" class="nav-btn next" onclick="$('#flipbook').turn('next')"><i class="fa-solid fa-circle-chevron-right"></i></button>
-            </div>
-            <div class="dock-group quick-actions">
-                <button id="ttsSpeechBtn" onclick="window.togglePageSpeech()"><i class="fa-solid fa-headphones"></i></button>
-                <button onclick="openSettingsModal()"><i class="fa-solid fa-gear"></i></button>
-            </div>
-        </div>
-    </div>
-    <div id="jumpPageModal" class="jump-modal">
-        <div class="modal-content">
-            <h3>Go to Page</h3>
-            <input type="number" id="jumpPageInput" placeholder="Enter page..." min="1">
-            <div class="modal-actions">
-                <button onclick="closeJumpModal()" class="btn-cancel">Cancel</button>
-                <button onclick="executeJump()" class="btn-go">Go</button>
-            </div>
-        </div>
-    </div>
-    <div id="settingsModal" class="jump-modal">
-        <div class="modal-content">
-            <h3>Reader Settings</h3>
-            <div class="settings-options-list">
-                <div class="setting-row">
-                    <div class="setting-info"><i class="fa-solid fa-moon"></i><span>Dark Mode</span></div>
-                    <label class="switch-control"><input type="checkbox" id="darkModeCheckbox" onchange="handleThemeToggle()"><span class="switch-slider"></span></label>
+    <section id="LibraryPage" class="page-view">
+        <div class="lib-wrapper">
+            <header class="lib-nav">
+                <button class="mini-back-btn" onclick="window.render('home')">
+                    <i class="fa-solid fa-arrow-left-long"></i>
+                </button>
+                <div class="lib-title-box">
+                    <h1 class="glitch-text">Vault<span>.</span>lib</h1>
+                    <div class="lib-meta-status">
+                        <span class="status-indicator"></span>
+                        <span id="lib-count">12 Synchronized Units</span>
+                    </div>
                 </div>
-                <div class="setting-row">
-                    <div class="setting-info"><i class="fa-solid fa-eye"></i><span>Keep Screen On</span></div>
-                    <label class="switch-control"><input type="checkbox" id="wakeLockCheckbox" onchange="handleWakeLockToggle()"><span class="switch-slider"></span></label>
+            </header>
+
+            <div class="compact-grid" id="purchasedBooksGrid">
+                </div>
+        </div>
+    </section>
+
+    <section id="ReaderPage" class="page-view">
+        <div class="reader-nav">
+            <button class="reader-back" onclick="window.render('LibraryPage')">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            
+            <div class="reader-title-info">
+                <h2 id="currentReadingTitle">Loading Book...</h2>
+                <div class="reader-meta">
+                    <span class="brand-tag">TalkInk 3D Premium</span>
                 </div>
             </div>
-            <div class="modal-actions"><button onclick="closeSettingsModal()" class="btn-cancel">Close</button></div>
-        </div>
-    </div>
-    
-    <div id="ttsLanguageModal" class="jump-modal" style="display: none; z-index: 2000;">
-        <div class="modal-content" style="max-width: 380px; padding: 25px; border: 1px solid rgba(99, 102, 241, 0.2); background: #020617; border-radius: 16px;">
-            <div style="text-align: center; margin-bottom: 20px;">
-                <i class="fa-solid fa-language" style="font-size: 2.2rem; color: #6366f1; margin-bottom: 10px; display: block;"></i>
-                <h3 style="margin: 0; font-size: 1.3rem; font-weight: 800; color: #fff;">Select Audio Mode</h3>
-            </div>
-            <button onclick="window.speechPlayer.openAiLangModal()" style="width: 100%; background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); border: none; color: #fff; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; margin-bottom: 15px;"><i class="fa-solid fa-wand-magic-sparkles"></i> Listen AI Explanation</button>
-            <div id="ttsLangGrid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px;">
-                <button class="lang-select-btn" onclick="window.speechPlayer.setLanguage('en', 'en-US', 'Original (English)')">🇺🇸 English</button>
-                <button class="lang-select-btn" onclick="window.speechPlayer.setLanguage('hi', 'hi-IN', 'Hindi Translation')">🇮🇳 हिंदी</button>
-                <button class="lang-select-btn" onclick="window.speechPlayer.setLanguage('or', 'or-IN', 'Odia Translation')">🇮🇳 ଓଡ଼ିଆ</button>
-                <button class="lang-select-btn" onclick="window.speechPlayer.setLanguage('bn', 'bn-IN', 'Bengali Translation')">🇮🇳 বাংলা</button>
-            </div>
-            <button onclick="window.speechPlayer.closeLangModal()" style="width: 100%; background: rgba(255,255,255,0.05); color: #94a3b8; padding: 12px; border-radius: 10px; border:none; cursor:pointer;">Cancel</button>
-        </div>
-    </div>
-    <div id="aiExplanationLangModal" class="jump-modal" style="display: none; z-index: 2010;"></div>
-    <div id="aiTranscriptModal" class="jump-modal" style="display: none; z-index: 2020;"></div>
-</section>
 
-<section id="SettingPage" class="page-view">
-    <div class="settings-wrapper">
-        <header class="settings-nav">
-            <button class="mini-back-btn" onclick="window.render('profile')"><i class="fa-solid fa-arrow-left-long"></i></button>
-            <div class="settings-title-box"><h1 class="glitch-text">Config<span>.</span>sys</h1></div>
-        </header>
-        <div class="settings-grid">
-            <div class="settings-card avatar-matrix-card">
-                <div class="avatar-configuration-zone">
-                    <img src="https://ui-avatars.com/api/?name=Reader&background=6366f1&color=fff&bold=true" id="settingsAvatarPreview" style="border-radius: 50%;">
+            <div class="reader-actions">
+                <button id="fullscreenToggleBtn" class="action-dock-btn" title="Toggle Fullscreen">
+                    <i class="fa-solid fa-expand"></i>
+                </button>
+                <button id="ambientSoundBtn" class="action-dock-btn" onclick="window.ambientEngine.togglePopup(event)" title="Ambient Sounds">
+                    <i class="fa-solid fa-music"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="reading-progress-container" id="progressBarContainer">
+            <div id="readingProgress">
+                <div id="progressThumb">
+                    <span id="progressTooltip">1</span>
                 </div>
             </div>
-            <div class="settings-card identity-matrix-card">
-                <form id="settingsIdentityForm" class="cyber-form" onsubmit="event.preventDefault();">
-                    <input type="text" id="settingsUserNameInput" required>
-                    <button type="submit" class="cyber-save-btn" id="saveIdentityBtn">COMMIT CHANGES</button>
+        </div>
+
+        <div class="reader-container">
+            <div id="flipbook-wrapper">
+                <div id="flipbook"></div>
+            </div>
+        </div>
+
+        <div class="reader-bottom-dock">
+            <div class="dock-content">
+                <div class="dock-group zoom-controls">
+                    <button onclick="window.zoomOut()" title="Zoom Out">
+                        <i class="fa-solid fa-minus"></i>
+                    </button>
+                    <span class="dock-label">Zoom</span>
+                    <button onclick="window.zoomIn()" title="Zoom In">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+
+                <div class="dock-group main-nav">
+                    <button id="prevBtn" class="nav-btn prev" onclick="$('#flipbook').turn('previous')">
+                        <i class="fa-solid fa-circle-chevron-left"></i>
+                    </button>
+                    <div class="page-indicator" onclick="openJumpToPage()" style="cursor: pointer;" title="Click to Jump">
+                        <span id="dockPageCounter">1 / 1</span>
+                    </div>
+                    <button id="nextBtn" class="nav-btn next" onclick="$('#flipbook').turn('next')">
+                        <i class="fa-solid fa-circle-chevron-right"></i>
+                    </button>
+                </div>
+
+                <div class="dock-group quick-actions">
+                    <button id="ttsSpeechBtn" onclick="window.togglePageSpeech()" title="Listen Page">
+                        <i class="fa-solid fa-headphones"></i>
+                    </button>
+                    <button onclick="openSettingsModal()" title="Settings">
+                        <i class="fa-solid fa-gear"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="jumpPageModal" class="jump-modal">
+            <div class="modal-content">
+                <h3>Go to Page</h3>
+                <input type="number" id="jumpPageInput" placeholder="Enter page..." min="1">
+                <div class="modal-actions">
+                    <button onclick="closeJumpModal()" class="btn-cancel">Cancel</button>
+                    <button onclick="executeJump()" class="btn-go">Go</button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="settingsModal" class="jump-modal">
+            <div class="modal-content">
+                <h3>Reader Settings</h3>
+                <div class="settings-options-list">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <i class="fa-solid fa-moon"></i>
+                            <span>Dark Mode</span>
+                        </div>
+                        <label class="switch-control">
+                            <input type="checkbox" id="darkModeCheckbox" onchange="handleThemeToggle()">
+                            <span class="switch-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <i class="fa-solid fa-eye"></i>
+                            <span>Keep Screen On</span>
+                        </div>
+                        <label class="switch-control">
+                            <input type="checkbox" id="wakeLockCheckbox" onchange="handleWakeLockToggle()">
+                            <span class="switch-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button onclick="closeSettingsModal()" class="btn-cancel">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="ttsLanguageModal" class="jump-modal" style="display: none; z-index: 2000;">
+            <div class="modal-content" style="max-width: 380px; padding: 25px; border: 1px solid rgba(99, 102, 241, 0.2); background: #020617; border-radius: 16px;">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <i class="fa-solid fa-language" style="font-size: 2.2rem; color: #6366f1; margin-bottom: 10px; display: block;"></i>
+                    <h3 style="margin: 0; font-size: 1.3rem; font-weight: 800; letter-spacing: 0.5px; color: #fff;">Select Audio Mode</h3>
+                    <p style="font-size: 0.8rem; color: #64748b; margin: 5px 0 0 0;">Choose standard TTS or Premium AI Explanation</p>
+                </div>
+
+                <button onclick="window.speechPlayer.openAiLangModal()" style="width: 100%; background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); border: none; color: #fff; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3); transition: 0.2s;">
+                    <i class="fa-solid fa-wand-magic-sparkles animate-pulse"></i> ✨ Listen AI Explanation
+                </button>
+
+                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                    <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.08);"></div>
+                    <span style="font-size: 0.75rem; color: #475569; padding: 0 10px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px;">Or Standard Read</span>
+                    <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.08);"></div>
+                </div>
+                
+                <div id="ttsLangGrid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px;">
+                    <button class="lang-select-btn" onclick="window.speechPlayer.setLanguage('en', 'en-US', 'Original (English)')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: 0.2s;">
+                        <span style="font-size: 1.1rem;">🇺🇸</span> English
+                    </button>
+                    <button class="lang-select-btn" onclick="window.speechPlayer.setLanguage('hi', 'hi-IN', 'Hindi Translation')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: 0.2s;">
+                        <span style="font-size: 1.1rem;">🇮🇳</span> हिंदी (Hindi)
+                    </button>
+                    <button class="lang-select-btn" onclick="window.speechPlayer.setLanguage('or', 'or-IN', 'Odia Translation')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: 0.2s;">
+                        <span style="font-size: 1.1rem;">🇮🇳</span> ଓଡ଼ିଆ (Odia)
+                    </button>
+                    <button class="lang-select-btn" onclick="window.speechPlayer.setLanguage('bn', 'bn-IN', 'Bengali Translation')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: 0.2s;">
+                        <span style="font-size: 1.1rem;">🇮🇳</span> বাংলা (Bengali)
+                    </button>
+                    <button class="lang-select-btn" onclick="window.speechPlayer.setLanguage('es', 'es-ES', 'Spanish Translation')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: 0.2s;">
+                        <span style="font-size: 1.1rem;">🇪🇸</span> Spanish
+                    </button>
+                    <button class="lang-select-btn" onclick="window.speechPlayer.setLanguage('fr', 'fr-FR', 'French Translation')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: 0.2s;">
+                        <span style="font-size: 1.1rem;">🇫🇷</span> French
+                    </button>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="window.speechPlayer.closeLangModal()" style="flex: 1; background: rgba(255,255,255,0.05); border: none; color: #94a3b8; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.85rem; transition: 0.2s;">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="aiExplanationLangModal" class="jump-modal" style="display: none; z-index: 2010;">
+            <div class="modal-content" style="max-width: 350px; padding: 25px; border: 1px solid rgba(168, 85, 247, 0.2); background: #020617; border-radius: 16px;">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <i class="fa-solid fa-brain" style="font-size: 2.2rem; color: #a855f7; margin-bottom: 10px; display: block;"></i>
+                    <h3 style="margin: 0; font-size: 1.25rem; font-weight: 800; color: #fff;">Explanation Language</h3>
+                    <p style="font-size: 0.8rem; color: #64748b; margin: 5px 0 0 0;">In which language do you want the story breakdown?</p>
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+                    <button onclick="window.speechPlayer.startAiExplanation('hi')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 14px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.2s;">
+                        <span style="font-size: 1.2rem;">🇮🇳</span> हिंदी (Conversational Story)
+                    </button>
+                    <button onclick="window.speechPlayer.startAiExplanation('en')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 14px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.2s;">
+                        <span style="font-size: 1.2rem;">🇺🇸</span> English (Friendly Mentor)
+                    </button>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="window.speechPlayer.closeAiLangModal()" style="flex: 1; background: rgba(255,255,255,0.05); border: none; color: #94a3b8; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.85rem; transition: 0.2s;">Back</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="aiTranscriptModal" class="jump-modal" style="display: none; z-index: 2020;">
+            <div class="modal-content" style="max-width: 500px; width: 90%; padding: 25px; border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-quote-left" style="color: #a855f7; font-size: 1.1rem;"></i>
+                        <h3 style="margin:0; font-size: 1.15rem; font-weight: 800; color: #fff; letter-spacing: 0.3px;">AI Explanation Transcript</h3>
+                    </div>
+                    <button onclick="window.speechPlayer.closeTranscriptModal()" style="background: none; border: none; color: #64748b; font-size: 1.2rem; cursor: pointer; transition: 0.2s;">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                
+                <div id="aiTranscriptBody" style="max-height: 300px; overflow-y: auto; color: #cbd5e1; font-size: 0.95rem; line-height: 1.6; padding-right: 8px; font-family: 'Inter', sans-serif; text-align: left; white-space: pre-line;">
+                    AI is analyzing the page structure...
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="SettingPage" class="page-view">
+        <div class="settings-wrapper">
+            <header class="settings-nav">
+                <button class="mini-back-btn" onclick="window.render('profile')">
+                    <i class="fa-solid fa-arrow-left-long"></i>
+                </button>
+                <div class="settings-title-box">
+                    <h1 class="glitch-text">Config<span>.</span>sys</h1>
+                    <div class="settings-meta-status">
+                        <span class="status-indicator active"></span>
+                        <span>System Parameters Active</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="settings-grid">
+                <div class="settings-card avatar-matrix-card">
+                    <h3 class="card-terminal-label"><i class="fa-solid fa-id-badge"></i> AVATAR GENERATOR SYSTEM</h3>
+                    
+                    <div class="avatar-configuration-zone">
+                        <div class="settings-avatar-frame">
+                            <img src="https://ui-avatars.com/api/?name=Reader&background=6366f1&color=fff&bold=true" alt="User Identity Avatar" id="settingsAvatarPreview">
+                            <div class="frame-glaze-overlay"></div>
+                        </div>
+                        
+                        <div class="avatar-action-triggers">
+                            <div class="cyber-select-group">
+                                <label class="select-node-label">Matrix Theme Accent</label>
+                                <div class="cyber-select-wrapper">
+                                    <i class="fa-solid fa-palette select-icon"></i>
+                                    <select id="settingAvatarColorPreset" class="cyber-select-node">
+                                        <option value="6366f1" selected>Indigo Protocol (#6366f1)</option>
+                                        <option value="10b981">Emerald Shield (#10b981)</option>
+                                        <option value="ef4444">Crimson Overdrive (#ef4444)</option>
+                                        <option value="f59e0b">Amber Matrix (#f59e0b)</option>
+                                        <option value="020617">Deep Ink Obsidian (#020617)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="cyber-select-group">
+                                <label class="select-node-label">Avatar Node Geometry</label>
+                                <div class="cyber-select-wrapper">
+                                    <i class="fa-solid fa-shapes select-icon"></i>
+                                    <select id="settingAvatarShape" class="cyber-select-node">
+                                        <option value="true" selected>Circular Node Matrix</option>
+                                        <option value="false">Standard Quadrant Block</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-card identity-matrix-card">
+                    <h3 class="card-terminal-label"><i class="fa-solid fa-sliders"></i> IDENTITY PARAMETERS</h3>
+                    
+                    <form id="settingsIdentityForm" class="cyber-form" onsubmit="event.preventDefault();">
+                        <div class="cyber-input-group">
+                            <label class="input-node-label">User Identity Name</label>
+                            <div class="cyber-input-wrapper">
+                                <i class="fa-solid fa-user-gear input-icon"></i>
+                                <input type="text" id="settingsUserNameInput" placeholder="Loading Signature Matrix..." required>
+                                <span class="input-focus-laser"></span>
+                            </div>
+                        </div>
+
+                        <div class="cyber-input-group readonly-node">
+                            <label class="input-node-label">Registered Core Email (Encrypted)</label>
+                            <div class="cyber-input-wrapper">
+                                <i class="fa-solid fa-envelope-shield input-icon"></i>
+                                <input type="email" id="settingsUserEmailInput" value="loading@vault.com" readonly>
+                            </div>
+                            <p class="input-tip-nodes">Core network communication email cannot be altered dynamically.</p>
+                        </div>
+
+                        <div class="settings-form-actions">
+                            <button type="submit" class="cyber-save-btn" id="saveIdentityBtn">
+                                <span class="btn-glaze"></span>
+                                <span class="btn-content"><i class="fa-solid fa-shield-halved"></i> COMMIT CHANGES</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="latestBooksPage">
+        <div class="latest-container-wrapper">
+            <header class="latest-header">
+                <button class="icon-btn" onclick="render('home')">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <h2 class="latest-header-title">Latest Releases</h2>
+                <div style="width: 40px;"></div> 
+            </header>
+
+            <div id="latestBooksGrid" class="books-grid-layout"></div>
+        </div>
+    </section>
+
+    <section id="premiumBooksPage">
+        <div class="premium-container-wrapper">
+            <header class="premium-header">
+                <button class="icon-btn" onclick="render('home')">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <h2 class="premium-header-title">Premium Vault</h2>
+                <button class="icon-btn filter-trigger-btn" onclick="openFilterModal()">
+                    <i class="fa-solid fa-sliders"></i>
+                </button>
+            </header>
+
+            <div class="active-filter-bar" id="activeFilterIndicator" style="display: none;">
+                <span class="filter-chip-text" id="filterChipText">Paid Only</span>
+                <button class="clear-filter-btn" onclick="resetToDefaultPremium()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div id="premiumBooksGrid" class="books-grid-layout"></div>
+        </div>
+    </section>
+
+    <section id="wishList-page" class="wishlist-screen-container">
+        <header class="wishlist-header" id="wishlistHeader">
+            <div class="header-mode-standard" id="wishlistStandardHeader">
+                <button class="icon-btn" onclick="window.render('home')">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <span class="header-title">My Wishlist Vault</span>
+                <div style="width: 40px;"></div> 
+            </div>
+
+            <div class="header-mode-selection" id="wishlistSelectionHeader" style="display: none;">
+                <div class="selection-left-zone">
+                    <button class="icon-btn" id="wishlistCancelBtn">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <span class="selection-count" id="wishlistSelectCount">0 Selected</span>
+                </div>
+                
+                <div class="selection-actions-zone">
+                    <button class="action-text-btn" id="wishlistSelectAllBtn">
+                        <i class="fa-solid fa-check-double"></i> Select All
+                    </button>
+                    <button class="action-icon-danger-btn" id="wishlistDeleteBtn">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="wishlist-grid-scroll-pane">
+            <div class="wishlist-dynamic-grid" id="wishlistItemsGrid"></div>
+
+            <div class="pagination-trigger-zone" id="wishlistLoadMoreZone" style="display: none;">
+                <button class="load-more-btn" id="wishlistLoadMoreBtn">
+                    Show More Targets <i class="fa-solid fa-angle-down"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <div id="filterModal" class="filter-modal-overlay">
+        <div class="filter-modal-card">
+            <div class="filter-modal-header">
+                <h3>Refine Assets</h3>
+                <button class="modal-close-icon" onclick="closeFilterModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <p class="filter-subtitle">Select your preferred price bracket matrix:</p>
+            
+            <div class="filter-options-container">
+                <label class="filter-radio-tile">
+                    <input type="radio" name="priceRange" value="free">
+                    <div class="tile-content">
+                        <i class="fa-solid fa-gift text-accent"></i>
+                        <span>Completely Free</span>
+                    </div>
+                </label>
+                <label class="filter-radio-tile">
+                    <input type="radio" name="priceRange" value="1-20">
+                    <div class="tile-content"><span>₹1 — ₹20</span></div>
+                </label>
+                <label class="filter-radio-tile">
+                    <input type="radio" name="priceRange" value="21-50">
+                    <div class="tile-content"><span>₹21 — ₹50</span></div>
+                </label>
+                <label class="filter-radio-tile">
+                    <input type="radio" name="priceRange" value="51-100">
+                    <div class="tile-content"><span>₹51 — ₹100</span></div>
+                </label>
+                <label class="filter-radio-tile">
+                    <input type="radio" name="priceRange" value="101-300">
+                    <div class="tile-content"><span>₹101 — ₹300</span></div>
+                </label>
+                <label class="filter-radio-tile">
+                    <input type="radio" name="priceRange" value="301-above">
+                    <div class="tile-content"><span>₹301 & Above</span></div>
+                </label>
+            </div>
+
+            <div class="filter-modal-footer">
+                <button class="filter-reset-btn" onclick="clearRadioSelection()">Reset All</button>
+                <button class="filter-apply-btn" onclick="applySelectedFilterPipeline()">Apply Matrix</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="audioPlayerDock" class="audio-player-dock">
+        <div class="audio-player-content">
+            <div class="audio-status-info">
+                <i class="fa-solid fa-waveform-lines pulse-icon"></i>
+                <span id="audioStatusText">Reading Page 1...</span>
+            </div>
+            <div class="audio-controls-group">
+                <button id="audioPlayPauseBtn" onclick="window.speechPlayer.togglePause()" title="Pause">
+                    <i class="fa-solid fa-pause"></i>
+                </button>
+                <button id="audioStopBtn" onclick="window.speechPlayer.stop()" title="Stop Audio">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <button id="aiTranscriptBtn" onclick="window.speechPlayer.openTranscriptModal()" style="display: none; background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.2); color: #a855f7; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; transition: 0.2s; font-size: 0.95rem;" title="View AI Explanation Text">
+                    <i class="fa-solid fa-file-lines"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="ambientSoundPopup" class="ambient-popup">
+        <div class="ambient-popup-header">
+            <h4>Ambient Soundscapes</h4>
+            <button id="ambientQuickMute" class="ambient-mute-btn" onclick="window.ambientEngine.muteAll()" title="Mute/Stop Audio">
+                <i class="fa-solid fa-volume-xmark"></i>
+            </button>
+            <button class="ambient-close-btn" onclick="window.ambientEngine.closePopup()">&times;</button>
+        </div>
+        <div class="ambient-options-list">
+            <div id="ambient-item-none" class="ambient-item active" onclick="window.ambientEngine.selectSound('none', this)">
+                <i class="fa-solid fa-ban"></i>
+                <span>None (Silence)</span>
+            </div>
+            <div class="ambient-item" onclick="window.ambientEngine.selectSound('rain', this)">
+                <i class="fa-solid fa-cloud-rain"></i>
+                <span>Soft Rain</span>
+            </div>
+            <div class="ambient-item" onclick="window.ambientEngine.selectSound('forest', this)">
+                <i class="fa-solid fa-tree"></i>
+                <span>Forest Birds</span>
+            </div>
+            <div class="ambient-item" onclick="window.ambientEngine.selectSound('lofi', this)">
+                <i class="fa-solid fa-music"></i>
+                <span>Lofi Beats</span>
+            </div>
+        </div>
+        <div class="ambient-volume-row">
+            <i class="fa-solid fa-volume-low"></i>
+            <input type="range" id="ambientVolumeControl" min="0" max="1" step="0.1" value="0.5" oninput="window.ambientEngine.setVolume(this.value)">
+            <i class="fa-solid fa-volume-high"></i>
+        </div>
+    </div>
+
+    <div id="freeBookPopup" class="free-popup-overlay">
+        <div class="free-popup-card">
+            <div class="free-popup-icon">
+                <i class="fa-solid fa-gift"></i>
+            </div>
+            <h3>Premium Book is Free!</h3>
+            <p>This book is currently available for free. What would you like to do?</p>
+            <div class="free-popup-actions">
+                <button id="freeJustReadBtn" class="free-btn secondary">
+                    <i class="fa-solid fa-book-open"></i> Just Read
+                </button>
+                <button id="freeShowDetailsBtn" class="free-btn primary">
+                    <i class="fa-solid fa-circle-info"></i> Show Details
+                </button>
+            </div>
+            <button class="free-popup-close" onclick="document.getElementById('freeBookPopup').classList.remove('active')">&times;</button>
+        </div>
+    </div>
+
+    <div id="couponModal" class="coupon-modal-overlay">
+        <div class="coupon-modal-card">
+            <div class="coupon-modal-icon">
+                <i class="fa-solid fa-tags"></i>
+            </div>
+            <h3>Apply Promo Code</h3>
+            <p>Enter your secret coupon code to unlock exclusive discounts on this asset.</p>
+            <div class="coupon-input-wrapper">
+                <i class="fa-solid fa-ticket input-icon"></i>
+                <input type="text" id="couponCodeInput" placeholder="ENTER CODE HERE" autocomplete="off">
+            </div>
+            <div class="coupon-modal-btns">
+                <button class="coupon-cancel-btn" onclick="closeCouponModal()">Cancel</button>
+                <button class="coupon-apply-btn" onclick="triggerCouponPipeline()">Apply Code</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="searchOverlayPanel" class="search-overlay-panel">
+        <header class="search-panel-header">
+            <button class="search-close-btn" id="closeSearchPanelBtn">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <div class="search-input-container">
+                <form id="dummySearchForm" onsubmit="event.preventDefault(); window.executeDummySearch();">
+                    <input type="text" id="mainSearchInput" placeholder="Search Vault items..." autocomplete="off">
+                    <button type="button" class="clear-search-btn" id="clearSearchInputBtn" style="display: none;">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
                 </form>
             </div>
+            <button class="voice-search-btn" id="voiceSearchTriggerBtn" title="Voice Search Protocol">
+                <i class="fa-solid fa-microphone"></i>
+            </button>
+        </header>
+
+        <div class="search-suggestions-zone">
+            <ul class="suggestion-nodes-list"></ul>
         </div>
     </div>
-</section>
 
-<section id="latestBooksPage"><div id="latestBooksGrid" class="books-grid-layout"></div></section>
-<section id="premiumBooksPage"><div id="premiumBooksGrid" class="books-grid-layout"></div></section>
-<section id="wishList-page"><div id="wishlistItemsGrid"></div></section>
-<div id="filterModal" class="filter-modal-overlay"></div>
-<div id="audioPlayerDock" class="audio-player-dock"></div>
-<div id="ambientSoundPopup" class="ambient-popup"></div>
-<div id="freeBookPopup" class="free-popup-overlay"></div>
-<div id="couponModal" class="coupon-modal-overlay"></div>
-<div id="searchOverlayPanel" class="search-overlay-panel"></div>
-<div id="voiceSearchOverlay" class="voice-overlay-panel"></div>
-<div id="appOpenAdOverlay" class="app-ad-modal"></div>
-<div id="coinPurchaseModal" class="coin-modal-overlay"></div>
-<div id="actionConfirmModal" class="confirm-modal-overlay"></div>
+    <div id="voiceSearchOverlay" class="voice-overlay-panel">
+        <header class="voice-overlay-header">
+            <button class="voice-close-btn" onclick="window.closeVoiceEngine()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </header>
 
-<footer class="ti-core-footer">
-    <div class="footer-container">
-        <div class="footer-brand-section">
-            <div class="footer-logo">TALKINK<span class="logo-dot">.</span></div>
+        <div class="voice-core-body">
+            <h2 id="voiceStatusText" class="voice-status-prompt">Listening...</h2>
+            <p id="voiceTranscriptPreview" class="voice-transcript-subtext">Try saying something like "Cyberpunk Hacking Guide"</p>
+            
+            <div class="voice-mic-wave-container">
+                <div class="voice-pulse-ring ring-1"></div>
+                <div class="voice-pulse-ring ring-2"></div>
+                <button class="giant-mic-trigger" id="giantMicBtn">
+                    <i class="fa-solid fa-microphone"></i>
+                </button>
+            </div>
         </div>
     </div>
-    <div class="footer-meta-bar"><p>© 2026 TALKINK. Codename: Alpha-V3 Engine.</p></div>
-</footer>
 
+    <div id="appOpenAdOverlay" class="app-ad-modal">
+        <div class="ad-card-wrapper">
+            <div class="ad-badge">Sponsored</div>
+            <button class="ad-close-trigger" onclick="closeAppOpenAd()" aria-label="Close Ad">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="google-ad-injection-vault" class="ad-content-slot">
+                <div class="ad-loading-shimmer">
+                    <i class="fa-solid fa-circle-notch fa-spin"></i>
+                    <p>Loading Secure Gateway...</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div id="coinPurchaseModal" class="coin-modal-overlay">
+        <div class="coin-modal-card">
+            <button class="coin-modal-close" onclick="closeCoinModal()" aria-label="Close Modal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
 
+            <div class="coin-modal-header">
+                <div class="wallet-badge">
+                    <i class="fa-solid fa-wallet"></i>
+                    <span>Your Balance: <strong id="modalUserCoins">0</strong> Coins</span>
+                </div>
+                <h2>Unlock Premium Vault</h2>
+                <p>Choose your preferred gateway to unlock this featured story.</p>
+            </div>
 
+            <div id="coinModalError" class="modal-error-toast" style="display: none;">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span id="errorToastText">Insufficient coin balance!</span>
+            </div>
 
+            <div class="gateway-options-grid">
+                <button class="gateway-card-btn coin-gate-trigger" id="payViaCoinsBtn">
+                    <div class="gate-icon-wrapper gold-glow">
+                        <i class="fa-solid fa-coins"></i>
+                    </div>
+                    <div class="gate-info-meta">
+                        <span class="gate-title">Pay with Talkink Coins</span>
+                        <span class="gate-cost-cost" id="modalRequiredCoins">000 Coins</span>
+                    </div>
+                    <div class="gate-action-arrow">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </button>
 
+                <div class="gateway-divider">
+                    <span>OR</span>
+                </div>
 
+                <button class="gateway-card-btn cash-gate-trigger" id="payViaCashBtn">
+                    <div class="gate-icon-wrapper blue-glow">
+                        <i class="fa-solid fa-credit-card"></i>
+                    </div>
+                    <div class="gate-info-meta">
+                        <span class="gate-title">Pay via Safe Cash Gateway</span>
+                        <span class="gate-cost-cost" id="modalRequiredCash">₹00</span>
+                    </div>
+                    <div class="gate-action-arrow">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
 
+    <div id="actionConfirmModal" class="confirm-modal-overlay">
+        <div class="confirm-modal-card">
+            <div class="confirm-icon-wrapper">
+                <i class="fa-solid fa-circle-question"></i>
+            </div>
+            <h3 id="confirmModalTitle">Are you sure?</h3>
+            <p id="confirmModalDesc">This book will be permanently linked to your virtual profile library vault.</p>
+            <div class="confirm-actions-row">
+                <button class="confirm-cancel-btn" onclick="closeConfirmModal()">Cancel</button>
+                <button class="confirm-proceed-btn" id="confirmProceedActionBtn">Confirm & Unlock</button>
+            </div>
+        </div>
+    </div>
 
+    <section class="ti-core-manifesto-v3">
+        <div class="ti-manifesto-grid-container">
+            <header class="ti-manifesto-terminal-header">
+                <div class="ti-matrix-status-line">
+                    <span class="ti-pulse-node"></span>
+                    <span class="ti-spec-caps">System Architecture Matrix // Alpha-V3 Core</span>
+                </div>
+                <h2 class="ti-cyber-glow-title">Dismantling Cognitive Friction In Modern Literacy.</h2>
+                <p class="ti-manifesto-abstract">
+                    TalkInk operates as a decentralized, hardware-accelerated document ingestion layer and high-fidelity machine intelligence ecosystem. We engineer custom web automation pipelines that shift textual consumption from legacy visual layout configurations into multi-sensory acoustic and spatial orientation matrices.
+                </p>
+            </header>
 
-<script src="./js/animation.js"></script>
-<script src="https://js.instamojo.com/v1/checkout.js"></script>
-<script type="module" src="./js/app.js"></script>
+            <div class="ti-manifesto-pillars-section">
+                <h3 class="ti-section-vector-title">// Core Operational Optimization Protocols</h3>
+                <div class="ti-vector-matrix-grid">
+                    <div class="ti-vector-card">
+                        <div class="ti-card-laser-edge"></div>
+                        <span class="ti-card-index">01_</span>
+                        <h4>Memory Preservation Matrix</h4>
+                        <p>By executing direct raw text streaming models natively inside the canvas viewport, TalkInk entirely bypasses physical document storage requirements. Zero local downloads means optimized system hardware metrics and total elimination of mobile browser pipeline crashes under heavy scanning schemas.</p>
+                    </div>
+                    <div class="ti-vector-card">
+                        <div class="ti-card-laser-edge"></div>
+                        <span class="ti-card-index">02_</span>
+                        <h4>Neural Auditory Ingestion</h4>
+                        <p>To combat display-induced optical anxiety, our microservice cluster deploys low-latency neural speech synthesis. Complex printed alphabetic scripts are transformed into fluid, multi-dialect acoustic voice streams, accelerating knowledge retention patterns while bypassing screen fatigue metrics entirely.</p>
+                    </div>
+                    <div class="ti-vector-card">
+                        <div class="ti-card-laser-edge"></div>
+                        <span class="ti-card-index">03_</span>
+                        <h4>Dynamic Translation Nodes</h4>
+                        <p>We solve the regional isolation of technical literature by mapping fluid runtime translation blocks directly above active viewport rendering tracks. Users can cross-modulate unknown typographical data variables into clear, regional spoken layouts instantly with pristine information integrity.</p>
+                    </div>
+                    <div class="ti-vector-card">
+                        <div class="ti-card-laser-edge"></div>
+                        <span class="ti-card-index">04_</span>
+                        <h4>Democratized Library Vaults</h4>
+                        <p>We aggressively counteract aggressive pricing structures and subscription walls. Through a comprehensively indexed open-access directory of public domain assets coupled with deeply optimized dual-zone encryption layers, we secure permanent knowledge pathways for global student fraternities.</p>
+                    </div>
+                </div>
+            </div>
 
+            <div class="ti-specs-panel-row">
+                <h3 class="ti-section-vector-title">// Automated LLM Microservice & UI Sub-Components</h3>
+                <div class="ti-specs-flex-matrix">
+                    <div class="ti-spec-item-box">
+                        <div class="ti-spec-item-header">
+                            <span class="ti-cyber-accent"><i class="fa-solid fa-microchip"></i> CONTEXTUAL BACKGROUND SWEEPS</span>
+                        </div>
+                        <p>Our internal high-throughput compilation models execute algorithmic abstractions over long-form volumes, reducing document volume overload by up to 80% through structural executive highlights, logical breakdowns, and core definitions matrices.</p>
+                    </div>
+                    <div class="ti-spec-item-box">
+                        <div class="ti-spec-item-header">
+                            <span class="ti-cyber-accent"><i class="fa-solid fa-gauge-high"></i> ACCELERATED SMART READER ENGINE</span>
+                        </div>
+                        <p>A low-overhead, GPU-optimized document rendering framework utilizing 3D fluid page flip physics simulations, contrast preservation formulas tailored to #020617 dark mode parameters, and native system-level Wake-Lock API protocols.</p>
+                    </div>
+                    <div class="ti-spec-item-box">
+                        <div class="ti-spec-item-header">
+                            <span class="ti-cyber-accent"><i class="fa-solid fa-sliders"></i> ACOUSTIC ISOLATION SOUNDSCAPES</span>
+                        </div>
+                        <p>Features a specialized 3x acoustic focus environment engine. Users can mix procedural binaural frequencies, calibrated environmental sound loops, and bio-acoustic pink/brown noise structures engineered to boost analytical absorption variables.</p>
+                    </div>
+                </div>
+            </div>
 
+            <footer class="ti-manifesto-executive-vault">
+                <div class="ti-manifesto-crosshairs"></div>
+                <p class="ti-executive-quote">
+                    "Our engineering commitment is to rewrite the fundamentals of human-document interactive loops. By converting static, intimidating manual interfaces into adaptive, interactive spaces, we turn academic vulnerability into structural knowledge passion."
+                </p>
+                <div class="ti-executive-signature">
+                    <span class="ti-sig-name">Mr. Ganesh Bhoi</span>
+                    <span class="ti-sig-title">Founder & CEO // TalkInk Platform & Ecosystem</span>
+                </div>
+            </footer>
 
+            <div class="ti-manifesto-compliance-footer">
+                <div class="ti-compliance-node"><i class="fa-solid fa-building-shield"></i> Fair Use & Digital Rights Management Metadata Verified</div>
+                <div class="ti-compliance-node"><i class="fa-solid fa-terminal"></i> talkink.support@gmail.com</div>
+            </div>
+        </div>
+    </section>
+    <footer class="ti-core-footer">
+        <div class="footer-laser-line"></div>
+        <div class="footer-container">
+            <div class="footer-brand-section">
+                <div class="footer-logo">TALKINK<span class="logo-dot">.</span></div>
+                <p class="footer-tagline">Where premium audio stories come to life. Tune into the ultimate theater of mind.</p>
+                <div class="footer-social-grid">
+                    <a href="mailto:Talkink.support@gmail.com" class="social-node" title="Email Support">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                    <a href="https://www.instagram.com/ganeshbhoi111?igsh=NmU1ZTE5cno4bmtv" target="_blank" class="social-node" title="Instagram">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="https://youtube.com/@talkingganesh?si=3cnJpbDC3uLAE2EP" target="_blank" class="social-node" title="YouTube Channel">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
 
+            <div class="footer-links-section">
+                <h4 class="footer-heading">Platform Nav</h4>
+                <div class="links-grid">
+                    <a href="about.html" class="app-link-node">
+                        <span class="link-icon"><i class="fa-solid fa-user-astronaut"></i></span>
+                        <span class="link-txt">Our Genesis</span>
+                    </a>
+                    <a href="payments.html" class="app-link-node">
+                        <span class="link-icon"><i class="fa-solid fa-receipt"></i></span>
+                        <span class="link-txt">Payments & Refunds</span>
+                    </a>
+                </div>
+            </div>
 
+            <div class="footer-links-section">
+                <h4 class="footer-heading">Security & Trust</h4>
+                <div class="links-grid">
+                    <a href="privacy.html" class="app-link-node">
+                        <span class="link-icon"><i class="fa-solid fa-shield-halved"></i></span>
+                        <span class="link-txt">Privacy Protocols</span>
+                    </a>
+                    <a href="terms.html" class="app-link-node">
+                        <span class="link-icon"><i class="fa-solid fa-file-contract"></i></span>
+                        <span class="link-txt">Terms of Engine</span>
+                    </a>
+                </div>
+            </div>
+        </div>
 
+        <div class="footer-meta-bar">
+            <p>© 2026 TALKINK. All Rights Reserved. Codename: Alpha-V3 Engine.</p>
+        </div>
+    </footer>
 
-
-
-
-
-
-
-
-
-
-<script>
-    (function() {
-        var userClicked = false;
-        window.addEventListener('click', function() { userClicked = true; }, true);
-        window.addEventListener('touchend', function() { userClicked = true; }, true);
-
-        // Ultimate Navigation Lock Protocol
-        window.onbeforeunload = function() {
-            if (!userClicked) {
-                console.log("🔒 Shield Active: Blocked unauthorized external loop.");
-                return "Do you want to stay on TalkInk?";
-            }
-        };
-    })();
-</script>
-
-
-
-
-<script src="https://pl29646573.effectivecpmnetwork.com/f6/73/3c/f6733c4fa86746a2410f2e35a424608f.js"></script>
-
-
-
-
+    <script src="./js/animation.js"></script>
+    <script src="https://js.instamojo.com/v1/checkout.js"></script>
+    <script type="module" src="./js/app.js"></script>
 </body>
 </html>
