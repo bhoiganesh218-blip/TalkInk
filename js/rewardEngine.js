@@ -11,7 +11,9 @@ const IS_TEST_MODE = false; // 🚨 Production pe jaate hi ise false kar dena bh
 // Global States for HilltopAds VAST Integration
 let isAdReady = false; 
 let currentUID = null;
-// HilltopAds VAST Tag URL shared by you
+let hilltopPlayerInstance = null; // 🔥 Fluid Player instance track karne ke liye
+
+// HilltopAds VAST Tag URL
 const HILLTOP_VAST_URL = "https://helplessfew.com/dtm.FbzldBGlN/vKZ/GqUP/TekmH9luGZ_UllJk/PJTocDxFMBT/IfwUNMj/U/t/NQzUETxlM/joAa2nO_Qc";
 
 // Live Local State Cache
@@ -71,9 +73,8 @@ onAuthStateChanged(auth, async (user) => {
 
 // --- 🛑 HILLTOPADS VAST VIDEO ENGINE INITIALIZATION ---
 function initHilltopVastEngine() {
-    console.log("🛠️ Preparing HilltopAds VAST Node Registry...");
+    console.log("🛠_ Preparing HilltopAds VAST Node Registry...");
     
-    // VAST URL checks pre-validation
     if (HILLTOP_VAST_URL) {
         isAdReady = true;
         toggleWatchButtonState(true);
@@ -85,7 +86,7 @@ function initHilltopVastEngine() {
 }
 
 
-// --- 📺 INTERACTION ENGINE TRIGGER (REWARDED SYSTEM RESTRUCTURED) ---
+// --- 📺 INTERACTION ENGINE TRIGGER (FLUID PLAYER METHOD) ---
 window.triggerAdWatchingProcess = async function() {
     if (!currentUID) {
         alert("Bhai pehle login toh kar lo! 😉");
@@ -99,7 +100,7 @@ window.triggerAdWatchingProcess = async function() {
 
     // 🚨 TEST MODE ENHANCEMENT
     if (IS_TEST_MODE) {
-        console.log("🛠️ Test mode active: Bypassing external link redirection.");
+        console.log("🛠_ Test mode active: Simulating 5 seconds watch reward loop.");
         alert("TEST MODE ACTIVE: Simulating 5 seconds watch reward loop... (Ad script bypassed)");
         
         const watchBtn = document.getElementById('modal-watch-btn');
@@ -114,29 +115,46 @@ window.triggerAdWatchingProcess = async function() {
 
     // 🎬 LIVE MODE: Triggers when IS_TEST_MODE = false
     if (isAdReady) {
-        console.log("🎬 Opening HilltopAds VAST Streaming Layer...");
+        console.log("🎬 Activating Fluid Player Container for VAST Streaming...");
+        
+        const videoContainer = document.getElementById('ad-video-container');
         const watchBtn = document.getElementById('modal-watch-btn');
-        if (watchBtn) watchBtn.innerText = "📺 LOADING VIDEO AD...";
+        
+        if (videoContainer) videoContainer.style.display = 'block';
+        if (watchBtn) {
+            watchBtn.disabled = true;
+            watchBtn.innerText = "📺 WATCHING AD...";
+        }
 
         try {
-            // Hilltop VAST link window overlay system processing
-            const adWindow = window.open(HILLTOP_VAST_URL, '_blank');
-            
-            if (adWindow) {
-                alert("Bhai, naye tab mein ad khula hai. Reward paane ke liye use poora check karein aur wapas aayein! ⚡");
-                
-                // Processing reward simulation check since tracking tab closure directly on cross-origin is restricted
-                setTimeout(async () => {
-                    await processSuccessfulAdWatch();
-                }, 6000);
-            } else {
-                // Fallback direct redirection setup if pop-up blocker blocks window.open
-                console.warn("Popup blocker active, using anchor redirection fallback...");
-                window.location.href = HILLTOP_VAST_URL;
-            }
+            // Fluid Player Engine Core Initialization
+            hilltopPlayerInstance = fluidPlayer('talkink-ad-player', {
+                vastOptions: {
+                    adList: [
+                        {
+                            roll: 'preRoll', // Player load hote hi video trigger hoga
+                            vastTag: HILLTOP_VAST_URL
+                        }
+                    ],
+                    // 👑 USER REWARD VERIFICATION EVENT (Triggered automatically on full ad stream completion)
+                    adFinishedCallback: async () => {
+                        console.log("💰 Ad closed after successful playback stream! Awarding points...");
+                        if (videoContainer) videoContainer.style.display = 'none';
+                        await processSuccessfulAdWatch();
+                    }
+                },
+                layoutControls: {
+                    fillToContainer: true,
+                    autoPlay: true, 
+                    mute: false,
+                    allowTheatre: false,
+                    playbackRateControl: false // Anti-Cheat: User speed badha nahi sakta
+                }
+            });
+
         } catch (err) {
-            console.error("Critical error firing VAST handler node:", err);
-            alert("Ad run pipeline error. Reloading process grid...");
+            console.error("Critical error firing Fluid Player instance:", err);
+            alert("Ad player container loading crashed. Reloading node...");
             window.location.reload();
         }
     } else {
