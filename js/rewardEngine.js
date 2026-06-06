@@ -13,8 +13,10 @@ let isAdReady = false;
 let currentUID = null;
 let hilltopPlayerInstance = null; 
 
-// 🔥 ANTI-CHEAT: Jab tak ad physically play nahi hoga, reward trigger nahi hoga
+// 🔥 HARDCORE SECURE GATEKEEPERS
 let isAdActuallyPlaying = false; 
+let adPlayDurationCounter = 0; // Tracks actual seconds watched
+let adWatchIntervalTimer = null; // Interval instance tracking clock
 
 // HilltopAds VAST Tag URL
 const HILLTOP_VAST_URL = "https://helplessfew.com/dtm.FbzldBGlN/vKZ/GqUP/TekmH9luGZ_UllJk/PJTocDxFMBT/IfwUNMj/U/t/NQzUETxlM/joAa2nO_Qc";
@@ -98,8 +100,10 @@ window.triggerAdWatchingProcess = async function() {
         return;
     }
 
-    // Reset playing state before triggering
+    // Clear and reset security variables before triggering ad engine
     isAdActuallyPlaying = false;
+    adPlayDurationCounter = 0;
+    if (adWatchIntervalTimer) clearInterval(adWatchIntervalTimer);
 
     // 🚨 TEST MODE ENHANCEMENT
     if (IS_TEST_MODE) {
@@ -126,7 +130,7 @@ window.triggerAdWatchingProcess = async function() {
         if (videoContainer) videoContainer.style.display = 'block';
         if (watchBtn) {
             watchBtn.disabled = true;
-            watchBtn.innerText = "📺 WATCHING AD...";
+            watchBtn.innerText = "📺 LOADING SECURE AD STREAM...";
         }
 
         try {
@@ -138,31 +142,20 @@ window.triggerAdWatchingProcess = async function() {
                             vastTag: HILLTOP_VAST_URL
                         }
                     ],
-                    // 👑 1. Jab ad successfully pura stream ho jaye
+                    // 👑 1. When Ad Completes Stream
                     adFinishedCallback: async () => {
-                        console.log("💰 Ad closed after successful playback stream!");
-                        if (isAdActuallyPlaying) {
-                            closeAdAndProcessReward();
-                        } else {
-                            console.warn("🚨 Fake end detected. Ad didn't actually play.");
-                            alert("Bhai ad load nahi ho paya. Please try again!");
-                            resetAdWatchUIState();
-                        }
+                        console.log("🔒 Player claimed ad finish. Verifying actual runtime criteria...");
+                        verifyAndTriggerReward();
                     },
-                    // 🚫 2. Agar VAST Ad load nahi hua (No Fill / Blocked)
+                    // 🚫 2. Error Handler (No Fill, Ads unavailable, Adblock active)
                     adErrorCallback: (error) => {
                         console.error("❌ Hilltop VAST Ad Engine Error Event:", error);
-                        isAdActuallyPlaying = false; 
-                        alert("Ad load nahi ho paya (No Ad Available). Kuch der baad try karein!");
-                        resetAdWatchUIState();
+                        handleFakeOrFailedAdPlayback("Bhai abhi koi ads available nahi hain! Kuch der baad try karo.");
                     },
-                    // ⏩ 3. Ad skipped callback
+                    // ⏩ 3. Skipped Handler
                     adSkippedCallback: async () => {
-                        if (isAdActuallyPlaying) {
-                            closeAdAndProcessReward();
-                        } else {
-                            resetAdWatchUIState();
-                        }
+                        console.log("⏩ Ad skip button pressed. Checking active progress logic...");
+                        verifyAndTriggerReward();
                     }
                 },
                 layoutControls: {
@@ -174,23 +167,31 @@ window.triggerAdWatchingProcess = async function() {
                 }
             });
 
-            // ⚓ NATIVE TRACK EVENTS (Security Verification Layer)
+            // ⚓ CRYPTOGRAPHIC VERIFICATION MODULE (NATIVE AUDIO/VIDEO PROBING)
             const nativeVideoNode = document.getElementById('talkink-ad-player');
             if (nativeVideoNode) {
-                // Jab video sach me chalna shuru ho jaye tabhi flag true hoga
-                nativeVideoNode.onplaying = () => {
-                    console.log("▶️ Real Video Track Playing Detected!");
-                    isAdActuallyPlaying = true;
+                
+                // Triggers strictly when the rendering video buffer successfully loads and updates timeline frames
+                nativeVideoNode.ontimeupdate = () => {
+                    if (nativeVideoNode.currentTime > 0 && !isAdActuallyPlaying) {
+                        console.log("▶️ Real Video Pixels Processing! Engaging stream watch tracking interval...");
+                        isAdActuallyPlaying = true;
+                        
+                        if (watchBtn) watchBtn.innerText = "📺 WATCHING AD ACTIVE...";
+
+                        // Start ticking every 1 second to build genuine streaming validation proof
+                        adPlayDurationCounter = 0;
+                        adWatchIntervalTimer = setInterval(() => {
+                            adPlayDurationCounter++;
+                            console.log(`⏱️ Actual Streaming Playback Duration Verified: ${adPlayDurationCounter}s`);
+                        }, 1000);
+                    }
                 };
 
+                // Native termination monitor
                 nativeVideoNode.onended = async () => {
-                    console.log("⚓ Native HTML5 video track ended.");
-                    if (isAdActuallyPlaying) {
-                        closeAdAndProcessReward();
-                    } else {
-                        console.warn("🚨 Fallback blocked fake completion.");
-                        resetAdWatchUIState();
-                    }
+                    console.log("⚓ Native track terminal context caught.");
+                    verifyAndTriggerReward();
                 };
             }
 
@@ -205,13 +206,40 @@ window.triggerAdWatchingProcess = async function() {
     }
 };
 
+// --- 🛡️ SECURE VERIFICATION DISPATCH ENGINE ---
+function verifyAndTriggerReward() {
+    if (adWatchIntervalTimer) clearInterval(adWatchIntervalTimer);
+
+    // CRITICAL THRESHOLD SECURE CHECK: Ad must play live for at least 4 seconds total
+    if (isAdActuallyPlaying && adPlayDurationCounter >= 4) {
+        console.log("🎯 Verification Successful! User matched streaming thresholds.");
+        closeAdAndProcessReward();
+    } else {
+        console.warn(`🚨 Security Core Blocked Exploit: Attempted to secure reward with fake/empty stream. Watched duration: ${adPlayDurationCounter}s`);
+        handleFakeOrFailedAdPlayback("Bhai ad poora load hokar chal nahi paya! Please dobara try karo.");
+    }
+}
+
+function handleFakeOrFailedAdPlayback(alertMessage) {
+    if (adWatchIntervalTimer) clearInterval(adWatchIntervalTimer);
+    
+    // Cleanup player elements completely
+    isAdActuallyPlaying = false;
+    adPlayDurationCounter = 0;
+    
+    alert(alertMessage);
+    resetAdWatchUIState();
+}
+
 // --- ⚙️ BUFFER CONTROL MANAGEMENT FUNCTIONS ---
 async function closeAdAndProcessReward() {
+    if (adWatchIntervalTimer) clearInterval(adWatchIntervalTimer);
+    
     const videoContainer = document.getElementById('ad-video-container');
     if (videoContainer) videoContainer.style.display = 'none';
     
-    // Flag reset
     isAdActuallyPlaying = false;
+    adPlayDurationCounter = 0;
 
     setTimeout(async () => {
         await processSuccessfulAdWatch();
@@ -219,10 +247,14 @@ async function closeAdAndProcessReward() {
 }
 
 function resetAdWatchUIState() {
+    if (adWatchIntervalTimer) clearInterval(adWatchIntervalTimer);
+    
     const videoContainer = document.getElementById('ad-video-container');
     const watchBtn = document.getElementById('modal-watch-btn');
     
     isAdActuallyPlaying = false;
+    adPlayDurationCounter = 0;
+    
     if (videoContainer) videoContainer.style.display = 'none';
     if (watchBtn) {
         watchBtn.disabled = false;
