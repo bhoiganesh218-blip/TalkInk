@@ -136,11 +136,21 @@ window.triggerAdWatchingProcess = async function() {
                             vastTag: HILLTOP_VAST_URL
                         }
                     ],
-                    // 👑 USER REWARD VERIFICATION EVENT (Triggered automatically on full ad stream completion)
+                    // 👑 1. Jab ad successfully pura stream ho jaye
                     adFinishedCallback: async () => {
                         console.log("💰 Ad closed after successful playback stream! Awarding points...");
-                        if (videoContainer) videoContainer.style.display = 'none';
-                        await processSuccessfulAdWatch();
+                        closeAdAndProcessReward();
+                    },
+                    // 🚫 2. Agar VAST Ad load hone me network crash ya blocking ho jaye (Anti-Freeze)
+                    adErrorCallback: (error) => {
+                        console.error("❌ Hilltop VAST Ad Engine Error Event:", error);
+                        alert("Bhai ad node response load nahi kar paya. Ek baar refresh karke dobara try karo!");
+                        resetAdWatchUIState();
+                    },
+                    // ⏩ 3. Agar user ad skip kare tab bhi fail-safe flow chlane ke liye
+                    adSkippedCallback: async () => {
+                        console.warn("⚠️ User skipped the streaming window. Evaluating pipeline...");
+                        closeAdAndProcessReward();
                     }
                 },
                 layoutControls: {
@@ -151,6 +161,16 @@ window.triggerAdWatchingProcess = async function() {
                     playbackRateControl: false // Anti-Cheat: User speed badha nahi sakta
                 }
             });
+
+            // ⚓ SYSTEM HARDWARE NATIVE FALLBACK ENGINE
+            // Agar callback handler layer crash/freeze ho jaye, HTML5 native engine call push karega
+            const nativeVideoNode = document.getElementById('talkink-ad-player');
+            if (nativeVideoNode) {
+                nativeVideoNode.onended = async () => {
+                    console.log("⚓ Native HTML5 video tracks completed. Processing reward cascade...");
+                    closeAdAndProcessReward();
+                };
+            }
 
         } catch (err) {
             console.error("Critical error firing Fluid Player instance:", err);
@@ -163,6 +183,27 @@ window.triggerAdWatchingProcess = async function() {
     }
 };
 
+// --- ⚙️ BUFFER CONTROL MANAGEMENT FUNCTIONS ---
+async function closeAdAndProcessReward() {
+    const videoContainer = document.getElementById('ad-video-container');
+    if (videoContainer) videoContainer.style.display = 'none';
+    
+    // 0.4s state release delay taaki media elements framework memory leak na karein
+    setTimeout(async () => {
+        await processSuccessfulAdWatch();
+    }, 400);
+}
+
+function resetAdWatchUIState() {
+    const videoContainer = document.getElementById('ad-video-container');
+    const watchBtn = document.getElementById('modal-watch-btn');
+    if (videoContainer) videoContainer.style.display = 'none';
+    if (watchBtn) {
+        watchBtn.disabled = false;
+        watchBtn.innerText = "⚡ CLK HERE TO STREAM AD";
+    }
+}
+
 
 // --- ⚙️ CORE MUTATION PROTOCOL (Save -> Redirect) ---
 async function processSuccessfulAdWatch() {
@@ -173,7 +214,13 @@ async function processSuccessfulAdWatch() {
     localUserProgress.lastAdTimestamp = Date.now();
     
     const watchBtn = document.getElementById('modal-watch-btn');
-    if (watchBtn) watchBtn.innerText = "🏁 COMMITTING REWARD TO CLOUD...";
+    if (watchBtn) {
+        watchBtn.disabled = true;
+        watchBtn.innerText = "🏁 COMMITTING REWARD TO CLOUD...";
+    }
+
+    // Live UI module update locally taaki data immediately mirror ho jaye
+    updateRewardModalUI();
 
     const updateStatus = await updateData("users", currentUID, {
         coins: localUserProgress.coins,
@@ -182,8 +229,13 @@ async function processSuccessfulAdWatch() {
     });
 
     if (updateStatus && updateStatus.success) {
-        console.log("🚀 Sync completed. Initiating automatic return channel...");
-        window.location.href = 'index.html?reward=success';
+        console.log("🚀 Sync completed. Redirecting with active safe thread layout...");
+        if (watchBtn) watchBtn.innerText = "🎉 SUCCESS! REDIRECTING...";
+        
+        // 1.5s Execution Hold taaki Cloud Firestore pipelines data successfully save kar lein
+        setTimeout(() => {
+            window.location.href = 'index.html?reward=success';
+        }, 1500);
     } else {
         alert("❌ Sync pipeline broken. Reloading page state...");
         window.location.reload();
