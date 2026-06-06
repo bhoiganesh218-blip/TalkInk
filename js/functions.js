@@ -5010,13 +5010,18 @@ export const openCategoryViewPage = async (db, categoryId, categoryName, current
 
 
 /**
- * 🎨 HIGH-FREQUENCY LOCAL PDF UPLOADER MODAL SYSTEM (INSTANT LAUNCH + 30s BACKGROUND REDIRECT)
+ * 🎨 HIGH-FREQUENCY LOCAL PDF UPLOADER MODAL SYSTEM (SPA IFRAME ISOLATION MIX)
  * Generates an interactive file parsing frame for guest PDF conversions.
- * Instantly launches the 3D Reader, then redirects the page after 30 seconds in the background.
+ * Fully optimized for SPA environment using sandbox iframe re-injection for HilltopAds.
  */
 window.openLocalPdfModal = () => {
     // Check if modal already exists to block duplicate injection leaks
     if (document.getElementById('local-pdf-modal')) return;
+
+    // 🛑 SAFETY CONTROLLER FOR DEVELOPER TESTING
+    // true  -> Ads block rahenge, green dummy box dikhega (Testing ke liye)
+    // false -> Live HilltopAds chalenge (Production me false rakhein)
+    const IS_TEST_MODE = false; 
 
     const modal = document.createElement('div');
     modal.id = 'local-pdf-modal';
@@ -5024,14 +5029,17 @@ window.openLocalPdfModal = () => {
     
     modal.innerHTML = `
         <div class="pdf-upload-modal-card animate-modal-in" style="display: flex; flex-direction: column; align-items: center;">
-            <button class="modal-close-btn" onclick="document.getElementById('local-pdf-modal').remove()">✕</button>
+            <button class="modal-close-btn" onclick="window.closeLocalPdfModalWithAds()">✕</button>
             
-            <div class="modal-header-block" style="width: 100%; text-align: center; margin-top: 10px;">
+            <div id="hilltop-modal-banner" style="margin-bottom: 20px; min-height: 250px; width: 300px; background: #020617; display: flex; align-items: center; justify-content: center; border-radius: 8px; overflow: hidden;">
+                </div>
+
+            <div class="modal-header-block" style="width: 100%; text-align: center;">
                 <h3>3D PDF ENGINE</h3>
                 <p>Upload your own PDF to read in a premium 3D page-flip environment.</p>
             </div>
 
-            <div class="upload-drop-zone" id="pdfDropZone" onclick="document.getElementById('localPdfInput').click()" style="width: 100%; box-sizing: border-box;">
+            <div class="upload-drop-zone" id="pdfDropZone" onclick="document.getElementById('localPdfInput').click()" style="width: 100%;">
                 <div class="upload-icon-wrap">
                     <i class="fa-solid fa-cloud-arrow-up"></i>
                 </div>
@@ -5040,7 +5048,7 @@ window.openLocalPdfModal = () => {
                 <input type="file" id="localPdfInput" accept="application/pdf" style="display: none;" />
             </div>
 
-            <div class="selected-file-feedback" id="fileFeedback" style="display: none; width: 100%; box-sizing: border-box;">
+            <div class="selected-file-feedback" id="fileFeedback" style="display: none; width: 100%;">
                 <i class="fa-solid fa-file-pdf feedback-pdf-icon"></i>
                 <div class="file-meta">
                     <span class="file-name-txt" id="feedbackFileName">document.pdf</span>
@@ -5048,13 +5056,106 @@ window.openLocalPdfModal = () => {
                 </div>
             </div>
 
-            <button class="action-read-btn disabled-state" id="startLocalReadBtn" disabled style="width: 100%; margin-top: 15px;">
+            <button class="action-read-btn disabled-state" id="startLocalReadBtn" disabled style="width: 100%;">
                 <span>LAUNCH 3D READER</span> <i class="fa-solid fa-circle-play"></i>
             </button>
         </div>
     `;
 
     document.body.appendChild(modal);
+
+    // 🛑 Helper function to clean up modal and iframe ads cleanly
+    window.closeLocalPdfModalWithAds = () => {
+        const modalEl = document.getElementById('local-pdf-modal');
+        if (modalEl) modalEl.remove();
+        
+        // Remove Push Ad Frame from DOM on close
+        const activePushFrame = document.getElementById('hilltop-push-iframe');
+        if (activePushFrame) activePushFrame.remove();
+    };
+
+    // 🚀 IFRAME ISOLATION ENGINE FOR SPA ADS HOT-REFILL
+    setTimeout(() => {
+        const bannerContainer = document.getElementById('hilltop-modal-banner');
+        if (bannerContainer) {
+            if (IS_TEST_MODE) {
+                // Testing Mode: Green layout buffer box
+                bannerContainer.style.background = "#064e3b"; 
+                bannerContainer.style.border = "2px dashed #10b981";
+                bannerContainer.innerHTML = `
+                    <div style="color: #10b981; font-family: sans-serif; text-align: center; font-weight: bold; font-size: 14px; padding: 10px;">
+                        <p style="margin: 0; font-size: 20px;">🛠️</p>
+                        <p style="margin: 5px 0 0 0;">HILLTOPADS TEST MODE</p>
+                        <p style="margin: 3px 0 0 0; font-size: 11px; font-weight: normal; color: #a7f3d0;">Iframe Isolation active. Safe to close/open.</p>
+                    </div>
+                `;
+            } else {
+                const cacheBuster = Date.now();
+
+                // 1. INJECT BANNER ADS INSIDE AN ISOLATED IFRAME
+                bannerContainer.innerHTML = ""; // Container clear karo
+                const bannerIframe = document.createElement('iframe');
+                bannerIframe.style.width = "300px";
+                bannerIframe.style.height = "250px";
+                bannerIframe.style.border = "none";
+                bannerIframe.style.overflow = "hidden";
+                bannerContainer.appendChild(bannerIframe);
+
+                // Writing pure script code inside iframe body document
+                const bannerDoc = bannerIframe.contentDocument || bannerIframe.contentWindow.document;
+                bannerDoc.open();
+                bannerDoc.write(`
+                    <style>body { margin: 0; padding: 0; background: transparent; overflow:hidden; }</style>
+                    <script>
+                        (function(aqrxBanner){
+                        var d = document,
+                            s = d.createElement('script'),
+                            l = d.scripts[d.scripts.length - 1];
+                        s.settings = aqrxBanner || {};
+                        s.src = "//profitable-grocery.com/bXXFVLskd.GylC0wYcW/cK/deWmm9/uUZcUUlZk-PUT/cJxAMNTfIQw/NNzkMxtVN/ziE/x_MhjLAd3/NUwv?cb=${cacheBuster}";
+                        s.async = true;
+                        s.referrerPolicy = 'no-referrer-when-downgrade';
+                        l.parentNode.insertBefore(s, l);
+                        })({});
+                    <\/script>
+                `);
+                bannerDoc.close();
+
+                // 2. INJECT IN-PAGE PUSH ADS INSIDE AN ISOLATED HIDDEN IFRAME
+                const oldPushFrame = document.getElementById('hilltop-push-iframe');
+                if (oldPushFrame) oldPushFrame.remove();
+
+                const pushIframe = document.createElement('iframe');
+                pushIframe.id = 'hilltop-push-iframe';
+                pushIframe.style.position = "fixed";
+                pushIframe.style.width = "0";
+                pushIframe.style.height = "0";
+                pushIframe.style.border = "none";
+                pushIframe.style.bottom = "0";
+                pushIframe.style.right = "0";
+                pushIframe.style.zIndex = "-9999";
+                document.body.appendChild(pushIframe);
+
+                const pushDoc = pushIframe.contentDocument || pushIframe.contentWindow.document;
+                pushDoc.open();
+                pushDoc.write(`
+                    <script>
+                        (function(aqrxPush){
+                        var d = document,
+                            s = d.createElement('script'),
+                            l = d.scripts[d.scripts.length - 1];
+                        s.settings = aqrxPush || {};
+                        s.src = "//profitable-grocery.com/bwXoVlsRd.GflN0VYcWVcb/QeAmF9xu/ZuU_lbkAPMTkcuxPMyT/IiwdNWDokztTNIzqEzxbMNjvAH1iMewI?cb=${cacheBuster}";
+                        s.async = true;
+                        s.referrerPolicy = 'no-referrer-when-downgrade';
+                        l.parentNode.insertBefore(s, l);
+                        })({});
+                    <\/script>
+                `);
+                pushDoc.close();
+            }
+        }
+    }, 50);
 
     // --- INTERNAL ELEMENT POINTERS & REACTIVE LISTENERS ---
     const fileInput = document.getElementById('localPdfInput');
@@ -5086,29 +5187,18 @@ window.openLocalPdfModal = () => {
         window.tempSelectedPdfFile = file; 
     };
 
-    // 🚀 INSTANT LAUNCH ENGINE & BACKGROUND REDIRECT TIMER
     launchBtn.addEventListener('click', async () => {
         if (!window.tempSelectedPdfFile) {
             alert("Bhai, pehle koi PDF file select karo! 📄");
             return;
         }
 
-        // 1. Loader dikhao agar website par bana hai
         if (window.showLoader) window.showLoader();
-        
-        console.log("🎬 STEP 1: Instantly Launching 3D Reader Framework...");
-        
-        // 2. Turant 3D Reader framework chalu karo bina kisi rukawat ke
-        await executeCore3DReaderPipeline();
+        console.log("🎬 Activating Core 3D Reader Framework for:", window.tempSelectedPdfFile.name);
 
-        console.log("⏱️ STEP 2: Background Redirect Timer Initiated (30 Seconds)...");
-
-        // 3. BACKGROUND TIMER: 30 second baad chupchap link par redirect kar dega
-        setTimeout(() => {
-            const directLink = "https://www.effectivecpmnetwork.com/cmqwajz4?key=d7c5da0121c99070388b426354f299c4";
-            console.log("🎯 30 Seconds completed! Redirecting now.");
-            window.location.href = directLink;
-        }, 30000); // 30000 milliseconds = 30 seconds
+        setTimeout(async () => {
+            await executeCore3DReaderPipeline();
+        }, 500);
     });
 };
 
@@ -5119,26 +5209,34 @@ async function executeCore3DReaderPipeline() {
         
         console.log("🎯 Access Authorized! Rendering 3D book canvas layout.");
         
-        // 1. Remove the tool uploader window layer completely (Instantly hides modal)
-        const modalContainer = document.getElementById('local-pdf-modal');
-        if (modalContainer) modalContainer.remove();
+        // Modal cleanup with dynamic script safety flush
+        if (typeof window.closeLocalPdfModalWithAds === 'function') {
+            window.closeLocalPdfModalWithAds();
+        } else {
+            const modalContainer = document.getElementById('local-pdf-modal');
+            if (modalContainer) modalContainer.remove();
+        }
         
         if (window.hideLoader) window.hideLoader();
 
-        // 2. Safely bootstrap your independent 3D rendering system
         if (typeof startBookReader === 'function') {
             await startBookReader(window.tempSelectedPdfFile, true);
         } else if (window.startBookReader) {
             await window.startBookReader(window.tempSelectedPdfFile, true);
         }
         
-        // Data pointer ko abhi purge nahi karenge kyunki background context chal raha hai
-        // window.tempSelectedPdfFile = null;
+        window.tempSelectedPdfFile = null;
 
     } catch (error) {
         console.error("🚨 Emergency bypass crash inside core reader engine:", error);
         if (window.hideLoader) window.hideLoader();
-        const modalContainer = document.getElementById('local-pdf-modal');
-        if (modalContainer) modalContainer.remove();
+        
+        if (typeof window.closeLocalPdfModalWithAds === 'function') {
+            window.closeLocalPdfModalWithAds();
+        } else {
+            const modalContainer = document.getElementById('local-pdf-modal');
+            if (modalContainer) modalContainer.remove();
+        }
+        if (window.startBookReader) window.startBookReader(window.tempSelectedPdfFile, true);
     }
 }
