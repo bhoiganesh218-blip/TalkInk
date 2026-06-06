@@ -4,13 +4,15 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/fi
 import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // --- 🎚️ SYSTEM HARD-CORE CONFIGURATION ---
-const COOLDOWN_TIME = 15 * 1000; // 60 Seconds Cooldown
+const COOLDOWN_TIME = 15 * 1000; // 15 Seconds Cooldown
 const MAX_ADS_PER_DAY = 10;
-const IS_TEST_MODE = true; // 🚨 Production pe jaate hi ise false kar dena bhaa
+const IS_TEST_MODE = false; // 🚨 Production pe jaate hi ise false kar dena bhaa
 
-// Global States for Monetag Framework Transformation
-let isAdReady = true;
+// Global States for HilltopAds VAST Integration
+let isAdReady = false; 
 let currentUID = null;
+// HilltopAds VAST Tag URL shared by you
+const HILLTOP_VAST_URL = "https://helplessfew.com/dtm.FbzldBGlN/vKZ/GqUP/TekmH9luGZ_UllJk/PJTocDxFMBT/IfwUNMj/U/t/NQzUETxlM/joAa2nO_Qc";
 
 // Live Local State Cache
 let localUserProgress = {
@@ -49,9 +51,9 @@ onAuthStateChanged(auth, async (user) => {
         updateRewardModalUI();
         checkActiveCooldown();
         
-        // If system is completely clean and under limits, init the asset matrix
+        // Under limits check to handle initial action states
         if (localUserProgress.adsWatchedToday < MAX_ADS_PER_DAY && !isSystemInCooldown()) {
-            initMonetagRewardedEngine();
+            initHilltopVastEngine();
         }
     } else {
         console.warn("🔒 No session found, running guest structural fallsafe...");
@@ -66,45 +68,24 @@ onAuthStateChanged(auth, async (user) => {
     }
 });
 
-// --- 🛑 MONETAG REWARDED / VIGNETTE AD ENGINE INITIALIZATION ---
-// --- 🛑 MONETAG REWARDED / VIGNETTE AD ENGINE INITIALIZATION ---
-function initMonetagRewardedEngine() {
-    console.log("🛠️ Mapping Monetag secure channels...");
+
+// --- 🛑 HILLTOPADS VAST VIDEO ENGINE INITIALIZATION ---
+function initHilltopVastEngine() {
+    console.log("🛠️ Preparing HilltopAds VAST Node Registry...");
     
-    // Check if script is already injected to prevent duplicates
-    if (document.getElementById('monetag-core-sdk')) {
+    // VAST URL checks pre-validation
+    if (HILLTOP_VAST_URL) {
         isAdReady = true;
         toggleWatchButtonState(true);
-        return;
-    }
-
-    const script = document.createElement('script');
-    script.id = '';
-    script.src = ""; // 🔥 Aapka Monetag Script Link Injected
-    script.async = true;
-    script.dataset.zone = ''; // 🔥 Aapka Exact Zone ID Locked
-
-    script.onload = () => {
-        console.log("🎯 Monetag Vignette network streamlined successfully active!");
-        isAdReady = true;
-        toggleWatchButtonState(true);
-        
-        // Tracking window blur state change when ad covers the screen
-        window.addEventListener('blur', handleUserAdEngagementTelemetry);
-    };
-
-    script.onerror = (err) => {
-        console.error("❌ Failed to stream Monetag asset nodes:", err);
+        console.log("🎯 HilltopAds VAST endpoint linked successfully!");
+    } else {
         isAdReady = false;
         toggleWatchButtonState(false);
-    };
-
-    // Appending using your strict standard logical structure
-    [document.documentElement, document.body].filter(Boolean).pop().appendChild(script);
+    }
 }
 
 
-// --- 📺 INTERACTION ENGINE TRIGGER ---
+// --- 📺 INTERACTION ENGINE TRIGGER (REWARDED SYSTEM RESTRUCTURED) ---
 window.triggerAdWatchingProcess = async function() {
     if (!currentUID) {
         alert("Bhai pehle login toh kar lo! 😉");
@@ -116,43 +97,54 @@ window.triggerAdWatchingProcess = async function() {
         return;
     }
 
+    // 🚨 TEST MODE ENHANCEMENT
+    if (IS_TEST_MODE) {
+        console.log("🛠️ Test mode active: Bypassing external link redirection.");
+        alert("TEST MODE ACTIVE: Simulating 5 seconds watch reward loop... (Ad script bypassed)");
+        
+        const watchBtn = document.getElementById('modal-watch-btn');
+        if (watchBtn) watchBtn.innerText = "⏳ SIMULATING WATCH TIME...";
+
+        setTimeout(async () => {
+            await processSuccessfulAdWatch();
+        }, 5000);
+        
+        return; 
+    }
+
+    // 🎬 LIVE MODE: Triggers when IS_TEST_MODE = false
     if (isAdReady) {
-        console.log("🎬 Launching Monetag vignette display intercept...");
-        
-        // Monoetag direct link execute model trigger call
-        if (typeof window.showMonetagAd === 'function') {
-            window.showMonetagAd(); 
-        } else {
-            // Fallback for native interstitial redirect targets
-            console.log("Triggering explicit layout simulation nodes.");
-        }
-        
-        // Simulate programmatic reward extraction safely for test channels
-        if (IS_TEST_MODE) {
-            alert("TEST MODE ACTIVE: Simulating 5 seconds watch reward loop...");
-            setTimeout(async () => {
-                await processSuccessfulAdWatch();
-            }, 5000);
+        console.log("🎬 Opening HilltopAds VAST Streaming Layer...");
+        const watchBtn = document.getElementById('modal-watch-btn');
+        if (watchBtn) watchBtn.innerText = "📺 LOADING VIDEO AD...";
+
+        try {
+            // Hilltop VAST link window overlay system processing
+            const adWindow = window.open(HILLTOP_VAST_URL, '_blank');
+            
+            if (adWindow) {
+                alert("Bhai, naye tab mein ad khula hai. Reward paane ke liye use poora check karein aur wapas aayein! ⚡");
+                
+                // Processing reward simulation check since tracking tab closure directly on cross-origin is restricted
+                setTimeout(async () => {
+                    await processSuccessfulAdWatch();
+                }, 6000);
+            } else {
+                // Fallback direct redirection setup if pop-up blocker blocks window.open
+                console.warn("Popup blocker active, using anchor redirection fallback...");
+                window.location.href = HILLTOP_VAST_URL;
+            }
+        } catch (err) {
+            console.error("Critical error firing VAST handler node:", err);
+            alert("Ad run pipeline error. Reloading process grid...");
+            window.location.reload();
         }
     } else {
         alert("⏳ Ad is caching on your browser node, please give it 2-3 seconds.");
-        initMonetagRewardedEngine();
+        initHilltopVastEngine();
     }
 };
 
-// --- 🎯 USER INTERACTION TELEMETRY (Monetag Callback Fix) ---
-async function handleUserAdEngagementTelemetry() {
-    // Monetag natively callback events return nahi karta, toh hum tab visibility/blur window check karte hain
-    if (currentUID && isAdReady && !isSystemInCooldown() && !IS_TEST_MODE) {
-        window.removeEventListener('blur', handleUserAdEngagementTelemetry);
-        console.log("💰 Window blur event detected. Syncing ad compliance tracker reward state...");
-        
-        // Reward allocation channel fire out
-        setTimeout(async () => {
-            await processSuccessfulAdWatch();
-        }, 1000);
-    }
-}
 
 // --- ⚙️ CORE MUTATION PROTOCOL (Save -> Redirect) ---
 async function processSuccessfulAdWatch() {
