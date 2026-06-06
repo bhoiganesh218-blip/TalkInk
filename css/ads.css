@@ -1,5 +1,5 @@
 /* =========================================================================
-   🎨 TALKINK REWARD DASHBOARD CORE GRAPHICS ENGINE (ZERO HORIZONTAL SCROLL)
+   🎨 TALKIN REWARD DASHBOARD CORE GRAPHICS ENGINE (ZERO HORIZONTAL SCROLL)
    ========================================================================= */
 
 /* 🌌 1. SYSTEM ROOT VARIABLES */
@@ -154,6 +154,7 @@ html, body {
     width: 100%;
     min-width: 0; /* Prevents flex-items from bursting out grid limits */
 }
+
 
 /* 💎 6. REUSABLE PREMIUM CARD SPECIFICATION */
 .ti-premium-card {
@@ -320,6 +321,17 @@ html, body {
     width: 100%;
 }
 
+/* 🔥 🎬 NEW FLUID AD CONTAINER ENGINE STYLES */
+#ad-video-container {
+    animation: scaleCardUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1) forwards;
+}
+
+/* Custom design integration rules over fluid framework default skins */
+.fluid_video_wrapper {
+    border-radius: 10px !important;
+    background-color: #000000 !important;
+}
+
 .modal-watch-ad-btn {
     width: 100%;
     background: linear-gradient(135deg, var(--neon-indigo), var(--neon-purple));
@@ -416,6 +428,7 @@ html, body {
     letter-spacing: 1px;
     margin-bottom: 20px;
 }
+
 
 /* Premium dynamic book highlighted sub-card */
 .unlocked-book-card {
@@ -694,7 +707,17 @@ html, body {
 
 @keyframes bounceEffect {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
+    50% { transform: translateY(-6px); }
+}
+
+@keyframes scaleCardUp {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 @keyframes shakeAngle {
@@ -702,1001 +725,72 @@ html, body {
     100% { transform: rotate(5deg); }
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; } to { opacity: 1; }
-}
-
-@keyframes scaleCardUp {
-    from { opacity: 0; transform: translateY(15px) scale(0.98); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-}
 
 /* =========================================================================
-   📱 14. RESPONSIVE PORTS FLUID LAYOUT (CLEAN SINGLE VIEWPORTS FILTER)
+   📱 14. ULTIMATE RESPONSIVE ENGINE (MOBILE & TABLET LOCK)
    ========================================================================= */
 
-@media (max-width: 968px) {
+@media (max-width: 992px) {
     .ti-hub-layout-grid {
-        grid-template-columns: 1fr; /* Pure layout vertical drop */
-        gap: 20px;
-    }
-    
-    .ti-dashboard-wrapper {
-        padding: 16px;
-        gap: 20px;
-    }
-
-    .ti-premium-card {
-        padding: 20px;
-        border-radius: 20px;
+        grid-template-columns: 1fr; /* Stack left & right columns vertically */
+        gap: 24px;
     }
 }
 
 @media (max-width: 480px) {
+    .ti-dashboard-wrapper {
+        padding: 14px;
+        gap: 20px;
+    }
+
     .ti-dashboard-header {
-        padding-bottom: 14px;
-    }
-
-    .brand-logo-icon {
-        font-size: 1.5rem;
-    }
-
-    .brand-text-nodes h1 {
-        font-size: 1.15rem;
-    }
-
-    .sub-gateway {
-        font-size: 0.58rem;
-        letter-spacing: 1.5px;
-    }
-
-    /* Core touch targeting navigation controller */
-    .exit-text {
-        display: none !important; /* Forces total destruction of text width leaks */
-    }
-    
-    .ti-dashboard-exit-btn {
-        padding: 10px 12px;
-        border-radius: 10px;
-    }
-
-    /* Financial wallet micro metrics */
-    .live-balance-counter h2 {
-        font-size: 1.85rem;
-    }
-    
-    .coin-glow-sparkle {
-        font-size: 1.5rem;
-    }
-
-    .wallet-chip-icon {
-        display: none; /* Hide decorative background vector to save space */
-    }
-
-    /* Progress details formatting configuration */
-    .progress-info-row {
         flex-direction: column;
         align-items: flex-start;
-        gap: 6px;
+        gap: 16px;
     }
 
-    .counter-badge-highlight {
-        align-self: flex-start;
-        font-size: 0.72rem;
-    }
-
-    /* Book Matrix clean structural compression rules */
-    .book-card-flex {
-        flex-direction: row; 
-        align-items: center;
-        gap: 12px;
-    }
-
-    .book-cover-wrapper {
-        width: 65px;  
-        height: 95px;
-        border-radius: 6px;
-    }
-
-    #modal-book-title {
-        font-size: 0.85rem;
-    }
-
-    #modal-book-desc {
-        font-size: 0.68rem;
-        line-height: 1.3;
-        margin-bottom: 4px;
-        display: -webkit-box;
-        -webkit-line-clamp: 2; /* Truncates long paragraphs to exact 2 lines max */
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    /* Token alignment text rules */
-    #modal-unlocked-coupon {
-        font-size: 1.1rem;
-        letter-spacing: 1.5px;
-    }
-
-    /* Strict 1-column conversion list layout */
-    .coupon-action-row {
-        grid-template-columns: 1fr !important;
-        gap: 8px;
-    }
-
-    .coupon-claim-btn, .book-redirect-btn {
-        padding: 12px;
-        font-size: 0.8rem;
+    .ti-dashboard-exit-btn {
         width: 100%;
-    }
-
-    /* Guidelines timeline micro spacing fixes */
-    .blueprint-timeline::before {
-        left: 14px; 
-    }
-
-    .step-badge {
-        width: 30px;
-        height: 30px;
-        font-size: 0.75rem;
-    }
-
-    .step-content h4 {
-        font-size: 0.82rem;
-    }
-
-    .step-content p {
-        font-size: 0.7rem;
-    }
-}
-/* =========================================================================
-   🎨 TALKINK REWARD DASHBOARD CORE GRAPHICS ENGINE (ZERO HORIZONTAL SCROLL)
-   ========================================================================= */
-
-/* 🌌 1. SYSTEM ROOT VARIABLES */
-:root {
-    --bg-main: #020617;                   /* Ultra Dark Navy Blue Backdrop */
-    --card-bg: rgba(15, 23, 42, 0.45);    /* Semitransparent Glass Core */
-    --border-accent: rgba(99, 102, 241, 0.2); /* Soft Subtle Indigo Line */
-    --neon-indigo: #6366f1;
-    --neon-purple: #a855f7;
-    --neon-green: #22c55e;
-    --text-primary: #f8fafc;
-    --text-muted: #94a3b8;
-    --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-}
-
-/* 🧼 2. GLOBAL RESET AND VIEWPORT SETUPS */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: var(--font-stack);
-    -webkit-font-smoothing: antialiased;
-}
-
-html, body {
-    width: 100%;
-    max-width: 100%;
-    background-color: var(--bg-main);
-    color: var(--text-primary);
-    min-height: 100vh;
-    overflow-x: hidden; /* Strict horizontal lock at parent levels */
-}
-
-/* 🚀 3. CANVAS WRAPPER & BACKGROUND GLOW FLARES */
-.ti-dashboard-wrapper {
-    position: relative;
-    width: 100%;
-    max-width: 100%;
-    min-height: 100vh;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    z-index: 1;
-    overflow-x: hidden; /* Prevent padding overflow leak */
-}
-
-/* Premium Nebula Flares backdrop decoration */
-.bg-flare {
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    filter: blur(140px);
-    opacity: 0.12;
-    pointer-events: none;
-    z-index: -1;
-}
-.flare-primary {
-    top: -5%;
-    left: -5%;
-    background: var(--neon-indigo);
-}
-.flare-secondary {
-    bottom: -5%;
-    right: -5%;
-    background: var(--neon-purple);
-}
-
-/* 🛡️ 4. DASHBOARD HEADER ALIGNMENT */
-.ti-dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--border-accent);
-    padding-bottom: 20px;
-    backdrop-filter: blur(8px);
-    width: 100%;
-}
-
-.brand-meta-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-.brand-logo-icon {
-    font-size: 2rem;
-    filter: drop-shadow(0 0 10px var(--neon-indigo));
-}
-
-.brand-text-nodes h1 {
-    font-size: 1.6rem;
-    font-weight: 900;
-    letter-spacing: 2px;
-}
-
-.gradient-accent {
-    background: linear-gradient(90deg, var(--neon-indigo), var(--neon-purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.sub-gateway {
-    font-size: 0.7rem;
-    font-weight: 700;
-    color: var(--text-muted);
-    letter-spacing: 3px;
-    display: block;
-    margin-top: -2px;
-}
-
-.ti-dashboard-exit-btn {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    color: var(--text-primary);
-    padding: 10px 20px;
-    border-radius: 12px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    flex-shrink: 0;
-}
-
-.ti-dashboard-exit-btn:hover {
-    background: rgba(239, 68, 68, 0.1);
-    border-color: rgba(239, 68, 68, 0.3);
-    color: #ef4444;
-    transform: translateY(-2px);
-}
-
-/* 🎪 5. MASTER GRID DISTRIBUTION MODULE */
-.ti-hub-layout-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 32px;
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    flex-grow: 1;
-}
-
-.ti-grid-column-left,
-.ti-grid-column-right {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    width: 100%;
-    min-width: 0; /* Prevents flex-items from bursting out grid limits */
-}
-
-/* 💎 6. REUSABLE PREMIUM CARD SPECIFICATION */
-.ti-premium-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-accent);
-    border-radius: 24px;
-    padding: 28px;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-}
-
-/* 🪙 7. THE WALLET LIVE SHOWCASE CARD */
-.wallet-card-showcase {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.05));
-    border-color: rgba(99, 102, 241, 0.3);
-}
-
-.wallet-card-overlay {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 80% 20%, rgba(234, 179, 8, 0.08), transparent 50%);
-}
-
-.wallet-inner-flex {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    z-index: 2;
-    width: 100%;
-}
-
-.card-mini-title {
-    font-size: 0.75rem;
-    font-weight: 800;
-    color: var(--text-muted);
-    letter-spacing: 2px;
-}
-
-.live-balance-counter {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-top: 8px;
-}
-
-.coin-glow-sparkle {
-    font-size: 2.2rem;
-    filter: drop-shadow(0 0 12px #eab308);
-    animation: bounceEffect 3s infinite ease-in-out;
-}
-
-.live-balance-counter h2 {
-    font-size: 2.8rem;
-    font-weight: 900;
-    letter-spacing: -1px;
-}
-
-.wallet-chip-icon {
-    font-size: 2rem;
-    color: rgba(255, 255, 255, 0.15);
-}
-
-/* 🚀 8. MISSION CONTROL CENTER & REWARD PROGRESS GAUGE */
-.card-header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    padding-bottom: 16px;
-    width: 100%;
-}
-
-.panel-heading {
-    font-size: 1.15rem;
-    font-weight: 800;
-    letter-spacing: 1px;
-}
-
-.status-indicator-badge {
-    background: rgba(99, 102, 241, 0.12);
-    border: 1px solid rgba(99, 102, 241, 0.25);
-    padding: 6px 12px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.7rem;
-    font-weight: 800;
-    letter-spacing: 1px;
-    flex-shrink: 0;
-}
-
-.pulse-beacon {
-    width: 6px;
-    height: 6px;
-    background: var(--neon-indigo);
-    border-radius: 50%;
-    box-shadow: 0 0 8px var(--neon-indigo);
-    animation: blinkGlow 1.5s infinite alternate;
-}
-
-.reward-progress-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    margin-bottom: 24px;
-    width: 100%;
-}
-
-.progress-info-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.85rem;
-    width: 100%;
-}
-
-.task-descriptor {
-    color: var(--text-muted);
-    font-weight: 500;
-}
-
-.counter-badge-highlight {
-    color: var(--neon-indigo);
-    font-weight: 800;
-    background: rgba(99, 102, 241, 0.1);
-    padding: 4px 10px;
-    border-radius: 8px;
-}
-
-.modal-progress-bar-bg {
-    width: 100%;
-    height: 10px;
-    background: rgba(255, 255, 255, 0.04);
-    border-radius: 20px;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.03);
-}
-
-.modal-progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--neon-indigo), var(--neon-purple));
-    box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
-    border-radius: 20px;
-    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.reward-hint-text {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    line-height: 1.5;
-}
-
-/* 🕹️ 9. HARDWARE EXECUTION ZONE AND COOLDOWN LAYER */
-.reward-action-zone {
-    position: relative;
-    width: 100%;
-}
-
-.modal-watch-ad-btn {
-    width: 100%;
-    background: linear-gradient(135deg, var(--neon-indigo), var(--neon-purple));
-    border: none;
-    color: var(--text-primary);
-    padding: 16px 24px;
-    border-radius: 16px;
-    font-size: 0.95rem;
-    font-weight: 800;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.25);
-    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
-}
-
-.modal-watch-ad-btn:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 15px 25px rgba(168, 85, 247, 0.3);
-    filter: brightness(1.1);
-}
-
-.modal-watch-ad-btn:active:not(:disabled) {
-    transform: translateY(1px);
-}
-
-.modal-watch-ad-btn:disabled {
-    background: rgba(255, 255, 255, 0.05);
-    color: rgba(255, 255, 255, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    box-shadow: none;
-    cursor: not-allowed;
-}
-
-/* Cooldown Security Panel */
-.cooldown-lock-layer {
-    position: absolute;
-    inset: -2px;
-    background: rgba(9, 15, 32, 0.92);
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 5;
-    border: 1px solid rgba(239, 68, 68, 0.2);
-    animation: fadeIn 0.3s ease forwards;
-}
-
-.lock-vibe-box {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-.lock-icon {
-    font-size: 1.5rem;
-    animation: shakeAngle 2s infinite alternate;
-}
-
-.lock-timer-text {
-    display: flex;
-    flex-direction: column;
-}
-
-.lock-timer-text span {
-    font-size: 0.65rem;
-    font-weight: 800;
-    color: var(--text-muted);
-    letter-spacing: 1px;
-}
-
-.lock-timer-text strong {
-    font-size: 1.3rem;
-    font-weight: 900;
-    color: #ef4444;
-    letter-spacing: 1px;
-}
-
-/* 🎟️ 10. LOOT BOX REVEAL CARD SYSTEM */
-.modal-coupon-reveal {
-    border-color: rgba(34, 197, 94, 0.3);
-    background: linear-gradient(180deg, rgba(15, 23, 42, 0.6), rgba(34, 197, 94, 0.03));
-    animation: scaleCardUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards;
-}
-
-.coupon-alert-badge {
-    background: rgba(34, 197, 94, 0.12);
-    border: 1px solid rgba(34, 197, 94, 0.3);
-    color: var(--neon-green);
-    font-size: 0.75rem;
-    font-weight: 900;
-    padding: 6px 14px;
-    border-radius: 30px;
-    width: max-content;
-    letter-spacing: 1px;
-    margin-bottom: 20px;
-}
-
-/* Premium dynamic book highlighted sub-card */
-.unlocked-book-card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 20px;
-    width: 100%;
-}
-
-.book-card-flex {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    width: 100%;
-}
-
-.book-cover-wrapper {
-    position: relative;
-    width: 90px;
-    height: 130px;
-    border-radius: 10px;
-    overflow: hidden;
-    flex-shrink: 0;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-    background: #0f172a;
-}
-
-.book-cover-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.cover-glass-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(125deg, rgba(255,255,255,0.15), transparent 60%);
-    pointer-events: none;
-}
-
-.book-meta-details {
-    flex-grow: 1;
-    min-width: 0; /* Vital layout fix to block text expansion limits */
-}
-
-#modal-book-title {
-    font-size: 1rem;
-    font-weight: 800;
-    color: var(--text-primary);
-    margin-bottom: 6px;
-    line-height: 1.3;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; /* Elegant dot cutters for extra text titles */
-}
-
-#modal-book-desc {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    line-height: 1.4;
-    margin-bottom: 10px;
-}
-
-.target-apply-badge {
-    font-size: 0.65rem;
-    font-weight: 800;
-    color: #eab308;
-    background: rgba(234, 179, 8, 0.1);
-    padding: 3px 8px;
-    border-radius: 4px;
-    width: max-content;
-}
-
-/* Coupon Vector Box */
-.coupon-code-wrapper {
-    background: rgba(9, 15, 32, 0.8);
-    border: 1px dashed rgba(34, 197, 94, 0.4);
-    padding: 18px;
-    border-radius: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    margin-bottom: 14px;
-    width: 100%;
-}
-
-/* Coupon design cutouts */
-.ticket-stub-left, .ticket-stub-right {
-    position: absolute;
-    width: 12px;
-    height: 24px;
-    background: var(--bg-main);
-    top: calc(50% - 12px);
-}
-.ticket-stub-left { left: -7px; border-radius: 0 12px 12px 0; }
-.ticket-stub-right { right: -7px; border-radius: 12px 0 0 12px; }
-
-#modal-unlocked-coupon {
-    font-size: 1.4rem;
-    font-weight: 900;
-    letter-spacing: 4px;
-    color: var(--neon-green);
-    text-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
-    word-break: break-all;
-}
-
-.coupon-expiry-note {
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.coupon-action-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    width: 100%;
-}
-
-.coupon-claim-btn {
-    background: #22c55e;
-    color: #ffffff;
-    border: none;
-    padding: 14px;
-    border-radius: 12px;
-    font-weight: 800;
-    cursor: pointer;
-    font-size: 0.85rem;
-    letter-spacing: 1px;
-    transition: background 0.2s;
-}
-.coupon-claim-btn:hover { background: #16a34a; }
-
-.book-redirect-btn {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    color: var(--text-primary);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 0.85rem;
-    transition: all 0.3s;
-}
-.book-redirect-btn:hover {
-    background: var(--text-primary);
-    color: var(--bg-main);
-}
-
-/* 💡 11. GUIDELINES INFOGRAPHIC TIMELINE FRAMEWORK */
-.guide-blueprint-card {
-    background: radial-gradient(circle at 0% 0%, rgba(168, 85, 247, 0.04), transparent 50%), var(--card-bg);
-}
-
-.guide-title {
-    font-size: 1rem;
-    font-weight: 800;
-    letter-spacing: 1px;
-    margin-bottom: 24px;
-}
-
-.blueprint-timeline {
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-    position: relative;
-    width: 100%;
-}
-
-/* Center timeline line strip */
-.blueprint-timeline::before {
-    content: '';
-    position: absolute;
-    left: 18px;
-    top: 10px;
-    bottom: 10px;
-    width: 2px;
-    background: linear-gradient(180deg, var(--neon-indigo), var(--neon-purple), rgba(255,255,255,0.02));
-}
-
-.timeline-step {
-    display: flex;
-    gap: 20px;
-    position: relative;
-    z-index: 2;
-    width: 100%;
-}
-
-.step-badge {
-    width: 38px;
-    height: 38px;
-    background: #0f172a;
-    border: 2px solid var(--border-accent);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.85rem;
-    font-weight: 800;
-    color: var(--neon-indigo);
-    flex-shrink: 0;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    transition: all 0.3s;
-}
-
-.timeline-step:hover .step-badge {
-    border-color: var(--neon-purple);
-    color: var(--text-primary);
-    box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
-}
-
-.step-content {
-    min-width: 0;
-}
-
-.step-content h4 {
-    font-size: 0.9rem;
-    font-weight: 700;
-    margin-bottom: 4px;
-}
-
-.step-content p {
-    font-size: 0.78rem;
-    color: var(--text-muted);
-    line-height: 1.45;
-}
-
-/* 🛡️ 12. SECURITY WARNING BAR DESIGN */
-.alpha-notice-card {
-    background: rgba(239, 68, 68, 0.02);
-    border-color: rgba(239, 68, 68, 0.1);
-    padding: 18px 22px;
-    width: 100%;
-}
-
-.notice-flex {
-    display: flex;
-    gap: 16px;
-    align-items: flex-start;
-    width: 100%;
-}
-
-.notice-icon {
-    font-size: 1.3rem;
-    flex-shrink: 0;
-}
-
-.notice-text {
-    min-width: 0;
-}
-
-.notice-text h4 {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.9);
-    margin-bottom: 2px;
-}
-
-.notice-text p {
-    font-size: 0.72rem;
-    color: var(--text-muted);
-    line-height: 1.4;
-}
-
-/* 🔄 13. ANIMATIONS REGISTRY KEYFRAMES */
-@keyframes blinkGlow {
-    0% { opacity: 0.4; transform: scale(0.9); }
-    100% { opacity: 1; transform: scale(1.1); box-shadow: 0 0 12px var(--neon-indigo); }
-}
-
-@keyframes bounceEffect {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
-}
-
-@keyframes shakeAngle {
-    0% { transform: rotate(-5deg); }
-    100% { transform: rotate(5deg); }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; } to { opacity: 1; }
-}
-
-@keyframes scaleCardUp {
-    from { opacity: 0; transform: translateY(15px) scale(0.98); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-/* =========================================================================
-   📱 14. RESPONSIVE PORTS FLUID LAYOUT (CLEAN SINGLE VIEWPORTS FILTER)
-   ========================================================================= */
-
-@media (max-width: 968px) {
-    .ti-hub-layout-grid {
-        grid-template-columns: 1fr; /* Pure layout vertical drop */
-        gap: 20px;
-    }
-    
-    .ti-dashboard-wrapper {
-        padding: 16px;
-        gap: 20px;
+        justify-content: center;
     }
 
     .ti-premium-card {
-        padding: 20px;
-        border-radius: 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .ti-dashboard-header {
-        padding-bottom: 14px;
+        padding: 18px;
+        border-radius: 16px;
     }
 
-    .brand-logo-icon {
-        font-size: 1.5rem;
-    }
-
-    .brand-text-nodes h1 {
-        font-size: 1.15rem;
-    }
-
-    .sub-gateway {
-        font-size: 0.58rem;
-        letter-spacing: 1.5px;
-    }
-
-    /* Core touch targeting navigation controller */
-    .exit-text {
-        display: none !important; /* Forces total destruction of text width leaks */
-    }
-    
-    .ti-dashboard-exit-btn {
-        padding: 10px 12px;
-        border-radius: 10px;
-    }
-
-    /* Financial wallet micro metrics */
     .live-balance-counter h2 {
-        font-size: 1.85rem;
+        font-size: 2rem;
+    }
+
+    .coupon-action-row {
+        grid-template-columns: 1fr; /* Stack coupon buttons on micro screens */
+    }
+
+    /* 🎬 STRICT FLUID PLAYER MOBILE OVERRIDES */
+    #ad-video-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 12px 0 !important;
+        padding: 0 !important;
+        overflow: hidden;
+        border-radius: 12px;
+    }
+
+    /* Locked aspect-ratio container framework */
+    .fluid_video_wrapper {
+        width: 100% !important;
+        height: auto !important;
+        max-width: 100% !important;
+    }
+
+    video.fluid_video_player {
+        width: 100% !important;
+        height: auto !important;
+        object-fit: contain !important;
     }
     
-    .coin-glow-sparkle {
-        font-size: 1.5rem;
-    }
-
-    .wallet-chip-icon {
-        display: none; /* Hide decorative background vector to save space */
-    }
-
-    /* Progress details formatting configuration */
-    .progress-info-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 6px;
-    }
-
-    .counter-badge-highlight {
-        align-self: flex-start;
-        font-size: 0.72rem;
-    }
-
-    /* Book Matrix clean structural compression rules */
-    .book-card-flex {
-        flex-direction: row; 
-        align-items: center;
-        gap: 12px;
-    }
-
-    .book-cover-wrapper {
-        width: 65px;  
-        height: 95px;
-        border-radius: 6px;
-    }
-
-    #modal-book-title {
-        font-size: 0.85rem;
-    }
-
-    #modal-book-desc {
-        font-size: 0.68rem;
-        line-height: 1.3;
-        margin-bottom: 4px;
-        display: -webkit-box;
-        -webkit-line-clamp: 2; /* Truncates long paragraphs to exact 2 lines max */
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    /* Token alignment text rules */
-    #modal-unlocked-coupon {
-        font-size: 1.1rem;
-        letter-spacing: 1.5px;
-    }
-
-    /* Strict 1-column conversion list layout */
-    .coupon-action-row {
-        grid-template-columns: 1fr !important;
-        gap: 8px;
-    }
-
-    .coupon-claim-btn, .book-redirect-btn {
-        padding: 12px;
-        font-size: 0.8rem;
-        width: 100%;
-    }
-
-    /* Guidelines timeline micro spacing fixes */
-    .blueprint-timeline::before {
-        left: 14px; 
-    }
-
-    .step-badge {
-        width: 30px;
-        height: 30px;
-        font-size: 0.75rem;
-    }
-
-    .step-content h4 {
-        font-size: 0.82rem;
-    }
-
-    .step-content p {
-        font-size: 0.7rem;
+    .fluid_controls_container {
+        padding: 0 6px !important;
     }
 }
