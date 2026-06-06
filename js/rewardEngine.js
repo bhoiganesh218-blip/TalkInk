@@ -11,7 +11,10 @@ const IS_TEST_MODE = false; // 🚨 Production pe jaate hi ise false kar dena bh
 // Global States for HilltopAds VAST Integration
 let isAdReady = false; 
 let currentUID = null;
-let hilltopPlayerInstance = null; // 🔥 Fluid Player instance track karne ke liye
+let hilltopPlayerInstance = null; 
+
+// 🔥 ANTI-CHEAT: Jab tak ad physically play nahi hoga, reward trigger nahi hoga
+let isAdActuallyPlaying = false; 
 
 // HilltopAds VAST Tag URL
 const HILLTOP_VAST_URL = "https://helplessfew.com/dtm.FbzldBGlN/vKZ/GqUP/TekmH9luGZ_UllJk/PJTocDxFMBT/IfwUNMj/U/t/NQzUETxlM/joAa2nO_Qc";
@@ -53,7 +56,6 @@ onAuthStateChanged(auth, async (user) => {
         updateRewardModalUI();
         checkActiveCooldown();
         
-        // Under limits check to handle initial action states
         if (localUserProgress.adsWatchedToday < MAX_ADS_PER_DAY && !isSystemInCooldown()) {
             initHilltopVastEngine();
         }
@@ -74,11 +76,9 @@ onAuthStateChanged(auth, async (user) => {
 // --- 🛑 HILLTOPADS VAST VIDEO ENGINE INITIALIZATION ---
 function initHilltopVastEngine() {
     console.log("🛠_ Preparing HilltopAds VAST Node Registry...");
-    
     if (HILLTOP_VAST_URL) {
         isAdReady = true;
         toggleWatchButtonState(true);
-        console.log("🎯 HilltopAds VAST endpoint linked successfully!");
     } else {
         isAdReady = false;
         toggleWatchButtonState(false);
@@ -98,10 +98,13 @@ window.triggerAdWatchingProcess = async function() {
         return;
     }
 
+    // Reset playing state before triggering
+    isAdActuallyPlaying = false;
+
     // 🚨 TEST MODE ENHANCEMENT
     if (IS_TEST_MODE) {
         console.log("🛠_ Test mode active: Simulating 5 seconds watch reward loop.");
-        alert("TEST MODE ACTIVE: Simulating 5 seconds watch reward loop... (Ad script bypassed)");
+        alert("TEST MODE ACTIVE: Simulating 5 seconds watch reward loop...");
         
         const watchBtn = document.getElementById('modal-watch-btn');
         if (watchBtn) watchBtn.innerText = "⏳ SIMULATING WATCH TIME...";
@@ -113,7 +116,7 @@ window.triggerAdWatchingProcess = async function() {
         return; 
     }
 
-    // 🎬 LIVE MODE: Triggers when IS_TEST_MODE = false
+    // 🎬 LIVE MODE
     if (isAdReady) {
         console.log("🎬 Activating Fluid Player Container for VAST Streaming...");
         
@@ -127,30 +130,39 @@ window.triggerAdWatchingProcess = async function() {
         }
 
         try {
-            // Fluid Player Engine Core Initialization
             hilltopPlayerInstance = fluidPlayer('talkink-ad-player', {
                 vastOptions: {
                     adList: [
                         {
-                            roll: 'preRoll', // Player load hote hi video trigger hoga
+                            roll: 'preRoll', 
                             vastTag: HILLTOP_VAST_URL
                         }
                     ],
                     // 👑 1. Jab ad successfully pura stream ho jaye
                     adFinishedCallback: async () => {
-                        console.log("💰 Ad closed after successful playback stream! Awarding points...");
-                        closeAdAndProcessReward();
+                        console.log("💰 Ad closed after successful playback stream!");
+                        if (isAdActuallyPlaying) {
+                            closeAdAndProcessReward();
+                        } else {
+                            console.warn("🚨 Fake end detected. Ad didn't actually play.");
+                            alert("Bhai ad load nahi ho paya. Please try again!");
+                            resetAdWatchUIState();
+                        }
                     },
-                    // 🚫 2. Agar VAST Ad load hone me network crash ya blocking ho jaye (Anti-Freeze)
+                    // 🚫 2. Agar VAST Ad load nahi hua (No Fill / Blocked)
                     adErrorCallback: (error) => {
                         console.error("❌ Hilltop VAST Ad Engine Error Event:", error);
-                        alert("Bhai ad node response load nahi kar paya. Ek baar refresh karke dobara try karo!");
+                        isAdActuallyPlaying = false; 
+                        alert("Ad load nahi ho paya (No Ad Available). Kuch der baad try karein!");
                         resetAdWatchUIState();
                     },
-                    // ⏩ 3. Agar user ad skip kare tab bhi fail-safe flow chlane ke liye
+                    // ⏩ 3. Ad skipped callback
                     adSkippedCallback: async () => {
-                        console.warn("⚠️ User skipped the streaming window. Evaluating pipeline...");
-                        closeAdAndProcessReward();
+                        if (isAdActuallyPlaying) {
+                            closeAdAndProcessReward();
+                        } else {
+                            resetAdWatchUIState();
+                        }
                     }
                 },
                 layoutControls: {
@@ -158,17 +170,27 @@ window.triggerAdWatchingProcess = async function() {
                     autoPlay: true, 
                     mute: false,
                     allowTheatre: false,
-                    playbackRateControl: false // Anti-Cheat: User speed badha nahi sakta
+                    playbackRateControl: false 
                 }
             });
 
-            // ⚓ SYSTEM HARDWARE NATIVE FALLBACK ENGINE
-            // Agar callback handler layer crash/freeze ho jaye, HTML5 native engine call push karega
+            // ⚓ NATIVE TRACK EVENTS (Security Verification Layer)
             const nativeVideoNode = document.getElementById('talkink-ad-player');
             if (nativeVideoNode) {
+                // Jab video sach me chalna shuru ho jaye tabhi flag true hoga
+                nativeVideoNode.onplaying = () => {
+                    console.log("▶️ Real Video Track Playing Detected!");
+                    isAdActuallyPlaying = true;
+                };
+
                 nativeVideoNode.onended = async () => {
-                    console.log("⚓ Native HTML5 video tracks completed. Processing reward cascade...");
-                    closeAdAndProcessReward();
+                    console.log("⚓ Native HTML5 video track ended.");
+                    if (isAdActuallyPlaying) {
+                        closeAdAndProcessReward();
+                    } else {
+                        console.warn("🚨 Fallback blocked fake completion.");
+                        resetAdWatchUIState();
+                    }
                 };
             }
 
@@ -188,7 +210,9 @@ async function closeAdAndProcessReward() {
     const videoContainer = document.getElementById('ad-video-container');
     if (videoContainer) videoContainer.style.display = 'none';
     
-    // 0.4s state release delay taaki media elements framework memory leak na karein
+    // Flag reset
+    isAdActuallyPlaying = false;
+
     setTimeout(async () => {
         await processSuccessfulAdWatch();
     }, 400);
@@ -197,6 +221,8 @@ async function closeAdAndProcessReward() {
 function resetAdWatchUIState() {
     const videoContainer = document.getElementById('ad-video-container');
     const watchBtn = document.getElementById('modal-watch-btn');
+    
+    isAdActuallyPlaying = false;
     if (videoContainer) videoContainer.style.display = 'none';
     if (watchBtn) {
         watchBtn.disabled = false;
@@ -219,7 +245,6 @@ async function processSuccessfulAdWatch() {
         watchBtn.innerText = "🏁 COMMITTING REWARD TO CLOUD...";
     }
 
-    // Live UI module update locally taaki data immediately mirror ho jaye
     updateRewardModalUI();
 
     const updateStatus = await updateData("users", currentUID, {
@@ -229,10 +254,9 @@ async function processSuccessfulAdWatch() {
     });
 
     if (updateStatus && updateStatus.success) {
-        console.log("🚀 Sync completed. Redirecting with active safe thread layout...");
+        console.log("🚀 Sync completed. Redirecting...");
         if (watchBtn) watchBtn.innerText = "🎉 SUCCESS! REDIRECTING...";
         
-        // 1.5s Execution Hold taaki Cloud Firestore pipelines data successfully save kar lein
         setTimeout(() => {
             window.location.href = 'index.html?reward=success';
         }, 1500);
