@@ -9,7 +9,7 @@ const MAX_ADS_PER_DAY = 10;
 const IS_TEST_MODE = false; // Production pe jaate hi ise false hi rakhna bhaa
 
 // 🔥 HILLTOPADS DIRECT SMARTLINK URL
-const HILLTOP_DIRECT_LINK = " https://sorrowfulpsychology.com/HGNXu2";
+const HILLTOP_DIRECT_LINK = "https://sorrowfulpsychology.com/HGNXu2";
 
 // Live Local State Cache
 let localUserProgress = {
