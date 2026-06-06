@@ -6,20 +6,10 @@ import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/f
 // --- 🎚️ SYSTEM HARD-CORE CONFIGURATION ---
 const COOLDOWN_TIME = 15 * 1000; // 15 Seconds Cooldown
 const MAX_ADS_PER_DAY = 10;
-const IS_TEST_MODE = false; // 🚨 Production pe jaate hi ise false kar dena bhaa
+const IS_TEST_MODE = false; // Production pe jaate hi ise false hi rakhna bhaa
 
-// Global States for HilltopAds VAST Integration
-let isAdReady = false; 
-let currentUID = null;
-let hilltopPlayerInstance = null; 
-
-// 🔥 HARDCORE SECURE GATEKEEPERS
-let isAdActuallyPlaying = false; 
-let adPlayDurationCounter = 0; // Tracks actual seconds watched
-let adWatchIntervalTimer = null; // Interval instance tracking clock
-
-// HilltopAds VAST Tag URL
-const HILLTOP_VAST_URL = "https://helplessfew.com/dtm.FbzldBGlN/vKZ/GqUP/TekmH9luGZ_UllJk/PJTocDxFMBT/IfwUNMj/U/t/NQzUETxlM/joAa2nO_Qc";
+// 🔥 HILLTOPADS DIRECT SMARTLINK URL
+const HILLTOP_DIRECT_LINK = "https://sorrowfulpsychology.com/HGNXu2";
 
 // Live Local State Cache
 let localUserProgress = {
@@ -28,7 +18,9 @@ let localUserProgress = {
     lastAdTimestamp: 0
 };
 
-// --- 🔐 AUTH STATUS MONITOR & FIRESTORE SYNC (WITH GUEST SAFEGUARDS) ---
+let currentUID = null;
+
+// --- 🔐 AUTH STATUS MONITOR & FIRESTORE SYNC ---
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         currentUID = user.uid;
@@ -57,38 +49,14 @@ onAuthStateChanged(auth, async (user) => {
         
         updateRewardModalUI();
         checkActiveCooldown();
-        
-        if (localUserProgress.adsWatchedToday < MAX_ADS_PER_DAY && !isSystemInCooldown()) {
-            initHilltopVastEngine();
-        }
     } else {
-        console.warn("🔒 No session found, running guest structural fallsafe...");
+        console.warn("🔒 No session found, redirecting guest...");
         currentUID = null;
-        localUserProgress = { coins: 0, adsWatchedToday: 0, lastAdTimestamp: 0 };
-        
-        updateRewardModalUI();
-        
-        setTimeout(() => {
-            window.location.href = "index.html"; 
-        }, 100);
+        window.location.href = "index.html"; 
     }
 });
 
-
-// --- 🛑 HILLTOPADS VAST VIDEO ENGINE INITIALIZATION ---
-function initHilltopVastEngine() {
-    console.log("🛠_ Preparing HilltopAds VAST Node Registry...");
-    if (HILLTOP_VAST_URL) {
-        isAdReady = true;
-        toggleWatchButtonState(true);
-    } else {
-        isAdReady = false;
-        toggleWatchButtonState(false);
-    }
-}
-
-
-// --- 📺 INTERACTION ENGINE TRIGGER (FLUID PLAYER METHOD) ---
+// --- 📺 INTERACTION ENGINE TRIGGER (DIRECT DIRECT LINK REDIRECT) ---
 window.triggerAdWatchingProcess = async function() {
     if (!currentUID) {
         alert("Bhai pehle login toh kar lo! 😉");
@@ -100,168 +68,31 @@ window.triggerAdWatchingProcess = async function() {
         return;
     }
 
-    // Clear and reset security variables before triggering ad engine
-    isAdActuallyPlaying = false;
-    adPlayDurationCounter = 0;
-    if (adWatchIntervalTimer) clearInterval(adWatchIntervalTimer);
-
     // 🚨 TEST MODE ENHANCEMENT
     if (IS_TEST_MODE) {
-        console.log("🛠_ Test mode active: Simulating 5 seconds watch reward loop.");
-        alert("TEST MODE ACTIVE: Simulating 5 seconds watch reward loop...");
-        
-        const watchBtn = document.getElementById('modal-watch-btn');
-        if (watchBtn) watchBtn.innerText = "⏳ SIMULATING WATCH TIME...";
-
-        setTimeout(async () => {
-            await processSuccessfulAdWatch();
-        }, 5000);
-        
+        console.log("🛠_ Test mode active: Simulating instant reward loop.");
+        alert("TEST MODE ACTIVE: Simulating watch reward loop...");
+        await processSuccessfulAdWatch();
         return; 
     }
 
-    // 🎬 LIVE MODE
-    if (isAdReady) {
-        console.log("🎬 Activating Fluid Player Container for VAST Streaming...");
-        
-        const videoContainer = document.getElementById('ad-video-container');
-        const watchBtn = document.getElementById('modal-watch-btn');
-        
-        if (videoContainer) videoContainer.style.display = 'block';
-        if (watchBtn) {
-            watchBtn.disabled = true;
-            watchBtn.innerText = "📺 LOADING SECURE AD STREAM...";
-        }
-
-        try {
-            hilltopPlayerInstance = fluidPlayer('talkink-ad-player', {
-                vastOptions: {
-                    adList: [
-                        {
-                            roll: 'preRoll', 
-                            vastTag: HILLTOP_VAST_URL
-                        }
-                    ],
-                    // 👑 1. When Ad Completes Stream
-                    adFinishedCallback: async () => {
-                        console.log("🔒 Player claimed ad finish. Verifying actual runtime criteria...");
-                        verifyAndTriggerReward();
-                    },
-                    // 🚫 2. Error Handler (No Fill, Ads unavailable, Adblock active)
-                    adErrorCallback: (error) => {
-                        console.error("❌ Hilltop VAST Ad Engine Error Event:", error);
-                        handleFakeOrFailedAdPlayback("Bhai abhi koi ads available nahi hain! Kuch der baad try karo.");
-                    },
-                    // ⏩ 3. Skipped Handler
-                    adSkippedCallback: async () => {
-                        console.log("⏩ Ad skip button pressed. Checking active progress logic...");
-                        verifyAndTriggerReward();
-                    }
-                },
-                layoutControls: {
-                    fillToContainer: true,
-                    autoPlay: true, 
-                    mute: false,
-                    allowTheatre: false,
-                    playbackRateControl: false 
-                }
-            });
-
-            // ⚓ CRYPTOGRAPHIC VERIFICATION MODULE (NATIVE AUDIO/VIDEO PROBING)
-            const nativeVideoNode = document.getElementById('talkink-ad-player');
-            if (nativeVideoNode) {
-                
-                // Triggers strictly when the rendering video buffer successfully loads and updates timeline frames
-                nativeVideoNode.ontimeupdate = () => {
-                    if (nativeVideoNode.currentTime > 0 && !isAdActuallyPlaying) {
-                        console.log("▶️ Real Video Pixels Processing! Engaging stream watch tracking interval...");
-                        isAdActuallyPlaying = true;
-                        
-                        if (watchBtn) watchBtn.innerText = "📺 WATCHING AD ACTIVE...";
-
-                        // Start ticking every 1 second to build genuine streaming validation proof
-                        adPlayDurationCounter = 0;
-                        adWatchIntervalTimer = setInterval(() => {
-                            adPlayDurationCounter++;
-                            console.log(`⏱️ Actual Streaming Playback Duration Verified: ${adPlayDurationCounter}s`);
-                        }, 1000);
-                    }
-                };
-
-                // Native termination monitor
-                nativeVideoNode.onended = async () => {
-                    console.log("⚓ Native track terminal context caught.");
-                    verifyAndTriggerReward();
-                };
-            }
-
-        } catch (err) {
-            console.error("Critical error firing Fluid Player instance:", err);
-            alert("Ad player container loading crashed. Reloading node...");
-            window.location.reload();
-        }
-    } else {
-        alert("⏳ Ad is caching on your browser node, please give it 2-3 seconds.");
-        initHilltopVastEngine();
+    // 🎬 LIVE REDIRECT MODE
+    console.log("🚀 Launching HilltopAds Direct Link Redirect Pipeline...");
+    
+    const watchBtn = document.getElementById('modal-watch-btn');
+    if (watchBtn) {
+        watchBtn.disabled = true;
+        watchBtn.innerText = "🚀 OPENING AD PAGE...";
     }
-};
 
-// --- 🛡️ SECURE VERIFICATION DISPATCH ENGINE ---
-function verifyAndTriggerReward() {
-    if (adWatchIntervalTimer) clearInterval(adWatchIntervalTimer);
+    // 1. User ko naye tab me HilltopAds ke direct link par bhej rahe hain
+    window.open(HILLTOP_DIRECT_LINK, '_blank');
 
-    // CRITICAL THRESHOLD SECURE CHECK: Ad must play live for at least 4 seconds total
-    if (isAdActuallyPlaying && adPlayDurationCounter >= 4) {
-        console.log("🎯 Verification Successful! User matched streaming thresholds.");
-        closeAdAndProcessReward();
-    } else {
-        console.warn(`🚨 Security Core Blocked Exploit: Attempted to secure reward with fake/empty stream. Watched duration: ${adPlayDurationCounter}s`);
-        handleFakeOrFailedAdPlayback("Bhai ad poora load hokar chal nahi paya! Please dobara try karo.");
-    }
-}
-
-function handleFakeOrFailedAdPlayback(alertMessage) {
-    if (adWatchIntervalTimer) clearInterval(adWatchIntervalTimer);
-    
-    // Cleanup player elements completely
-    isAdActuallyPlaying = false;
-    adPlayDurationCounter = 0;
-    
-    alert(alertMessage);
-    resetAdWatchUIState();
-}
-
-// --- ⚙️ BUFFER CONTROL MANAGEMENT FUNCTIONS ---
-async function closeAdAndProcessReward() {
-    if (adWatchIntervalTimer) clearInterval(adWatchIntervalTimer);
-    
-    const videoContainer = document.getElementById('ad-video-container');
-    if (videoContainer) videoContainer.style.display = 'none';
-    
-    isAdActuallyPlaying = false;
-    adPlayDurationCounter = 0;
-
+    // 2. Background me immediately user ko point process kar dete hain
     setTimeout(async () => {
         await processSuccessfulAdWatch();
-    }, 400);
-}
-
-function resetAdWatchUIState() {
-    if (adWatchIntervalTimer) clearInterval(adWatchIntervalTimer);
-    
-    const videoContainer = document.getElementById('ad-video-container');
-    const watchBtn = document.getElementById('modal-watch-btn');
-    
-    isAdActuallyPlaying = false;
-    adPlayDurationCounter = 0;
-    
-    if (videoContainer) videoContainer.style.display = 'none';
-    if (watchBtn) {
-        watchBtn.disabled = false;
-        watchBtn.innerText = "⚡ CLK HERE TO STREAM AD";
-    }
-}
-
+    }, 500);
+};
 
 // --- ⚙️ CORE MUTATION PROTOCOL (Save -> Redirect) ---
 async function processSuccessfulAdWatch() {
@@ -277,8 +108,10 @@ async function processSuccessfulAdWatch() {
         watchBtn.innerText = "🏁 COMMITTING REWARD TO CLOUD...";
     }
 
+    // UI ko locally turant update karo
     updateRewardModalUI();
 
+    // Firestore database sync pipeline
     const updateStatus = await updateData("users", currentUID, {
         coins: localUserProgress.coins,
         adsWatchedToday: localUserProgress.adsWatchedToday,
@@ -286,12 +119,12 @@ async function processSuccessfulAdWatch() {
     });
 
     if (updateStatus && updateStatus.success) {
-        console.log("🚀 Sync completed. Redirecting...");
+        console.log("🚀 Sync completed. Redirecting to home with success param...");
         if (watchBtn) watchBtn.innerText = "🎉 SUCCESS! REDIRECTING...";
         
         setTimeout(() => {
             window.location.href = 'index.html?reward=success';
-        }, 1500);
+        }, 1000);
     } else {
         alert("❌ Sync pipeline broken. Reloading page state...");
         window.location.reload();
@@ -330,10 +163,6 @@ function toggleWatchButtonState(ready) {
         btn.disabled = false;
         btn.innerHTML = `⚡ CLK HERE TO STREAM AD`;
         btn.style.opacity = "1";
-    } else {
-        btn.disabled = true;
-        btn.innerHTML = `⏳ INJECTING MEDIA BUFFER...`;
-        btn.style.opacity = "0.6";
     }
 }
 
@@ -347,7 +176,7 @@ function checkActiveCooldown() {
     if (timePassed < COOLDOWN_TIME) {
         startCooldownCountdown(COOLDOWN_TIME - timePassed);
     } else if (localUserProgress.adsWatchedToday < MAX_ADS_PER_DAY) {
-        toggleWatchButtonState(isAdReady);
+        toggleWatchButtonState(true);
     }
 }
 
@@ -383,20 +212,16 @@ function startCooldownCountdown(duration) {
 async function fetchRandomCouponFromBooks() {
     const couponBox = document.getElementById('modal-coupon-box');
     const couponText = document.getElementById('modal-unlocked-coupon');
-    
     const bookCoverImg = document.getElementById('modal-book-cover');
     const bookTitleText = document.getElementById('modal-book-title');
     const bookDescText = document.getElementById('modal-book-desc');
     const bookDirectLink = document.getElementById('modal-book-direct-link');
 
     if (!couponBox) return;
-    
     couponBox.style.display = 'block';
     
     try {
-        console.log("📥 Fetching eligible paid reward asset pools from Firestore...");
         const querySnapshot = await getDocs(collection(db, "books"));
-        
         let targetEligibleBooks = [];
         
         querySnapshot.forEach((doc) => {
@@ -417,7 +242,6 @@ async function fetchRandomCouponFromBooks() {
         if (targetEligibleBooks.length > 0) {
             const randomBookIndex = Math.floor(Math.random() * targetEligibleBooks.length);
             const selectedBook = targetEligibleBooks[randomBookIndex];
-            
             const randomCouponIndex = Math.floor(Math.random() * selectedBook.coupons.length);
             const selectedCoupon = selectedBook.coupons[randomCouponIndex];
             
@@ -431,34 +255,22 @@ async function fetchRandomCouponFromBooks() {
                     ? cleanText.substring(0, 90) + "..." 
                     : cleanText;
             }
-            
             if (bookDirectLink) {
                 bookDirectLink.href = `index.html?page=BookDetailsPage&id=${selectedBook.id}`;
             }
-
-            console.log(`🎯 Fixed Reward matched Book ID: ${selectedBook.id}`);
-        } else {
-            if (couponText) couponText.innerText = "NO_ACTIVE_COUPON";
-            if (bookTitleText) bookTitleText.innerText = "Missions Pool Exhausted";
         }
     } catch (error) {
         console.error("Critical error inside coupon database extraction:", error);
-        if (couponText) couponText.innerText = "RETRYING ERROR...";
     }
 }
 
 // --- 📋 UNBREAKABLE CLIPBOARD ENGINE: COUPON COPY PROCESSOR ---
-function copyUnlockedCoupon() {
+window.copyUnlockedCoupon = function() {
     const couponElement = document.getElementById('modal-unlocked-coupon');
     const copyBtn = document.getElementById('copy-btn-text');
-    
-    if (!couponElement) {
-        console.error("❌ Copy Error: Element '#modal-unlocked-coupon' not found in DOM.");
-        return;
-    }
+    if (!couponElement) return;
     
     const couponText = couponElement.innerText.trim();
-    
     if (couponText === "FETCHING..." || couponText === "" || couponText === "NO_ACTIVE_COUPON") {
         alert("Bhai, pehle mission complete karke coupon unlock hone do! 😉");
         return;
@@ -466,59 +278,35 @@ function copyUnlockedCoupon() {
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(couponText)
-            .then(() => {
-                handleCopySuccess(copyBtn);
-            })
-            .catch((err) => {
-                console.warn("Clipboard API failed, trying fallback method...", err);
-                fallbackCopyMethod(couponText, copyBtn);
-            });
+            .then(() => handleCopySuccess(copyBtn))
+            .catch(() => fallbackCopyMethod(couponText, copyBtn));
     } else {
         fallbackCopyMethod(couponText, copyBtn);
     }
-}
-
-window.copyUnlockedCoupon = copyUnlockedCoupon;
+};
 
 function fallbackCopyMethod(text, buttonElement) {
     const textArea = document.createElement("textarea");
     textArea.value = text;
-    textArea.style.top = "0";
-    textArea.style.left = "0";
-    textArea.style.position = "fixed";
-    textArea.style.opacity = "0";
-    
     document.body.appendChild(textArea);
-    textArea.focus();
     textArea.select();
-    
     try {
-        const successful = document.execCommand('copy');
-        if (successful) {
-            handleCopySuccess(buttonElement);
-        } else {
-            alert("Bhai copy nahi ho paya, manually copy kar lo code: " + text);
-        }
+        document.execCommand('copy');
+        handleCopySuccess(buttonElement);
     } catch (err) {
-        console.error("Fallback execution crash: ", err);
         alert("Copy Error! Code: " + text);
     }
-    
     document.body.removeChild(textArea);
 }
 
 function handleCopySuccess(button) {
-    console.log("🎯 Coupon successfully cloned to system clipboard memory!");
     if (button) {
         const originalText = button.innerText;
         button.innerText = "COPIED! 🔥";
         button.style.background = "#16a34a";
-        
         setTimeout(() => {
             button.innerText = originalText;
             button.style.background = "";
         }, 1500);
-    } else {
-        alert("Coupon Code Copied Successfully!");
     }
 }
