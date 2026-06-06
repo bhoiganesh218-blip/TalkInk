@@ -7,6 +7,9 @@
     
     <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
     
+    <link rel="stylesheet" href="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.css" type="text/css"/>
+    <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
+    
     <link rel="stylesheet" href="./css/ads.css"> 
 </head>
 <body>
@@ -59,8 +62,8 @@
 
                     <div class="reward-progress-grid">
                         <div class="progress-info-row">
-                            <span class="task-descriptor">Objective: Stream 5 micro-ads today</span>
-                            <strong class="counter-badge-highlight" id="modal-ad-count-text">0 / 5 COMPLETE</strong>
+                            <span class="task-descriptor">Objective: Stream 10 micro-ads today</span>
+                            <strong class="counter-badge-highlight" id="modal-ad-count-text">0 / 10 COMPLETE</strong>
                         </div>
                         <div class="modal-progress-bar-bg">
                             <div class="modal-progress-fill" id="modal-ad-progress-fill" style="width: 0%"></div>
@@ -69,12 +72,19 @@
                     </div>
 
                     <div class="reward-action-zone">
+                        
+                        <div id="ad-video-container" style="display: none; width: 100%; max-width: 420px; margin: 0 auto 15px auto; border-radius: 12px; border: 2px solid #1e293b; overflow: hidden; background: #020617; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);">
+                            <video id="talkink-ad-player">
+                                <source src="" type="video/mp4" />
+                            </video>
+                        </div>
+
                         <div class="cooldown-lock-layer" id="modal-cooldown-lock" style="display: none;">
                             <div class="lock-vibe-box">
                                 <span class="lock-icon">🔒</span>
                                 <div class="lock-timer-text">
                                     <span>SYSTEM COOLING CYCLE</span>
-                                    <strong id="modal-timer-clock">01:30</strong>
+                                    <strong id="modal-timer-clock">00:15</strong>
                                 </div>
                             </div>
                         </div>
@@ -143,7 +153,7 @@
                             <div class="step-badge">3</div>
                             <div class="step-content">
                                 <h4>Unlock Premium Ticket</h4>
-                                <p>Once the 5/5 mission gauge locks full, a dynamic hidden paid book profile alongside an exclusive zero-balance code drops instantly.</p>
+                                <p>Once the 10/10 mission gauge locks full, a dynamic hidden paid book profile alongside an exclusive zero-balance code drops instantly.</p>
                             </div>
                         </div>
 
@@ -174,7 +184,5 @@
     </div>
 
     <script type="module" src="./js/rewardEngine.js"></script>
-
-
 </body>
 </html>
