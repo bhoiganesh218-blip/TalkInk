@@ -15,8 +15,6 @@ import {
     serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-
-
 import { 
     getAuth, 
     signInWithPopup, 
@@ -44,13 +42,16 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
-export { auth };
+// Scopes for seamless prompt popup
+googleProvider.setCustomParameters({ prompt: 'select_account' });
+
+export { auth, db, googleProvider };
+
 /**
  * --- HELPER FUNCTIONS ---
  */
 
 // A. Create/Add Data
-// Hum setDoc use kar rahe hain taaki agar hum chahein toh custom ID bhi de sakein
 export const addData = async (colName, docId, data) => {
     try {
         const docRef = doc(db, colName, docId);
@@ -65,7 +66,7 @@ export const addData = async (colName, docId, data) => {
     }
 };
 
-// B. Update Data (Specifically for Books/Users)
+// B. Update Data
 export const updateData = async (colName, docId, updatedData) => {
     try {
         const docRef = doc(db, colName, docId);
@@ -91,7 +92,7 @@ export const deleteData = async (colName, docId) => {
     }
 };
 
-// D. Get Single Document (Jaise specific book details ke liye)
+// D. Get Single Document
 export const getSingleDoc = async (colName, docId) => {
     try {
         const docSnap = await getDoc(doc(db, colName, docId));
@@ -106,17 +107,11 @@ export const getSingleDoc = async (colName, docId) => {
     }
 };
 
-/**
- * E. Smart Pagination (Get 1-10, then 10-20...)
- * @param {string} colName - Collection (e.g., 'books')
- * @param {number} pageSize - Kitne books dikhani hain (e.g., 10)
- * @param {object} lastVisibleDoc - Last loaded doc object
- */
+// E. Smart Pagination
 export const getPaginatedData = async (colName, pageSize, lastVisibleDoc = null) => {
     try {
         let q;
         if (lastVisibleDoc) {
-            // Next set of data (e.g., 11 to 20)
             q = query(
                 collection(db, colName),
                 orderBy("createdAt", "desc"),
@@ -124,7 +119,6 @@ export const getPaginatedData = async (colName, pageSize, lastVisibleDoc = null)
                 limit(pageSize)
             );
         } else {
-            // Initial data load (1 to 10)
             q = query(
                 collection(db, colName),
                 orderBy("createdAt", "desc"),
@@ -138,9 +132,7 @@ export const getPaginatedData = async (colName, pageSize, lastVisibleDoc = null)
             results.push({ id: doc.id, ...doc.data() });
         });
 
-        // Agle page ke liye last document track karna
         const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
-
         return { success: true, data: results, lastDoc: lastDoc };
     } catch (error) {
         console.error("Error fetching paginated data: ", error);
@@ -148,41 +140,30 @@ export const getPaginatedData = async (colName, pageSize, lastVisibleDoc = null)
     }
 };
 
-export { db };
-
-
-
-
-
-
-
-
-
-
 /**
  * --- AUTH FUNCTIONS ---
  */
 
-// A. Sign Up (Email/Pass) + User Profile Creation
+// A. Sign Up (Email/Pass)
 export const registerUser = async (email, password, fullName) => {
     try {
-      window.showLoader();
+        if (typeof window.showLoader === "function") window.showLoader();
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-        
-        // Firestore mein user document banana
+
         await setDoc(doc(db, "users", user.uid), {
             uid: user.uid,
             displayName: fullName,
             email: email,
             photoURL: "",
-            purchasedBooks: [], // Shuruat mein khali
+            purchasedBooks: [],
             createdAt: serverTimestamp()
         });
-        window.hideLoader();
+        
+        if (typeof window.hideLoader === "function") window.hideLoader();
         return { success: true, user };
     } catch (error) {
-       window.hideLoader();
+        if (typeof window.hideLoader === "function") window.hideLoader();
         return { success: false, error: error.message };
     }
 };
@@ -190,24 +171,24 @@ export const registerUser = async (email, password, fullName) => {
 // B. Login (Email/Pass)
 export const loginUser = async (email, password) => {
     try {
-      window.showLoader();
+        if (typeof window.showLoader === "function") window.showLoader();
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        
+        if (typeof window.hideLoader === "function") window.hideLoader();
         return { success: true, user: userCredential.user };
-        window.hideLoader();
     } catch (error) {
-       window.hideLoader();
+        if (typeof window.hideLoader === "function") window.hideLoader();
         return { success: false, error: error.message };
     }
 };
 
-// C. Google Login (One-Tap)
+// C. Google Login (One-Tap Popup Fix)
 export const loginWithGoogle = async () => {
     try {
-      window.showLoader();
+        if (typeof window.showLoader === "function") window.showLoader();
         const result = await signInWithPopup(auth, googleProvider);
         const user = result.user;
 
-        // Check karo agar user naya hai toh Firestore mein entry karo
         const userDoc = await getDoc(doc(db, "users", user.uid));
         if (!userDoc.exists()) {
             await setDoc(doc(db, "users", user.uid), {
@@ -219,70 +200,58 @@ export const loginWithGoogle = async () => {
                 createdAt: serverTimestamp()
             });
         }
-        window.hideLoader();
+        
+        if (typeof window.hideLoader === "function") window.hideLoader();
         return { success: true, user };
     } catch (error) {
-      window.hideLoader();
+        if (typeof window.hideLoader === "function") window.hideLoader();
+        console.error("Google Auth Details:", error);
         return { success: false, error: error.message };
     }
-   
 };
 
 // D. Password Reset
 export const resetPassword = async (email) => {
     try {
-      window.showLoader();
+        if (typeof window.showLoader === "function") window.showLoader();
         await sendPasswordResetEmail(auth, email);
+        
+        if (typeof window.hideLoader === "function") window.hideLoader();
         return { success: true };
-        window.hideLoader();
     } catch (error) {
-      window.hideLoader();
+        if (typeof window.hideLoader === "function") window.hideLoader();
         return { success: false, error: error.message };
     }
 };
 
 // E. Logout
 export const logoutUser = async () => {
-  window.showLoader();
+    if (typeof window.showLoader === "function") window.showLoader();
     await signOut(auth);
-    window.hideLoader();
+    if (typeof window.hideLoader === "function") window.hideLoader();
 };
 
-
-
-
-
-
-
-// F. Auth State Observer (The Brain with Integrated SPA Deep Linking Router)
+// F. Auth State Observer
 export const observeAuthState = (callback) => {
     onAuthStateChanged(auth, async (user) => {
         if (user) {
-            window.showLoader();
-            
-            // User login hai, Firestore se uska pura data nikal lo
+            if (typeof window.showLoader === "function") window.showLoader();
+
             const userDoc = await getDoc(doc(db, "users", user.uid));
             const userData = userDoc.exists() ? userDoc.data() : user;
-            
-            // Global memory me data bind karo taaki baki files access kar sakein
+
             window.currentUserData = userData;
-            
-            // Data ko callback ke throug app me pass karo
             callback(userData);
 
-            // 🛰️ SPA ROUTER CHECK TRIGGER (Deep Linking Matrix)
-            // Pehle check karo kya user kisi book ke share link se aaya hai?
             const deepLinkIntercepted = await window.handleSPADeepLinkingRouter();
-            
-            // Agar koi share link nahi mila, tabhi normal home page render hoga
             if (!deepLinkIntercepted) {
                 window.render("home");
             }
-            
-            window.hideLoader();
+
+            if (typeof window.hideLoader === "function") window.hideLoader();
         } else {
             callback(null);
-            window.render("login"); // Session active nahi hai toh seedhe login view
+            window.render("login");
         }
     });
 };
