@@ -361,7 +361,7 @@ export const renderAuthSystem = (user = null, type = 'login') => {
                 </form>
                 <div class="divider"><span>OR</span></div>
                 <div class="social-auth">
-                    <button class="google-btn" id="googleBtn"><img src="https://img.icons8.com/color/48/000000/google-logo.png" /> Google</button>
+                    <button type="button" class="google-btn" id="googleBtn"><img src="https://img.icons8.com/color/48/000000/google-logo.png" /> Google</button>
                 </div>
             </div>`;
     }
