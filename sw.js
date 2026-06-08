@@ -1,4 +1,4 @@
-const CACHE_NAME = 'talkink-v1.2';
+const CACHE_NAME = 'talkink-v1.3';
 const ASSETS = [
   // 📁 Main Root Paths & Configs
   '/talkink/',
