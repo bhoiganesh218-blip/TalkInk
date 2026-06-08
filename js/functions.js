@@ -3790,62 +3790,15 @@ window.initSettingsEventListeners = () => {
 
 
 
-
-// =========================================================================
-// 🔍 VAULT SEARCH CONTROLLER TERMINAL PROTOCOL (SLIDING SYSTEM)
-// =========================================================================
-
-// 1. DUMMY FUNCTION - CALL THIS FROM YOUR MAIN HEADER SEARCH ICON TO OPEN PANEL
-window.openSearchPanelEngine = () => {
-    const searchPanel = document.getElementById('searchOverlayPanel');
-    if (searchPanel) {
-        searchPanel.classList.add('active'); // Triggers left-to-right slide animation
-        
-        // Auto focus input field for extreme fluid mobile interface
-        setTimeout(() => {
-            document.getElementById('mainSearchInput')?.focus();
-        }, 300);
-    }
-};
-
-// 2. CLOSING MECHANISM
-window.closeSearchPanelEngine = () => {
-    const searchPanel = document.getElementById('searchOverlayPanel');
-    if (searchPanel) {
-        searchPanel.classList.remove('active');
-    }
-};
-
-// 3. AUTO FILL CONTROLLER FOR SUGGESTION CLICKS
-window.fillSearchField = (term) => {
-    const searchInput = document.getElementById('mainSearchInput');
-    if (searchInput) {
-        searchInput.value = term;
-        // Trigger clear cross button show parameter
-        const clearBtn = document.getElementById('clearSearchInputBtn');
-        if (clearBtn) clearBtn.style.display = 'block';
-        
-        // Run final search sequence block
-        window.executeDummySearch();
-    }
-};
-
-
-
-
-
-
-
 // =========================================================================
 // 🧠 FUZZY LOGIC SPELLING-MISTAKE TRACKER (LEVENSHTEIN DISTANCE MATRIX)
 // =========================================================================
-// Yeh helper function batata hai ki do strings me kitni spelling ki galati hai
 window.calculateFuzzyMatchScore = (str1, str2) => {
     const s1 = str1.trim().toLowerCase().replace(/\s+/g, '');
     const s2 = str2.trim().toLowerCase().replace(/\s+/g, '');
     
-    if (s1 === s2) return 100; // Perfect match without space
-    if (s1.includes(s2) || s2.includes(s1)) return 85; // Token inclusion match
+    if (s1 === s2) return 100; 
+    if (s1.includes(s2) || s2.includes(s1)) return 85; 
 
     const track = Array(s2.length + 1).fill(null).map(() => Array(s1.length + 1).fill(null));
     for (let i = 0; i <= s1.length; i += 1) track[0][i] = i;
@@ -3855,291 +3808,286 @@ window.calculateFuzzyMatchScore = (str1, str2) => {
         for (let i = 1; i <= s1.length; i += 1) {
             const indicator = s1[i - 1] === s2[j - 1] ? 0 : 1;
             track[j][i] = Math.min(
-                track[j][i - 1] + 1, // deletion
-                track[j - 1][i] + 1, // insertion
-                track[j - 1][i - 1] + indicator // substitution
+                track[j][i - 1] + 1, 
+                track[j - 1][i] + 1, 
+                track[j - 1][i - 1] + indicator 
             );
         }
     }
-    
     const distance = track[s2.length][s1.length];
     const maxLength = Math.max(s1.length, s2.length);
-    // Convert distance to percentage score
     return Math.round(((maxLength - distance) / maxLength) * 100);
 };
 
 // =========================================================================
-// 🔍 DUAL-MODE HYBRID PSYCHOLOGY & FUZZY SEARCH ENGINE
+// 🔍 VAULT SEARCH CONTROLLER TERMINAL PROTOCOL (SLIDING SYSTEM)
 // =========================================================================
-window.executeDummySearch = async (isFinalSearch = false) => {
-    const queryInput = document.getElementById('mainSearchInput');
-    if (!queryInput) return;
-
-    const rawQuery = queryInput.value.trim().toLowerCase();
-    const queryNormalized = rawQuery.replace(/\s+/g, ' '); 
-    const queryNoSpace = rawQuery.replace(/\s+/g, '');
-
-    if (!queryNormalized) {
-        return; // Silent return to prevent annoying alerts while typing
-    }
-
-    const suggestionsZone = document.querySelector('.search-suggestions-zone');
-    
-    let aiPsychologyKeywords = [];
-    let isAiActive = false;
-
-    // 🚀 MODE A: COGNITIVE AI DECODING (Only runs when explicitly triggered on ENTER or VOICE)
-    if (isFinalSearch) {
-        suggestionsZone.innerHTML = `
-            <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px; color:#6366f1;">
-                <i class="fa-solid fa-spinner fa-spin" style="font-size:2rem; margin-bottom:12px;"></i>
-                <p style="font-size:0.85rem; letter-spacing:1px; color:#64748b; text-transform:uppercase;">DECODING USER PSYCHOLOGY (AI)...</p>
-            </div>
-        `;
-
-        try {
-            const backendUrl = 'https://talkinkbackend.onrender.com/smart-psychology-search';
-            const response = await fetch(backendUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ query: queryNormalized })
-            });
-
-            if (response.ok) {
-                const resData = await response.json();
-                if (resData.success && Array.isArray(resData.suggestions)) {
-                    aiPsychologyKeywords = resData.suggestions.map(k => k.toLowerCase().trim());
-                    isAiActive = true;
-                    console.log("🤖 [AI Engine] Core psychology parameters captured:", aiPsychologyKeywords);
-                }
-            }
-        } catch (aiErr) {
-            console.warn("⚠️ [AI Engine] Live gateway timed out. Shifting directly to deep fuzzy index:", aiErr.message);
-        }
-    }
-
-    // 🚀 MODE B: BULLETPROOF FIRESTORE & LOCAL FUZZY SCANNER (Runs on every keystroke)
-    try {
-        // Module configuration dynamic fallback
-        let db;
-        if (typeof window.db !== 'undefined') {
-            db = window.db;
-        } else if (typeof firebase !== 'undefined' && typeof firebase.firestore === 'function') {
-            db = firebase.firestore();
-        } else {
-            const firestoreModule = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js");
-            db = firestoreModule.getFirestore();
-        }
-        
-        let booksSnapshot;
-        if (typeof db.collection === 'function') {
-            booksSnapshot = await db.collection("books").get();
-        } else {
-            const firestoreModule = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js");
-            booksSnapshot = await firestoreModule.getDocs(firestoreModule.collection(db, "books"));
-        }
-
-        const matchedResults = [];
-
-        booksSnapshot.forEach((docSnap) => {
-            const book = docSnap.data();
-            book.id = docSnap.id;
-
-            let relevanceScore = 0;
-            const threshold = 70; 
-
-            // --- 🧠 1. COGNITIVE AI MATRIX MATCHING ---
-            if (isAiActive && aiPsychologyKeywords.length > 0) {
-                const searchablePool = [
-                    book.title, 
-                    book.genre, 
-                    book.description, 
-                    ...(Array.isArray(book.searchKeywords) ? book.searchKeywords : [])
-                ].filter(Boolean).map(v => v.toString().toLowerCase());
-
-                aiPsychologyKeywords.forEach(concept => {
-                    searchablePool.forEach(item => {
-                        if (item.includes(concept) || concept.includes(item)) {
-                            relevanceScore += 45; 
-                        } else {
-                            const fuzzyScore = window.calculateFuzzyMatchScore(item, concept);
-                            if (fuzzyScore >= 80) relevanceScore += 30;
-                        }
-                    });
-                });
-            }
-
-            // --- 👑 2. HANDWRITTEN CUSTOM FUZZY SEARCH MATCHERS ---
-            if (book.searchKeywords && Array.isArray(book.searchKeywords)) {
-                book.searchKeywords.forEach(kw => {
-                    const kwStr = kw.toString().toLowerCase();
-                    const fuzzy = window.calculateFuzzyMatchScore(kwStr, queryNormalized);
-                    if (fuzzy >= threshold) relevanceScore += (fuzzy * 0.5) + 20;
-                });
-            }
-
-            if (book.title) {
-                const titleStr = book.title.toString().toLowerCase();
-                const fuzzy = window.calculateFuzzyMatchScore(titleStr, queryNormalized);
-                if (fuzzy >= threshold) {
-                    relevanceScore += (fuzzy * 0.4) + 15;
-                    if (titleStr === queryNormalized || titleStr.replace(/\s+/g, '') === queryNoSpace) {
-                        relevanceScore += 40; 
-                    }
-                }
-            }
-
-            if (book.author) {
-                const authorStr = book.author.toString().toLowerCase();
-                const fuzzy = window.calculateFuzzyMatchScore(authorStr, queryNormalized);
-                if (fuzzy >= threshold) relevanceScore += (fuzzy * 0.3) + 10;
-            }
-
-            if (book.genre) {
-                const genreStr = book.genre.toString().toLowerCase();
-                const fuzzy = window.calculateFuzzyMatchScore(genreStr, queryNormalized);
-                if (fuzzy >= threshold) relevanceScore += (fuzzy * 0.2);
-            }
-
-            if (book.language) {
-                const langStr = book.language.toString().toLowerCase();
-                if (langStr === queryNormalized || window.calculateFuzzyMatchScore(langStr, queryNormalized) > 85) {
-                    relevanceScore += 15;
-                }
-            }
-
-            if (book.description) {
-                const descStr = book.description.toString().toLowerCase();
-                if (descStr.includes(queryNormalized)) {
-                    relevanceScore += 10;
-                }
-            }
-
-            if (relevanceScore > 0) {
-                book.score = Math.round(relevanceScore);
-                matchedResults.push(book);
-            }
-        });
-
-        matchedResults.sort((a, b) => b.score - a.score);
-        window.renderSearchResultsUI(matchedResults, queryNormalized);
-
-    } catch (error) {
-        console.error("Fuzzy Search Engine Matrix Error:", error);
-        suggestionsZone.innerHTML = `<p style="color:#ef4444; padding:20px; text-align:center;">Matrix Error: ${error.message}</p>`;
-    }
-};
-
-
-
-
-
-
-
-
-
-
-// =========================================================================
-// 🖥️ UI RENDERER FOR SEARCH RESULTS (WITH CUSTOM BOOK DETAILS TRIGGER)
-// =========================================================================
-window.renderSearchResultsUI = (results, query) => {
-    const suggestionsZone = document.querySelector('.search-suggestions-zone');
-    if (!suggestionsZone) return;
-
-    if (results.length === 0) {
-        suggestionsZone.innerHTML = `
-            <div style="text-align:center; padding:60px 20px; color:#64748b;">
-                <i class="fa-solid fa-circle-exclamation" style="font-size:2.5rem; color:#ef4444; margin-bottom:16px;"></i>
-                <h4 style="color:#f8fafc; margin-bottom:6px;">No Identity Matches Found</h4>
-                <p style="font-size:0.82rem;">No parameters found matching token "${query}" inside vault.</p>
-            </div>
-        `;
-        return;
-    }
-
-    // Generate dynamic result list grid
-    let htmlContent = `<div style="padding: 12px 16px; font-size:0.75rem; color:#64748b; text-transform:uppercase; letter-spacing:1px;">Search Results Matrix (${results.length})</div>`;
-    htmlContent += `<ul class="suggestion-nodes-list">`;
-
-    results.forEach(book => {
-        // 🔥 FIXED: onclick par pehle search panel close hoga, fir showBookDetails('${book.id}') call hoga
-        htmlContent += `
-            <li class="suggestion-item" style="align-items: flex-start; gap:14px; padding:16px;" onclick="window.closeSearchPanelEngine(); if(typeof showBookDetails === 'function'){ showBookDetails('${book.id}'); } else { console.log('showBookDetails function missing for id:', '${book.id}'); }">
-                <div style="width:50px; height:70px; background:#1e293b; border-radius:6px; overflow:hidden; flex-shrink:0; border:1px solid rgba(255,255,255,0.05);">
-                    <img src="${book.photoURL || 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=150'}" style="width:100%; height:100%; object-fit:cover;">
-                </div>
-                <div style="flex:1; display:flex; flex-direction:column; gap:2px;">
-                    <span style="color:#f1f5f9; font-size:0.92rem; font-weight:600; white-space:normal; overflow:visible; text-overflow:unset;">${book.title}</span>
-                    <span style="color:#6366f1; font-size:0.78rem; font-weight:500;">By ${book.author}</span>
-                    <p style="color:#64748b; font-size:0.75rem; margin:4px 0 0 0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; line-height:1.3;">${book.description}</p>
-                </div>
-                <div style="color:#10b981; font-weight:700; font-size:0.85rem; padding-top:2px;">
-                    ${book.price == 0 || book.price === 'Free' ? 'FREE' : '₹' + book.price}
-                </div>
-            </li>
-        `;
-    });
-
-    htmlContent += `</ul>`;
-    suggestionsZone.innerHTML = htmlContent;
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// =========================================================================
-// 🔍 CORE SEARCH & VOICE MICROPHONE ENGINE INTERFACE (INTEGRATED)
-// =========================================================================
-
-let speechEngineInstance = null; // Global instance for controller safety
-
-// 1. DUMMY FUNCTION - CALL THIS FROM YOUR MAIN HEADER SEARCH ICON TO OPEN PANEL
 window.openSearchPanelEngine = () => {
     const searchPanel = document.getElementById('searchOverlayPanel');
     if (searchPanel) {
-        searchPanel.classList.add('active'); // Triggers left-to-right slide animation
-        
-        // Auto focus input field for extreme fluid mobile interface
+        searchPanel.classList.add('active'); 
         setTimeout(() => {
             document.getElementById('mainSearchInput')?.focus();
         }, 300);
     }
 };
 
-// 2. CLOSING MECHANISM FOR MAIN SEARCH PANEL
 window.closeSearchPanelEngine = () => {
     const searchPanel = document.getElementById('searchOverlayPanel');
-    if (searchPanel) {
-        searchPanel.classList.remove('active');
+    if (searchPanel) searchPanel.classList.remove('active');
+};
+
+// =========================================================================
+// 🚀 YOUTUBE-STYLE SMART MULTI-LAYER SEARCH ENGINE (LAG-FREE SYSTEM)
+// =========================================================================
+window.executeSearchQueryPipeline = async (searchQuery) => {
+    const rawQuery = searchQuery.trim().toLowerCase();
+    const queryNormalized = rawQuery.replace(/\s+/g, ' '); 
+    const queryTokens = queryNormalized.split(' '); 
+
+    if (!queryNormalized) return;
+
+    // Instant Fluid UI Transition
+    window.closeSearchPanelEngine();
+    if (typeof window.showLoader === "function") window.showLoader();
+
+    const targetGridSelector = '.ink-grid'; 
+    const container = document.querySelector(targetGridSelector);
+    if (!container) return;
+
+    // Standard Layout Injection
+    container.innerHTML = `
+        <div id="searchHeaderZone" class="search-results-heading-bar" style="grid-column: 1 / -1; padding: 15px 0; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+            <h2 id="searchTitleText" style="color: #f1f5f9; font-size: 1.4rem; font-weight: 700;">Search Results for: <span style="color: #6366f1;">"${searchQuery}"</span></h2>
+        </div>
+    `;
+
+    let aiPsychologyKeywords = [];
+    let isAiActive = false;
+    
+    // AI Cognitive Gateway Bridge Mapping
+    try {
+        const backendUrl = 'https://talkinkbackend.onrender.com/smart-psychology-search';
+        const response = await fetch(backendUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: queryNormalized })
+        });
+        if (response.ok) {
+            const resData = await response.json();
+            if (resData.success && Array.isArray(resData.suggestions)) {
+                aiPsychologyKeywords = resData.suggestions.map(k => k.toLowerCase().trim());
+                isAiActive = true;
+            }
+        }
+    } catch (e) { 
+        console.warn("AI offline, switching to structural backup algorithm mapping."); 
+    }
+
+    try {
+        let activeDB = typeof window.db !== 'undefined' ? window.db : db;
+        if (!activeDB) {
+            const firestoreModule = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js");
+            activeDB = firestoreModule.getFirestore();
+        }
+
+        let booksSnapshot;
+        if (typeof activeDB.collection === 'function') {
+            booksSnapshot = await activeDB.collection("books").get();
+        } else {
+            const firestoreModule = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js");
+            booksSnapshot = await firestoreModule.getDocs(firestoreModule.collection(activeDB, "books"));
+        }
+
+        const primaryMatches = [];   // Tier 1: Perfect / Fuzzy / AI Matches
+        const fallbackMatches = [];  // Tier 2: Token / Sub-word Matches (YouTube Mode 1)
+        const allBooksPool = [];     // Tier 3: Recommendation Backup Engine (YouTube Mode 2)
+
+        booksSnapshot.forEach((docSnap) => {
+            const book = docSnap.data();
+            book.id = docSnap.id;
+            allBooksPool.push(book); 
+
+            let relevanceScore = 0;
+            const threshold = 70;
+
+            // --- LAYER 1: COGNITIVE AI SECTOR ANALYSIS ---
+            if (isAiActive && aiPsychologyKeywords.length > 0) {
+                const pool = [book.title, book.genre, book.description, ...(book.searchKeywords || [])].filter(Boolean).map(v => v.toString().toLowerCase());
+                aiPsychologyKeywords.forEach(concept => {
+                    pool.forEach(item => {
+                        if (item.includes(concept)) relevanceScore += 45;
+                    });
+                });
+            }
+
+            // --- LAYER 2: CORE FIELD SUBSTRING & FUZZY CRITERIA ---
+            if (book.title) {
+                const titleStr = book.title.toString().toLowerCase();
+                const fuzzy = window.calculateFuzzyMatchScore(titleStr, queryNormalized);
+                if (fuzzy >= threshold) relevanceScore += (fuzzy * 0.4) + 15;
+                if (titleStr.includes(queryNormalized)) relevanceScore += 50; 
+            }
+
+            if (book.searchKeywords && Array.isArray(book.searchKeywords)) {
+                book.searchKeywords.forEach(kw => {
+                    if (kw.toString().toLowerCase().includes(queryNormalized)) relevanceScore += 40;
+                });
+            }
+
+            if (relevanceScore > 0) {
+                book.score = Math.round(relevanceScore);
+                primaryMatches.push(book);
+            } 
+            // --- LAYER 3: MULTI-TOKEN PARSING MATRIX ---
+            else {
+                let tokenScore = 0;
+                queryTokens.forEach(token => {
+                    if (token.length > 2) { 
+                        if (book.title?.toLowerCase().includes(token) || 
+                            book.description?.toLowerCase().includes(token) ||
+                            book.genre?.toLowerCase().includes(token)) {
+                            tokenScore += 20;
+                        }
+                    }
+                });
+                if (tokenScore > 0) {
+                    book.score = tokenScore;
+                    fallbackMatches.push(book);
+                }
+            }
+        });
+
+        // Metrics Sort Sequence Sorting
+        primaryMatches.sort((a, b) => b.score - a.score);
+        fallbackMatches.sort((a, b) => b.score - a.score);
+
+        if (typeof window.hideLoader === "function") window.hideLoader();
+
+        // Execution Controller Dynamic Decision Tree
+        if (primaryMatches.length > 0) {
+            window.bootstrapLocalSearchGrid(targetGridSelector, primaryMatches, 21, typeof currentUserData !== 'undefined' ? currentUserData : null);
+        } 
+        else if (fallbackMatches.length > 0) {
+            document.getElementById('searchTitleText').innerHTML = `No exact matches for "${searchQuery}". <span style="color: #a855f7;">Showing related content:</span>`;
+            window.bootstrapLocalSearchGrid(targetGridSelector, fallbackMatches, 21, typeof currentUserData !== 'undefined' ? currentUserData : null);
+        } 
+        else {
+            document.getElementById('searchTitleText').innerHTML = `0 Results for "${searchQuery}". <span style="color: #f43f5e;">Recommended for you:</span>`;
+            const recommendations = allBooksPool.sort(() => 0.5 - Math.random()).slice(0, 21);
+            window.bootstrapLocalSearchGrid(targetGridSelector, recommendations, 21, typeof currentUserData !== 'undefined' ? currentUserData : null);
+        }
+
+    } catch (error) {
+        console.error("🚨 Hybrid Smart Search Pipeline Crash:", error);
+        if (typeof window.hideLoader === "function") window.hideLoader();
     }
 };
 
-// 3. AUTO FILL CONTROLLER FOR SUGGESTION CLICKS
-window.fillSearchField = (term) => {
-    const searchInput = document.getElementById('mainSearchInput');
-    if (searchInput) {
-        searchInput.value = term;
-        // Trigger clear cross button show parameter
-        const clearBtn = document.getElementById('clearSearchInputBtn');
-        if (clearBtn) clearBtn.style.display = 'block';
+// =========================================================================
+// 📦 LOCAL STORAGE ARRAY CHUNKER FOR LOCAL SEARCH RESULTS (21 LIMIT + PAGINATION)
+// =========================================================================
+window.bootstrapLocalSearchGrid = (containerSelector, allResults, pageSize = 21, currentUserData = null, pageIndex = 0) => {
+    const container = document.querySelector(containerSelector);
+    if (!container) return;
+
+    const headerBar = container.querySelector('.search-results-heading-bar');
+    const headerHTML = headerBar ? headerBar.outerHTML : '';
+    container.innerHTML = headerHTML;
+
+    const startIndex = pageIndex * pageSize;
+    const endIndex = startIndex + pageSize;
+    const currentBatch = allResults.slice(startIndex, endIndex);
+
+    const purchasedList = currentUserData?.purchasedBooks || [];
+    let cardsHTML = '';
+
+    currentBatch.forEach(book => {
+        const isPurchased = purchasedList.includes(book.id);
+        const isFree = Number(book.price) === 0;
+        const authorName = book.author || "Unknown";
+        const currentCover = book.coverURL || book.coverImage || 'Dummy.jpg';
+
+        if (isPurchased || isFree) {
+            const clickAction = isPurchased ? `openReader('${book.id}')` : `animateBookClick(this, '${book.id}')`;
+            cardsHTML += `
+                <div class="ink-card purchased" onclick="${clickAction}">
+                    <div class="card-visual"><img src="${currentCover}" alt="${book.title}"><div class="pdf-tag">PDF</div></div>
+                    <div class="card-info">
+                        <h3>${book.title}</h3>
+                        <div class="meta-tags"><span>By ${authorName}</span></div>
+                        <div class="price-bar"><span class="owned-text">${isFree && !isPurchased ? 'FREE' : 'READ'}</span></div>
+                    </div>
+                </div>`;
+        } else {
+            cardsHTML += `
+                <div class="ink-card" onclick="openDetails('${book.id}')">
+                    <div class="card-visual"><img src="${currentCover}" alt="${book.title}"><div class="ink-badge">PREMIUM</div></div>
+                    <div class="card-info">
+                        <h3>${book.title}</h3>
+                        <div class="meta-tags"><span>By ${authorName}</span></div>
+                        <div class="price-bar"><span class="price-val">₹${book.price}</span></div>
+                    </div>
+                </div>`;
+        }
+    });
+
+    container.insertAdjacentHTML('beforeend', cardsHTML);
+
+    // Dynamic Navigation Controls Layer Injection
+    const hasPrevious = pageIndex > 0;
+    const hasNext = endIndex < allResults.length;
+
+    if (hasPrevious || hasNext) {
+        const navActionsHTML = `
+            <div id="searchNavActionsZone" style="grid-column: 1 / -1; display: flex; justify-content: center; align-items: center; gap: 20px; padding: 40px 0; width: 100%;">
+                <button id="searchPrevBtn" style="
+                    background: ${hasPrevious ? 'rgba(255, 255, 255, 0.03)' : 'rgba(255, 255, 255, 0.01)'}; 
+                    color: ${hasPrevious ? '#6366f1' : '#475569'}; 
+                    border: 1px solid ${hasPrevious ? 'rgba(99, 102, 241, 0.4)' : 'rgba(71, 85, 105, 0.2)'};
+                    padding: 12px 35px; border-radius: 50px; font-weight: 700; font-size: 0.85rem; 
+                    cursor: ${hasPrevious ? 'pointer' : 'not-allowed'}; transition: 0.3s all ease;
+                    display: flex; align-items: center; gap: 8px;
+                " ${!hasPrevious ? 'disabled' : ''}>
+                    <i class="fa-solid fa-arrow-left"></i> Previous
+                </button>
+
+                <button id="searchNextBtn" style="
+                    background: ${hasNext ? 'rgba(255, 255, 255, 0.03)' : 'rgba(255, 255, 255, 0.01)'}; 
+                    color: ${hasNext ? '#6366f1' : '#475569'}; 
+                    border: 1px solid ${hasNext ? 'rgba(99, 102, 241, 0.4)' : 'rgba(71, 85, 105, 0.2)'};
+                    padding: 12px 35px; border-radius: 50px; font-weight: 700; font-size: 0.85rem; 
+                    cursor: ${hasNext ? 'pointer' : 'not-allowed'}; transition: 0.3s all ease;
+                    display: flex; align-items: center; gap: 8px;
+                " ${!hasNext ? 'disabled' : ''}>
+                    Next <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        `;
         
-        // Run final search sequence block
-        window.executeDummySearch();
+        container.insertAdjacentHTML('beforeend', navActionsHTML);
+
+        if (hasNext) {
+            document.getElementById('searchNextBtn').addEventListener('click', () => {
+                window.bootstrapLocalSearchGrid(containerSelector, allResults, pageSize, currentUserData, pageIndex + 1);
+                window.scrollTo({ top: container.offsetTop - 100, behavior: 'smooth' });
+            });
+        }
+
+        if (hasPrevious) {
+            document.getElementById('searchPrevBtn').addEventListener('click', () => {
+                window.bootstrapLocalSearchGrid(containerSelector, allResults, pageSize, currentUserData, pageIndex - 1);
+                window.scrollTo({ top: container.offsetTop - 100, behavior: 'smooth' });
+            });
+        }
     }
 };
 
-// 4. SPEECH RECOGNITION PANEL ENTRY TRIGGER
+// =========================================================================
+// 🎤 CORE VOICE SEARCH MICROPHONE ENGINE INTERFACE
+// =========================================================================
+let speechEngineInstance = null;
+
 window.openVoiceSearchEngine = () => {
     const voiceOverlay = document.getElementById('voiceSearchOverlay');
     const statusText = document.getElementById('voiceStatusText');
@@ -4147,92 +4095,60 @@ window.openVoiceSearchEngine = () => {
     
     if (!voiceOverlay) return;
     
-    // Slide overlay window from Right to Left
-    voiceOverlay.classList.add('active');
+    voiceOverlay.classList.add('active'); 
     if (statusText) statusText.innerText = "Listening...";
     if (transcriptText) transcriptText.innerText = 'Say something clearly into microphone...';
 
-    // 🌐 Web Speech API Recognition Initializer Pipeline
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    
     if (!SpeechRecognition) {
         if (transcriptText) transcriptText.innerText = "Speech Engine not supported inside current browser environment.";
         return;
     }
 
-    // Clean restart any old residual streams
     if (speechEngineInstance) {
         try { speechEngineInstance.stop(); } catch(e){}
     }
 
     speechEngineInstance = new SpeechRecognition();
-    speechEngineInstance.continuous = false; // Stop as soon as user pauses talking
-    speechEngineInstance.lang = 'en-IN'; // Indian-English context tuning (Hindi works sync well too)
+    speechEngineInstance.continuous = false;
+    speechEngineInstance.lang = 'en-IN';
     speechEngineInstance.interimResults = false;
 
-    // Capturing voice result block trigger
     speechEngineInstance.onresult = (event) => {
         const spokenText = event.results[0][0].transcript;
-        console.log(`🎤 Voice Core Output Received: "${spokenText}"`);
-        
         if (transcriptText) transcriptText.innerText = `"${spokenText}"`;
         if (statusText) statusText.innerText = "Processing Matrix...";
-// Is segment ko apne window.openVoiceSearchEngine function ke andar update kar dena
-setTimeout(() => {
-    const mainSearchInput = document.getElementById('mainSearchInput');
-    const clearBtn = document.getElementById('clearSearchInputBtn');
-    
-    if (mainSearchInput) {
-        mainSearchInput.value = spokenText; 
-        if (clearBtn) clearBtn.style.display = 'block'; 
-        
-        window.closeVoiceEngine(); 
-        
-        // 🔥 Voice completed successfully, hit the AI pipeline immediately!
-        window.executeDummySearch(true); 
-    }
-}, 800);
 
-
-    };
-
-    // Error Handler for voice module
-    speechEngineInstance.onerror = (event) => {
-        console.error("Speech Recognition Node Error:", event.error);
-        if (statusText) statusText.innerText = "Voice Error";
-        if (transcriptText) {
-            if (event.error === 'not-allowed') {
-                transcriptText.innerText = "Permission Denied: Microphone access blocked.";
-            } else {
-                transcriptText.innerText = `Could not register sound pattern. [${event.error}]`;
+        setTimeout(() => {
+            const mainSearchInput = document.getElementById('mainSearchInput');
+            if (mainSearchInput) {
+                mainSearchInput.value = spokenText; 
+                // 🔥 KEYBOARD SAFETY BLUR LAYER FOR VOICE FINALIZE
+                mainSearchInput.blur();
             }
-        }
+            window.closeVoiceEngine();
+            window.executeSearchQueryPipeline(spokenText); 
+        }, 800);
     };
 
-    speechEngineInstance.onend = () => {
-        console.log("Speech Engine tracking window closed.");
+    speechEngineInstance.onerror = (event) => {
+        if (statusText) statusText.innerText = "Voice Error";
+        if (transcriptText) transcriptText.innerText = `Could not register sound pattern. [${event.error}]`;
     };
 
-    // Start listening process
     speechEngineInstance.start();
 };
 
-// 5. CLOSING MECHANISM FOR VOICE SEARCH OVERLAY
 window.closeVoiceEngine = () => {
     const voiceOverlay = document.getElementById('voiceSearchOverlay');
-    if (voiceOverlay) {
-        voiceOverlay.classList.remove('active');
-    }
-    
-    // Kill microphone listening process loop instantly
+    if (voiceOverlay) voiceOverlay.classList.remove('active');
     if (speechEngineInstance) {
         try { speechEngineInstance.stop(); } catch(e){}
     }
 };
 
-
 // =========================================================================
-// 🔄 INITIALIZATION LOGIC PIPELINE ROUTING FOR EVENT TRIGGERS (REWRITTEN)
+// 🔄 INITIALIZATION LOGIC FOR NO-LAG INPUT ROUTING & KEYBOARD BLUR FIX
 // =========================================================================
 setTimeout(() => {
     const closeBtn = document.getElementById('closeSearchPanelBtn');
@@ -4243,31 +4159,27 @@ setTimeout(() => {
 
     if (closeBtn) closeBtn.onclick = window.closeSearchPanelEngine;
 
-    // Live typing event listener
     if (searchInput) {
+        // Safe lightweight tracking layer mapping (No database calculation here)
         searchInput.addEventListener('input', (e) => {
-            const queryValue = e.target.value;
-
             if (clearBtn) {
-                clearBtn.style.background = 'transparent';
-                clearBtn.style.display = queryValue.length > 0 ? 'block' : 'none';
-            }
-
-            // ⚡ FAST INPUT RULE: Keypress par hamesha sirf CUSTOM FUZZY chalega (No AI load)
-            if (queryValue.trim().length >= 1) {
-                window.executeDummySearch(false); // false means DO NOT call Gemini API
-            } else {
-                const suggestionsZone = document.querySelector('.search-suggestions-zone');
-                if (suggestionsZone) suggestionsZone.innerHTML = '';
+                clearBtn.style.display = e.target.value.length > 0 ? 'block' : 'none';
             }
         });
 
-        // 🧠 CRITICAL EVENT: Jab user Enter key hit karega, tabhi AI power call hogi!
+        // Smart execution mapping interface trigger on explicit confirmation parameter
         searchInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
-                e.preventDefault(); // Stop default form submit behaviors
-                console.log("🎯 [User Signal] Enter key detected. Triggering Deep AI Psychology Engine...");
-                window.executeDummySearch(true); // true means execute Gemini API analysis!
+                e.preventDefault(); 
+                
+                // 🔥 KEYBOARD HIDING FIX: Force focus out of elements to slide down mobile keyboards
+                searchInput.blur();
+                if (document.activeElement && typeof document.activeElement.blur === 'function') {
+                    document.activeElement.blur();
+                }
+
+                console.log("🎯 Enter event processed. Triggering analytics search core...");
+                window.executeSearchQueryPipeline(searchInput.value);
             }
         });
     }
@@ -4279,8 +4191,6 @@ setTimeout(() => {
                 searchInput.focus();
             }
             clearBtn.style.display = 'none';
-            const suggestionsZone = document.querySelector('.search-suggestions-zone');
-            if (suggestionsZone) suggestionsZone.innerHTML = '';
         };
     }
 
@@ -4288,6 +4198,17 @@ setTimeout(() => {
     if (giantMicBtn) giantMicBtn.onclick = window.openVoiceSearchEngine;
     
 }, 500);
+
+
+
+
+
+
+
+
+
+
+
 
 
 
