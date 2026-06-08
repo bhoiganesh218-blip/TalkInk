@@ -10,26 +10,21 @@ import {
 } from './firebase.js';
 
 // =========================================================================
-// 📦 FIRESTORE CORE MODULES IMPORTS (Fixed: Added getDocs)
+// 📦 FIRESTORE CORE MODULES IMPORTS (Fixed: Added limit & startAfter)
 // =========================================================================
 import { 
     getDoc, 
-    getDocs,     // 🔥 YEH MISSING THA, ISE AB ADD KAR DIYA HAI!
+    getDocs,     
     doc, 
     updateDoc, 
     arrayUnion,
     collection,
     query,
     where,
-    orderBy
+    orderBy,
+    limit,        // 🔥 FIX: Yeh missing tha, import kar diya!
+    startAfter    // 🔥 FIX: Yeh bhi missing tha, import kar diya!
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-
-
-
-
-
-
 
 /**
  * GLOBAL LOADER SYSTEM
@@ -76,11 +71,6 @@ window.hideLoader = () => {
 
 let lastVisible = null;
 
-
-
-
-
-
 // =========================================================================
 // 📚 UNIVERSAL REUSABLE GRID RENDERER ENGINE (Next & Previous Navigation Enabled)
 // =========================================================================
@@ -91,55 +81,65 @@ export const renderBooksGrid = async (containerSelector, pageSize = 20, currentU
         return;
     }
 
-    // Tracker Key engine (Humesha clean 'ink-grid' string dega)
+    // Tracker Key engine (Clean tracking string generator)
     const trackerKey = containerSelector
         .trim()
         .replace(/^[.#]/, '')          
         .replace(/[.#\s]+/g, '_');     
 
-    // 🧠 INITIALIZE ADVANCED NAVIGATION HISTORY TRACKER STACKS
-    if (!window.gridPaginationTrackers) {
-        window.gridPaginationTrackers = {};
-    }
-    if (!window.gridNavigationHistory) {
-        window.gridNavigationHistory = {}; // Har trackerKey ki page snapshots history rakhega
-    }
-    if (!window.gridNavigationHistory[trackerKey]) {
-        window.gridNavigationHistory[trackerKey] = []; // Array stack for backtracking
+    // Initialize Global State Trackers
+    if (!window.gridPaginationTrackers) window.gridPaginationTrackers = {};
+    if (!window.gridNavigationHistory) window.gridNavigationHistory = {}; 
+    if (!window.gridNavigationHistory[trackerKey]) window.gridNavigationHistory[trackerKey] = [];
+
+    // STATE CROSS-CHECK: Agar category badli hai, toh tracking vectors ko force reset karo
+    if (!window.currentGridCategories) window.currentGridCategories = {};
+    if (window.currentGridCategories[trackerKey] !== categoryFilter) {
+        window.currentGridCategories[trackerKey] = categoryFilter;
+        isNavigationTrigger = false; 
     }
 
-    // Agar pehli baar load ho raha hai (Na ki Next/Prev click se), toh stack reset karo
     if (!isNavigationTrigger) {
         window.gridPaginationTrackers[trackerKey] = null;
         window.gridNavigationHistory[trackerKey] = [];
-        container.innerHTML = ""; // Clean grid view state for fresh entry
+        container.innerHTML = ""; 
     }
 
-    window.showLoader(); 
+    if (typeof window.showLoader === "function") window.showLoader(); 
 
     let response;
     const activeDB = dbInstance || db || window.db;
 
-    // Firebase methods dynamic checks
+    // Standard core local fallback mapping
     const firestoreLimit = typeof limit === 'function' ? limit : window.limit;
     const firestoreStartAfter = typeof startAfter === 'function' ? startAfter : window.startAfter;
+    const firestoreWhere = typeof where === 'function' ? where : window.where;
 
     // --- 📡 DATA FETCHING MATRIX ---
     if (categoryFilter && categoryFilter !== 'all') {
         try {
             const booksRef = collection(activeDB, 'books');
-            let q = query(booksRef, where("categoryId", "array-contains", categoryFilter));
             
-            // Apply forward anchor point pointer matching from tracker cache
+            // Core constraints build structure
+            let queryConstraints = [
+                firestoreWhere("categoryId", "array-contains", categoryFilter),
+                orderBy("createdAt", "desc")
+            ];
+
+            // Safely append startAfter pointer if cursor exists
             if (window.gridPaginationTrackers[trackerKey] && typeof firestoreStartAfter === 'function') {
-                q = query(q, firestoreStartAfter(window.gridPaginationTrackers[trackerKey]));
+                queryConstraints.push(firestoreStartAfter(window.gridPaginationTrackers[trackerKey]));
             }
             
+            // STRICT GUARANTEE: Ab functions milenge toh directly inject honge arrays me
             if (typeof firestoreLimit === 'function') {
-                q = query(q, firestoreLimit(pageSize));
+                queryConstraints.push(firestoreLimit(Number(pageSize)));
             }
 
+            // Execute query build structure via spread operator
+            const q = query(booksRef, ...queryConstraints);
             const snapshot = await getDocs(q);
+            
             const firstDoc = snapshot.docs[0] || null;
             const lastDoc = snapshot.docs[snapshot.docs.length - 1] || null;
             const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -150,24 +150,25 @@ export const renderBooksGrid = async (containerSelector, pageSize = 20, currentU
             response = { success: false, data: [] };
         }
     } else {
-        // Regular global marketplace routing fallback pipeline
-        // (Note: Hum default getPaginatedData call kar rahe hain purane module parameters ko block na karne ke liye)
+        // Fallback global marketplace pipeline loading module
         response = await getPaginatedData('books', pageSize, window.gridPaginationTrackers[trackerKey]);
-        // Polyfill features for standard responses structure compatibility
         if(response.success && response.data.length > 0) {
-            response.firstDoc = "calculated_internally"; // Checked dynamic token fallback
+            response.firstDoc = "calculated_internally";
         }
     }
     
-    // Boundary structural validator check
+    // Boundary data verification validator
     if (!response.success || response.data.length === 0) {
         const existingActionsZone = document.getElementById(`navActionsZone_${trackerKey}`);
         if (existingActionsZone) existingActionsZone.remove();
-        window.hideLoader();
+        
+        if (!isNavigationTrigger) {
+            container.innerHTML = `<div class="empty-state-msg" style="grid-column: 1/-1; text-align: center; color: #475569; padding: 40px 0;">No books found in this category.</div>`;
+        }
+        if (typeof window.hideLoader === "function") window.hideLoader();
         return;
     }
 
-    // If it's a valid navigation movement, clear the previous view to load the clean current chunk
     if (isNavigationTrigger) {
         container.innerHTML = ""; 
     }
@@ -175,7 +176,6 @@ export const renderBooksGrid = async (containerSelector, pageSize = 20, currentU
     const purchasedList = currentUserData?.purchasedBooks || [];
     let cardsHTML = '';
 
-    // Shuffle sequence
     let booksDataBatch = [...response.data]; 
     if (shouldShuffle) {
         for (let i = booksDataBatch.length - 1; i > 0; i--) {
@@ -184,7 +184,7 @@ export const renderBooksGrid = async (containerSelector, pageSize = 20, currentU
         }
     }
 
-    // --- 📦 CORE CARDS LOOP (Tumhara Original CSS/HTML Card Architecture) ---
+    // --- 📦 UI COMPONENT ARCHITECTURE LOOP ---
     booksDataBatch.forEach(book => {
         const isPurchased = purchasedList.includes(book.id);
         const isFree = Number(book.price) === 0;
@@ -215,22 +215,20 @@ export const renderBooksGrid = async (containerSelector, pageSize = 20, currentU
         }
     });
 
-    // Old button row cleaner to stop duplicate injections rows layers
+    // Remove obsolete rendering structures injection bars
     const oldActionsZone = document.getElementById(`navActionsZone_${trackerKey}`);
     if (oldActionsZone) oldActionsZone.remove();
     
-    // Inject freshly compiled HTML cards
     container.insertAdjacentHTML('beforeend', cardsHTML);
 
-    // --- 🎛️ NEW ADVANCED DUAL BUTTON SYSTEM GATEWAY ---
+    // --- 🎛️ DUAL NAVIGATION CONTROL PLATFORM SYSTEMS ---
     const historyStack = window.gridNavigationHistory[trackerKey];
     const hasPrevious = historyStack.length > 0;
-    const hasNext = response.data.length === pageSize;
+    const hasNext = response.data.length === Number(pageSize);
 
     if (hasPrevious || hasNext) {
         const navActionsHTML = `
             <div id="navActionsZone_${trackerKey}" style="grid-column: 1 / -1; display: flex; justify-content: center; align-items: center; gap: 20px; padding: 40px 0; width: 100%;">
-                
                 <button id="prevBtn_${trackerKey}" style="
                     background: ${hasPrevious ? 'rgba(255, 255, 255, 0.03)' : 'rgba(255, 255, 255, 0.01)'}; 
                     color: ${hasPrevious ? '#6366f1' : '#475569'}; 
@@ -260,47 +258,34 @@ export const renderBooksGrid = async (containerSelector, pageSize = 20, currentU
                 >
                     Next <i class="fa-solid fa-arrow-right"></i>
                 </button>
-
             </div>
         `;
         
         container.insertAdjacentHTML('beforeend', navActionsHTML);
 
-        // --- ⚡ NEXT EVENT LISTENER ACTION ---
+        // NEXT INTERACTION
         if (hasNext) {
             document.getElementById(`nextBtn_${trackerKey}`).addEventListener('click', () => {
-                // Agle page par jaane se pehle current reference to history stack me push karo tracking backup ke liye
                 historyStack.push(window.gridPaginationTrackers[trackerKey]);
-                
-                // Advance forward cursor pointer reference positions
                 window.gridPaginationTrackers[trackerKey] = response.lastDoc;
-                
-                // Recall grid rendering with navigation processing flag set to TRUE
                 renderBooksGrid(containerSelector, pageSize, currentUserData, shouldShuffle, categoryFilter, activeDB, true);
                 window.scrollTo({ top: container.offsetTop - 100, behavior: 'smooth' });
             });
         }
 
-        // --- ⚡ PREVIOUS EVENT LISTENER ACTION ---
+        // PREVIOUS INTERACTION
         if (hasPrevious) {
             document.getElementById(`prevBtn_${trackerKey}`).addEventListener('click', () => {
-                // Stack framework array se purana tracking reference pop out karo
                 const previousAnchor = historyStack.pop();
-                
-                // Rollback target dynamic parameters indices references snapshots pointers
                 window.gridPaginationTrackers[trackerKey] = previousAnchor;
-                
-                // Recall matrix sync loader sequence
                 renderBooksGrid(containerSelector, pageSize, currentUserData, shouldShuffle, categoryFilter, activeDB, true);
                 window.scrollTo({ top: container.offsetTop - 100, behavior: 'smooth' });
             });
         }
     }
  
-    window.hideLoader();
+    if (typeof window.hideLoader === "function") window.hideLoader();
 };
-
-
 
 
 
